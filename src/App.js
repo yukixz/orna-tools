@@ -11,7 +11,10 @@ const initialState = {
   rowsAll: null,
   rows: [],
   language: LANGUAGE_DEFAULT,
-  // Options
+  // i18n
+  texts: {
+    category: [],
+  },
   options: {
     language: [],
     category: [],
@@ -25,14 +28,18 @@ const initialState = {
 
 function reducer(state, action) {
   switch (action.type) {
-    case 'LOADED':
+    case 'INITIALIZED':
       return {
         ...state,
         loading: false,
         codex: action.codex,
-        rowsAll: action.rows,
-        rows: applyFilter(action.rows, state.filters),
+        rowsAll: action.rowsAll,
+        rows: applyFilter(action.rowsAll, state.filters),
         language: action.language,
+        texts: {
+          ...state.texts,
+          ...action.texts,
+        },
         options: {
           ...state.options,
           ...action.options,
@@ -68,54 +75,51 @@ function applyFilter(rows, { query, category }) {
   return rows
 }
 
-async function init(dispatch) {
+async function init(language, dispatch) {
   // load data
   const origin = {}
   for (const lang of Object.keys(LANGUAGES)) {
     origin[lang] = (await import(`./data/${lang}.json`)).default
   }
   const codex = {}
+  const names = {}
   for (const [lang, categoryItems] of Object.entries(origin)) {
     for (const [category, items] of Object.entries(categoryItems)) {
       for (const [itemKey, item] of Object.entries(items)) {
         const key = `${category}:${itemKey}`
-        if (codex[key] == null) {
-          codex[key] = {}
+        if (names[key] == null) {
+          names[key] = []
         }
-        codex[key][lang] = {
-          ...item,
-          category,
+        names[key].push(item.name)
+
+        if (lang === language) {
+          codex[key] = {
+            ...item,
+            category,
+          }
         }
       }
     }
   }
-  const rows = Object.entries(codex)
-    .map(([key, langs]) =>
-      [key, Object.values(langs)
-        .map(item => item.name)
-        .join('|')
-        .toLowerCase()])
-  // options
-  const lang = LANGUAGE_DEFAULT
+  const rowsAll = Object.entries(names)
+    .map(([key, texts]) => [key, texts.join('|').toLowerCase()])
+  // i18n
+  const texts = {
+    category: CATEGORIES[language],
+  }
   const options = {
     language: Object.entries(LANGUAGES).map(([value, text]) => ({ value, text })),
-    category: Object.entries(CATEGORIES[lang]).map(([value, text]) => ({ value, text })),
+    category: Object.entries(texts.category).map(([value, text]) => ({ value, text })),
   }
   // dispatch
-  dispatch({
-    type: 'LOADED',
-    codex,
-    rows,
-    language: lang,
-    options,
-  })
+  dispatch({ type: 'INITIALIZED', language, codex, rowsAll, texts, options })
 }
 
 function App() {
   const [state, dispatch] = React.useReducer(reducer, initialState)
 
   React.useEffect(() => {
-    init(dispatch).catch(console.error)
+    init(LANGUAGE_DEFAULT, dispatch).catch(console.error)
   }, [])
 
   const searchChangeTimeout = React.useRef()
@@ -129,6 +133,10 @@ function App() {
 
   const handleCategoryChange = React.useCallback((event, data) => {
     dispatch({ type: 'FILTERS_UPDATED', filters: { category: data.value } })
+  }, [])
+
+  const handleLanguageChange = React.useCallback((event, data) => {
+    init(data.value, dispatch).catch(console.error)
   }, [])
 
   return (
@@ -145,10 +153,12 @@ function App() {
             <Dropdown selection clearable placeholder='Category'
               options={state.options.category} onChange={handleCategoryChange} />
           </Grid.Column>
-          {/* <Grid.Column>
+          <Grid.Column>
+          </Grid.Column>
+          <Grid.Column>
             <Dropdown selection clearable placeholder='Language'
-              options={state.options.language} onChange={handleCategoryChange} />
-          </Grid.Column> */}
+              options={state.options.language} onChange={handleLanguageChange} />
+          </Grid.Column>
         </Grid.Row>
         <Grid.Row>
           <Table celled>
@@ -161,11 +171,11 @@ function App() {
             </Table.Header>
             <Table.Body>
               {state.rows.map(([key, text]) => {
-                const codex = state.codex[key][state.language]
+                const codex = state.codex[key]
                 return (
                   <Table.Row key={key}>
                     <Table.Cell>
-                      {CATEGORIES[state.language][codex.category]}
+                      {state.texts.category[codex.category]}
                     </Table.Cell>
                     <Table.Cell>
                       {codex.name}
