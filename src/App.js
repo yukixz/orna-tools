@@ -1,9 +1,9 @@
 import React from 'react'
-import { Container, Table, Input, Dropdown, Icon, Menu } from 'semantic-ui-react'
+import { Container, Table, Input, Dropdown, Icon, Menu, Modal, Image } from 'semantic-ui-react'
 import { Dimmer, Loader } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 import './App.css'
-import { LANGUAGES, LANGUAGE_DEFAULT, CATEGORIES } from './constants'
+import { LANGUAGES, LANGUAGE_DEFAULT, CATEGORIES, TABLE_MAX_ROWS } from './constants'
 
 const initialState = {
   loading: true,
@@ -23,6 +23,11 @@ const initialState = {
   filters: {
     category: null,
     query: "",
+  },
+  // Modal
+  modal: {
+    key: null,
+    codex: null,
   },
 }
 
@@ -58,6 +63,22 @@ function reducer(state, action) {
         ...state,
         filters: filters,
         rows: applyFilter(state.rowsAll, filters),
+      }
+    case 'MODAL_OPEN':
+      return {
+        ...state,
+        modal: {
+          key: action.key,
+          codex: action.codex,
+        }
+      }
+    case 'MODAL_CLOSE':
+      return {
+        ...state,
+        modal: {
+          key: null,
+          codex: null,
+        }
       }
 
     default:
@@ -117,6 +138,7 @@ async function init(language, dispatch) {
 
 function App() {
   const [state, dispatch] = React.useReducer(reducer, initialState)
+  const { modal } = state
 
   React.useEffect(() => {
     init(LANGUAGE_DEFAULT, dispatch).catch(console.error)
@@ -137,6 +159,10 @@ function App() {
 
   const handleLanguageChange = React.useCallback((event, data) => {
     init(data.value, dispatch).catch(console.error)
+  }, [])
+
+  const handleShowDetail = React.useCallback((key, codex) => {
+    dispatch({ type: 'MODAL_OPEN', key, codex })
   }, [])
 
   return (
@@ -168,24 +194,26 @@ function App() {
               onChange={handleLanguageChange} />
           </Menu.Item>
         </Menu>
-        <Table celled>
+        <Table celled striped selectable sortable>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell>Category</Table.HeaderCell>
               <Table.HeaderCell>Name</Table.HeaderCell>
+              <Table.HeaderCell>Category</Table.HeaderCell>
               <Table.HeaderCell>Link</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {state.rows.map(([key, text]) => {
+            {state.rows.slice(0, TABLE_MAX_ROWS).map(([key, text]) => {
+              console.log(key)
               const codex = state.codex[key]
               return (
-                <Table.Row key={key}>
+                <Table.Row key={key} onClick={() => handleShowDetail(key, codex)}>
                   <Table.Cell>
-                    {state.texts.category[codex.category]}
+                    <Image src={codex.image_url} size='mini' inline />
+                    {codex.name}
                   </Table.Cell>
                   <Table.Cell>
-                    {codex.name}
+                    {state.texts.category[codex.category]}
                   </Table.Cell>
                   <Table.Cell>
                     <a href={`https://playorna.com${codex.path}`} target='_blank' rel="noreferrer">
@@ -196,9 +224,33 @@ function App() {
               )
             })}
           </Table.Body>
+          <Table.Footer>
+            {state.rows.length > TABLE_MAX_ROWS &&
+              <Table.Row fullWidth>
+                <Table.Cell>
+                  1-{TABLE_MAX_ROWS} / {state.rows.length - TABLE_MAX_ROWS}
+                </Table.Cell>
+              </Table.Row>
+            }
+          </Table.Footer>
         </Table>
       </Container>
-    </div>
+
+      <Modal open={modal.codex != null}
+        onClose={() => dispatch({ type: 'MODAL_CLOSE' })}>
+        {modal.codex != null &&
+          <Modal.Header>
+            {modal.codex.name}
+          </Modal.Header>}
+        {modal.codex != null &&
+          <Modal.Content>
+            <pre>
+              {JSON.stringify(modal.codex, null, 2)}
+            </pre>
+          </Modal.Content>
+        }
+      </Modal>
+    </div >
   )
 }
 

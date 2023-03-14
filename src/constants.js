@@ -22,3 +22,5 @@ export const CATEGORIES = {
     "spells": "技能&法术",
   },
 }
+
+export const TABLE_MAX_ROWS = 100
