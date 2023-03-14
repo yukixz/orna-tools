@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Table, Grid, Input, Dropdown, Icon } from 'semantic-ui-react'
+import { Container, Table, Input, Dropdown, Icon, Menu } from 'semantic-ui-react'
 import { Dimmer, Loader } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 import './App.css'
@@ -140,59 +140,65 @@ function App() {
   }, [])
 
   return (
-    <Container className='app'>
-      <Dimmer active={state.loading}>
-        <Loader>Loading</Loader>
-      </Dimmer>
-      <Grid columns='equal' padded>
-        <Grid.Row>
-          <Grid.Column>
+    <div>
+      <Menu inverted>
+        <Container>
+          <Menu.Item as='a' header style={{ fontSize: '1.4em' }}>Orna Tools</Menu.Item>
+          <Menu.Item as='a' header href='/'>Codex</Menu.Item>
+          <Menu.Item as='a' header href='/clock/'>Clock</Menu.Item>
+        </Container>
+      </Menu>
+
+      <Container>
+        <Dimmer active={state.loading}>
+          <Loader>Loading</Loader>
+        </Dimmer>
+        <Menu>
+          <Menu.Item>
             <Input icon='search' placeholder='Search...' onChange={handleSearchChange} />
-          </Grid.Column>
-          <Grid.Column>
+          </Menu.Item>
+          <Menu.Item>
             <Dropdown selection clearable placeholder='Category'
-              options={state.options.category} onChange={handleCategoryChange} />
-          </Grid.Column>
-          <Grid.Column>
-          </Grid.Column>
-          <Grid.Column>
-            <Dropdown selection clearable placeholder='Language'
-              options={state.options.language} onChange={handleLanguageChange} />
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row>
-          <Table celled>
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell>Category</Table.HeaderCell>
-                <Table.HeaderCell>Name</Table.HeaderCell>
-                <Table.HeaderCell>Link</Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
-              {state.rows.map(([key, text]) => {
-                const codex = state.codex[key]
-                return (
-                  <Table.Row key={key}>
-                    <Table.Cell>
-                      {state.texts.category[codex.category]}
-                    </Table.Cell>
-                    <Table.Cell>
-                      {codex.name}
-                    </Table.Cell>
-                    <Table.Cell>
-                      <a href={`https://playorna.com${codex.path}`} target='_blank' rel="noreferrer">
-                        <Icon name='home' />
-                      </a>
-                    </Table.Cell>
-                  </Table.Row>
-                )
-              })}
-            </Table.Body>
-          </Table>
-        </Grid.Row>
-      </Grid>
-    </Container>
+              options={state.options.category}
+              onChange={handleCategoryChange} />
+          </Menu.Item>
+          <Menu.Item position='right'>
+            <Dropdown selection placeholder='Language'
+              options={state.options.language} value={state.language}
+              onChange={handleLanguageChange} />
+          </Menu.Item>
+        </Menu>
+        <Table celled>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Category</Table.HeaderCell>
+              <Table.HeaderCell>Name</Table.HeaderCell>
+              <Table.HeaderCell>Link</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            {state.rows.map(([key, text]) => {
+              const codex = state.codex[key]
+              return (
+                <Table.Row key={key}>
+                  <Table.Cell>
+                    {state.texts.category[codex.category]}
+                  </Table.Cell>
+                  <Table.Cell>
+                    {codex.name}
+                  </Table.Cell>
+                  <Table.Cell>
+                    <a href={`https://playorna.com${codex.path}`} target='_blank' rel="noreferrer">
+                      <Icon name='home' />
+                    </a>
+                  </Table.Cell>
+                </Table.Row>
+              )
+            })}
+          </Table.Body>
+        </Table>
+      </Container>
+    </div>
   )
 }
 
