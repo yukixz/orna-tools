@@ -3,16 +3,24 @@ import { Container, Table, Grid, Input, Dropdown, Icon } from 'semantic-ui-react
 import { Dimmer, Loader } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 import './App.css'
-
-const LANGS = ["en", "zh-hans"]
+import { LANGUAGES, LANGUAGE_DEFAULT, CATEGORIES } from './constants'
 
 const initialState = {
   loading: true,
-  lang: "zh-hans",
-  rows: [],
   codex: null,
   rowsAll: null,
-  categoryOptions: [],
+  rows: [],
+  language: LANGUAGE_DEFAULT,
+  // Options
+  options: {
+    language: [],
+    category: [],
+  },
+  // Filters
+  filters: {
+    category: null,
+    query: "",
+  },
 }
 
 function reducer(state, action) {
@@ -20,30 +28,55 @@ function reducer(state, action) {
     case 'LOADED':
       return {
         ...state,
-        loading: false, rows: action.rows,
-        codex: action.codex, rowsAll: action.rows,
-        categoryOptions: action.categoryOptions,
+        loading: false,
+        codex: action.codex,
+        rowsAll: action.rows,
+        rows: applyFilter(action.rows, state.filters),
+        language: action.language,
+        options: {
+          ...state.options,
+          ...action.options,
+        }
       }
-    case 'SEARCH_CLEAR':
-      return { ...state, rows: state.rowsAll }
-    case 'SEARCH_UPDATED':
-      return { ...state, rows: action.rows }
+    case 'LANGUAGE_CHANGE':
+      return {
+        ...state,
+      }
+    case 'FILTERS_UPDATED':
+      const filters = {
+        ...state.filters,
+        ...action.filters,
+      }
+      return {
+        ...state,
+        filters: filters,
+        rows: applyFilter(state.rowsAll, filters),
+      }
 
     default:
       throw new Error()
   }
 }
 
-async function loadData(dispatch) {
+function applyFilter(rows, { query, category }) {
+  if (query.length >= 1) {
+    rows = rows.filter(([key, text]) => text.includes(query))
+  }
+  if (category != null) {
+    rows = rows.filter(([key, text]) => key.startsWith(category))
+  }
+  return rows
+}
+
+async function init(dispatch) {
+  // load data
   const origin = {}
-  for (const lang of LANGS) {
+  for (const lang of Object.keys(LANGUAGES)) {
     origin[lang] = (await import(`./data/${lang}.json`)).default
   }
   const codex = {}
-  const categoriesSet = new Set()
   for (const [lang, categoryItems] of Object.entries(origin)) {
     for (const [category, items] of Object.entries(categoryItems)) {
-      categoriesSet.add(category)
       for (const [itemKey, item] of Object.entries(items)) {
         const key = `${category}:${itemKey}`
         if (codex[key] == null) {
@@ -59,17 +92,27 @@ async function loadData(dispatch) {
         .map(item => item.name)
         .join('|')
         .toLowerCase()])
-  const categoryOptions = Array.from(categoriesSet).sort().map(v => ({
-    value: v, text: v,
-  }))
-  dispatch({ type: 'LOADED', codex, rows, categoryOptions })
+  // options
+  const lang = LANGUAGE_DEFAULT
+  const options = {
+    language: Object.entries(LANGUAGES).map(([value, text]) => ({ value, text })),
+    category: Object.entries(CATEGORIES[lang]).map(([value, text]) => ({ value, text })),
+  }
+  // dispatch
+  dispatch({
+    type: 'LOADED',
+    codex,
+    rows,
+    language: lang,
+    options,
+  })
 }
 
 function App() {
   const [state, dispatch] = React.useReducer(reducer, initialState)
 
   React.useEffect(() => {
-    loadData(dispatch).catch(console.error)
+    init(dispatch).catch(console.error)
   }, [])
 
   const searchChangeTimeout = React.useRef()
@@ -77,13 +120,13 @@ function App() {
     clearTimeout(searchChangeTimeout.current)
     searchChangeTimeout.current = setTimeout(() => {
       const query = data.value.trim().toLowerCase()
-      if (query.length === 0) {
-        return dispatch({ type: 'SEARCH_CLEAR' })
-      }
-      const rows = state.rowsAll.filter(([key, text]) => text.includes(query))
-      dispatch({ type: 'SEARCH_UPDATED', rows })
+      dispatch({ type: 'FILTERS_UPDATED', filters: { query } })
     }, 200)
-  }, [state.rowsAll])
+  }, [])
+
+  const handleCategoryChange = React.useCallback((event, data) => {
+    dispatch({ type: 'FILTERS_UPDATED', filters: { category: data.value } })
+  }, [])
 
   return (
     <Container className='app'>
@@ -93,11 +136,16 @@ function App() {
       <Grid columns='equal' padded>
         <Grid.Row>
           <Grid.Column>
-            <Input placeholder='Search...' icon='search' onChange={handleSearchChange} />
+            <Input icon='search' placeholder='Search...' onChange={handleSearchChange} />
           </Grid.Column>
           <Grid.Column>
-            {/* <Dropdown placeholder='Category' selection clearable options={state.categoryOptions} /> */}
+            <Dropdown selection clearable placeholder='Category'
+              options={state.options.category} onChange={handleCategoryChange} />
           </Grid.Column>
+          {/* <Grid.Column>
+            <Dropdown selection clearable placeholder='Language'
+              options={state.options.language} onChange={handleCategoryChange} />
+          </Grid.Column> */}
         </Grid.Row>
         <Grid.Row>
           <Table celled>
@@ -110,7 +158,7 @@ function App() {
             </Table.Header>
             <Table.Body>
               {state.rows.map(([key, text]) => {
-                const codex = state.codex[key][state.lang]
+                const codex = state.codex[key][state.language]
                 return (
                   <Table.Row key={key}>
                     <Table.Cell>
