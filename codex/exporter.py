@@ -1,21 +1,21 @@
 #!/usr/bin/env python3
 # coding: utf-8
 
-import logging
 import json
+import logging
 import re
+import sys
 from typing import Union
 
 import sqlalchemy
 from bs4 import BeautifulSoup, Tag
+from orm import Base, Page
 from sqlalchemy import and_, func
 from sqlalchemy.orm import Session
 
-from orm import Base, Page
-
-
 logging.basicConfig(
     format="[%(asctime)s] %(levelname)s %(funcName)s:%(lineno)d %(message)s",
+    stream=sys.stdout,
 )
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)

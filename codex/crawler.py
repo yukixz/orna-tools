@@ -2,21 +2,22 @@
 # coding: utf-8
 
 import logging
+import sys
 from datetime import datetime, timedelta
 
 import requests_cache
 import sqlalchemy
 from bs4 import BeautifulSoup
+from orm import Base, Page
 from sqlalchemy import and_
 from sqlalchemy.orm import Session
 
-from orm import Base, Page
-
-
 logging.basicConfig(
-    level=logging.INFO,
     format="[%(asctime)s] %(levelname)s %(funcName)s:%(lineno)d %(message)s",
+    stream=sys.stdout,
 )
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 
 
 class Crawler:
@@ -33,7 +34,7 @@ class Crawler:
         )
 
     def fetch_html(self, path, lang) -> requests_cache.Response:
-        logging.info("path=%s lang=%s", path, lang)
+        logger.info("path=%s lang=%s", path, lang)
         resp = self.session.get(
             url=f"https://playorna.com{path}",
             cookies={
@@ -54,8 +55,8 @@ class Crawler:
     def fetch_item(self, category, path, lang) -> None:
         resp = self.fetch_html(path, lang)
         if resp.status_code not in (200, 404):
-            logging.info("path=%s ERROR http_status_code=%d",
-                         path, resp.status_code)
+            logger.info("path=%s ERROR http_status_code=%d",
+                        path, resp.status_code)
             return
         new_page = Page(
             date=datetime.utcnow().date(),
@@ -72,11 +73,11 @@ class Crawler:
             ).order_by(Page.date.desc()).first()
             if (page is not None and
                     page.code == new_page.code and page.html == new_page.html):
-                logging.info("path=%s SAME", path)
+                logger.info("path=%s SAME", path)
                 return
             session.add(new_page)
             session.commit()
-            logging.info("path=%s COMMIT", path)
+            logger.info("path=%s COMMIT", path)
 
     def crawl(self, category, lang="en") -> None:
         waitlist = set()
