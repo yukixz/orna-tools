@@ -199,7 +199,7 @@ function App() {
             <Table.Row>
               <Table.HeaderCell>Name</Table.HeaderCell>
               <Table.HeaderCell>Category</Table.HeaderCell>
-              <Table.HeaderCell>Link</Table.HeaderCell>
+              <Table.HeaderCell collapsing>Link</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
