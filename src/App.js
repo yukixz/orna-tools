@@ -82,7 +82,10 @@ async function init(dispatch) {
         if (codex[key] == null) {
           codex[key] = {}
         }
-        codex[key][lang] = item
+        codex[key][lang] = {
+          ...item,
+          category,
+        }
       }
     }
   }
@@ -151,8 +154,8 @@ function App() {
           <Table celled>
             <Table.Header>
               <Table.Row>
+                <Table.HeaderCell>Category</Table.HeaderCell>
                 <Table.HeaderCell>Name</Table.HeaderCell>
-                <Table.HeaderCell>Description</Table.HeaderCell>
                 <Table.HeaderCell>Link</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
@@ -162,10 +165,10 @@ function App() {
                 return (
                   <Table.Row key={key}>
                     <Table.Cell>
-                      {codex.name}
+                      {CATEGORIES[state.language][codex.category]}
                     </Table.Cell>
                     <Table.Cell>
-                      {codex.description}
+                      {codex.name}
                     </Table.Cell>
                     <Table.Cell>
                       <a href={`https://playorna.com${codex.path}`} target='_blank' rel="noreferrer">
