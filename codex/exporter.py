@@ -68,8 +68,9 @@ class Exporter:
         data = {}
         data['text'] = TEXTS[lang]
         data['category'] = self.export_category(lang)
+        data['codex'] = {}
         for category in CATEGORIES:
-            data[category] = self.export_codex(category, lang)
+            data['codex'][category] = self.export_codex(category, lang)
         return data
 
     def export_category(self, lang) -> dict:
