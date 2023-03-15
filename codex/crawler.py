@@ -3,7 +3,7 @@
 
 import logging
 import sys
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 import requests_cache
 import sqlalchemy
@@ -18,6 +18,8 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
+
+CATEGORIES = ("items", "monsters", "bosses", "followers", "raids", "spells")
 
 
 class Crawler:
@@ -52,36 +54,24 @@ class Crawler:
             })
         return resp
 
-    def fetch_item(self, category, path, lang) -> None:
+    def fetch_page(self, path, lang) -> None:
         resp = self.fetch_html(path, lang)
         if resp.status_code not in (200, 404):
-            logger.info("path=%s ERROR http_status_code=%d",
-                        path, resp.status_code)
+            logger.error("path=%s http_status_code=%d",
+                         path, resp.status_code)
             return
-        new_page = Page(
-            date=datetime.utcnow().date(),
-            category=category,
-            path=path,
-            lang=lang,
-            code=resp.status_code,
-            html=resp.text)
 
-        # check is same as last fetch
         with Session(self.db_engine) as session:
             page = session.query(Page).filter(
                 and_(Page.path == path, Page.lang == lang)
-            ).order_by(Page.date.desc()).first()
-            if (page is not None and
-                    page.code == new_page.code and page.html == new_page.html):
-                logger.info("path=%s SAME", path)
-                return
-            session.add(new_page)
+            ).one_or_none()
+            if page is None:
+                page = Page(path=path, lang=lang,
+                            code=resp.status_code, html=resp.text)
+            session.add(page)
             session.commit()
-            logger.info("path=%s COMMIT", path)
 
-    def crawl(self, category, lang="en") -> None:
-        waitlist = set()
-        # get entries from index page
+    def crawl_and_parse_category_index(self, category, lang):
         index = 1
         while True:
             resp = self.fetch_html(f"/codex/{category}/?p={index}", lang)
@@ -89,17 +79,28 @@ class Crawler:
                 break
             soup = BeautifulSoup(resp.text, "html.parser")
             for item in soup.select("a.codex-entries-entry"):
-                waitlist.add(item['href'])
+                yield item['href']
             index += 1
+
+    def crawl(self, lang="en") -> None:
+        logger.info("Crawling... lang=%s", lang)
+        waitlist = set()
+        # codex homepage
+        waitlist.add("/codex/")
+        # get entries from index page
+        for category in CATEGORIES:
+            for path in self.crawl_and_parse_category_index(category, lang):
+                waitlist.add(path)
         # get entries from saved codex
         with Session(self.db_engine) as session:
-            pages = session.query(Page.path).filter(
-                Page.category == category).all()
+            pages = session.query(Page.path).filter(Page.code == 200).all()
             for page in pages:
                 waitlist.add(page.path)
         # update entries in waitlist
-        for path in waitlist:
-            self.fetch_item(category, path, lang)
+        logger.info("waitlist length=%d", len(waitlist))
+        for path in sorted(waitlist):
+            self.fetch_page(path, lang)
+        logger.info("Crawl done. lang=%s", lang)
 
 
 def main():
@@ -108,8 +109,7 @@ def main():
 
     crawler = Crawler(db_engine)
     for lang in ("en", "zh-hans"):
-        for category in ("items", "monsters", "bosses", "followers", "raids", "spells"):
-            crawler.crawl(category, lang)
+        crawler.crawl(lang)
 
 
 if __name__ == '__main__':

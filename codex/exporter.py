@@ -51,18 +51,9 @@ class Exporter:
         texts = TEXTS[lang]
 
         with Session(self.db_engine) as session:
-            pages = session.query(
-                session.query(
-                    Page,
-                    # pylint: disable=not-callable
-                    func.rank().over(
-                        order_by=Page.date.desc(),
-                        partition_by=Page.path,
-                    ).label('rank'),
-                ).filter(
-                    and_(Page.category == category, Page.lang == lang)
-                ).subquery()
-            ).filter_by(rank=1).all()
+            pages = session.query(Page).filter(
+                and_(Page.path.like(f"/codex/{category}/%"), Page.lang == lang)
+            ).all()
         for page in pages:
             key = self.key_by_url(page.path)
             if page.code != 200:
