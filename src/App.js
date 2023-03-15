@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Table, Input, Dropdown, Icon, Menu, Modal, Image } from 'semantic-ui-react'
+import { Container, Table, Input, Dropdown, Icon, Menu, Modal, Image, Button } from 'semantic-ui-react'
 import { Dimmer, Loader } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 import './App.css'
@@ -167,7 +167,7 @@ function App() {
 
   return (
     <div>
-      <Menu inverted>
+      <Menu inverted tabular>
         <Container>
           <Menu.Item as='a' header style={{ fontSize: '1.4em' }}>Orna Tools</Menu.Item>
           <Menu.Item as='a' header href='/'>Codex</Menu.Item>
@@ -179,7 +179,7 @@ function App() {
         <Dimmer active={state.loading}>
           <Loader>Loading</Loader>
         </Dimmer>
-        <Menu>
+        <Menu stackable borderless>
           <Menu.Item>
             <Input icon='search' placeholder='Search...' onChange={handleSearchChange} />
           </Menu.Item>
@@ -189,7 +189,7 @@ function App() {
               onChange={handleCategoryChange} />
           </Menu.Item>
           <Menu.Item position='right'>
-            <Dropdown selection placeholder='Language'
+            <Dropdown selection compact placeholder='Language'
               options={state.options.language} value={state.language}
               onChange={handleLanguageChange} />
           </Menu.Item>
@@ -228,7 +228,7 @@ function App() {
             {state.rows.length > TABLE_MAX_ROWS &&
               <Table.Row fullWidth>
                 <Table.Cell>
-                  1-{TABLE_MAX_ROWS} / {state.rows.length - TABLE_MAX_ROWS}
+                  1-{TABLE_MAX_ROWS} / {state.rows.length}
                 </Table.Cell>
               </Table.Row>
             }
@@ -243,7 +243,7 @@ function App() {
             {modal.codex.name}
           </Modal.Header>}
         {modal.codex != null &&
-          <Modal.Content>
+          <Modal.Content scrolling>
             <pre>
               {JSON.stringify(modal.codex, null, 2)}
             </pre>
