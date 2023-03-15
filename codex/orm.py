@@ -20,4 +20,19 @@ class Page(Base):
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
 
     def __repr__(self):
-        return f"Page(id={self.id}, path={self.path}, lang={self.lang}"
+        return f"Page(id={self.id}, path={self.path}, lang={self.lang})"
+
+
+class GuideAPI(Base):
+    __tablename__ = "guide_api"
+    id = Column(Integer, primary_key=True)
+    action = Column(String, nullable=False)
+    tier = Column(Integer, nullable=False)
+    code = Column(Integer, nullable=True)
+    data = Column(String, nullable=True)
+    # pylint: disable=not-callable
+    created_at = Column(DateTime, default=func.now())
+    updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
+
+    def __repr__(self):
+        return f"Page(id={self.id}, action={self.action})"

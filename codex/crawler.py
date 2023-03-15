@@ -8,7 +8,7 @@ from datetime import timedelta
 import requests_cache
 import sqlalchemy
 from bs4 import BeautifulSoup
-from orm import Base, Page
+from orm import Base, GuideAPI, Page
 from sqlalchemy import and_
 from sqlalchemy.orm import Session
 
@@ -17,9 +17,10 @@ logging.basicConfig(
     stream=sys.stdout,
 )
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 
 CATEGORIES = ("items", "monsters", "bosses", "followers", "raids", "spells")
+CATEGORIES_GUIDE = ("item", "skill", "pet", "monster")
 
 
 class Crawler:
@@ -30,13 +31,13 @@ class Crawler:
             backend='sqlite',
             use_temp=True,
             expire_after=timedelta(hours=1),
-            allowable_methods=['GET'],
+            allowable_methods=['GET', 'POST'],
             allowable_codes=[200, 404],
             match_headers=True,
         )
 
     def fetch_html(self, path, lang) -> requests_cache.Response:
-        logger.info("path=%s lang=%s", path, lang)
+        logger.debug("path=%s lang=%s", path, lang)
         resp = self.session.get(
             url=f"https://playorna.com{path}",
             cookies={
@@ -102,6 +103,34 @@ class Crawler:
             self.fetch_page(path, lang)
         logger.info("Crawl done. lang=%s", lang)
 
+    def fetch_guide(self, action, tier):
+        logger.info("action=%s tier=%s", action, tier)
+        resp = self.session.post(
+            url=f"https://orna.guide/api/v1/{action}",
+            json={"tier": tier},
+        )
+        if resp.status_code != 200:
+            logger.error("action=%s tier=%s http_status_code=%d",
+                         action, tier, resp.status_code)
+            return
+
+        with Session(self.db_engine) as session:
+            page = session.query(GuideAPI).filter(
+                and_(GuideAPI.action == action, GuideAPI.tier == tier)
+            ).one_or_none()
+            if page is None:
+                page = GuideAPI(action=action, tier=tier,
+                                code=resp.status_code, data=resp.text)
+            session.add(page)
+            session.commit()
+
+    def crawl_guide(self) -> None:
+        logger.info("Crawling...")
+        for category in CATEGORIES_GUIDE:
+            for tier in range(1, 10 + 1):
+                self.fetch_guide(category, tier)
+        logger.info("Crawl done.")
+
 
 def main():
     db_engine = sqlalchemy.create_engine("sqlite:///db.sqlite3")
@@ -110,6 +139,7 @@ def main():
     crawler = Crawler(db_engine)
     for lang in ("en", "zh-hans"):
         crawler.crawl(lang)
+    crawler.crawl_guide()
 
 
 if __name__ == '__main__':
