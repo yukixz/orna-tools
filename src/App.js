@@ -19,6 +19,7 @@ const initialState = {
   },
   // i18n
   texts: {
+    text: {},
     category: {},
   },
   options: {
@@ -120,6 +121,7 @@ async function init(language, dispatch) {
     .map(([key, texts]) => [key, texts.join('|').toLowerCase()])
   // i18n
   const texts = {
+    text: data[language].text,
     category: data[language].category,
   }
   const options = {
@@ -180,7 +182,8 @@ function App() {
       <Container>
         <Menu stackable borderless>
           <Menu.Item>
-            <Input icon='search' placeholder='Search...' onChange={handleSearchChange} />
+            <Input icon='search' placeholder='Search in any languages'
+              onChange={handleSearchChange} />
           </Menu.Item>
           <Menu.Item>
             <Dropdown selection clearable placeholder='Category'
@@ -197,13 +200,15 @@ function App() {
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Name</Table.HeaderCell>
+              <Table.HeaderCell>Tags</Table.HeaderCell>
               <Table.HeaderCell>Category</Table.HeaderCell>
               <Table.HeaderCell collapsing textAlign='center'>Action</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
             {rows.slice(0, TABLE_MAX_ROWS).map(([key, text]) =>
-              <TableRowForItem key={key} codex={codexes[key]} texts={texts} onClick={handleShowDetail} />
+              <TableRowForItem key={key}
+                codex={codexes[key]} texts={texts} onClick={handleShowDetail} />
             )}
           </Table.Body>
           <Table.Footer>
@@ -217,7 +222,7 @@ function App() {
       </Container>
 
       {modal != null &&
-        <ModalForItem codex={modal.codex} onClose={handleCloseDetail} />
+        <ModalForItem codex={modal.codex} texts={texts} onClose={handleCloseDetail} />
       }
     </div >
   )
@@ -230,6 +235,9 @@ const TableRowForItem = React.memo(function ({ codex, texts, onClick }) {
       <Table.Cell onClick={handleClick}>
         <Image src={codex.image_url} size='mini' inline />
         {codex.name}
+      </Table.Cell>
+      <Table.Cell>
+        <List items={codex.tags} />
       </Table.Cell>
       <Table.Cell>
         {texts.category[codex.category]}
@@ -256,7 +264,7 @@ const TableRowForItem = React.memo(function ({ codex, texts, onClick }) {
   )
 })
 
-const ModalForItem = React.memo(function ({ codex, onClose }) {
+const ModalForItem = React.memo(function ({ codex, texts, onClose }) {
   return (
     <Modal open={true} onClose={onClose}>
       <Modal.Header>
@@ -268,7 +276,7 @@ const ModalForItem = React.memo(function ({ codex, onClose }) {
             {codex.gives != null &&
               <Grid.Column>
                 <Segment padded>
-                  <Label attached='top'>Gives</Label>
+                  <Label attached='top'>{texts.text['Gives']}</Label>
                   <List items={codex.gives.map(([name, rate]) => `${name} (${rate}%)`)} />
                 </Segment>
               </Grid.Column>
@@ -276,7 +284,7 @@ const ModalForItem = React.memo(function ({ codex, onClose }) {
             {codex.causes != null &&
               <Grid.Column>
                 <Segment padded>
-                  <Label attached='top'>Causes</Label>
+                  <Label attached='top'>{texts.text['Causes']}</Label>
                   <List items={codex.causes.map(([name, rate]) => `${name} (${rate}%)`)} />
                 </Segment>
               </Grid.Column>
