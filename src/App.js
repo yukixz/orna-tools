@@ -112,6 +112,7 @@ async function init(language, dispatch) {
       })
     }
   }
+  codexItems.sort((a, b) => a.key.localeCompare(b.key))
   // i18n
   const texts = {
     text: data[language].text,
@@ -285,7 +286,7 @@ const ModalForItem = React.memo(function ({ codex, codexes, texts, onClose }) {
   return (
     <Modal open={true} onClose={onClose}>
       <Modal.Header>
-        {codex.name}
+        {codex.name} ({codex.id})
       </Modal.Header>
       <Modal.Content scrolling>
         <Grid columns={4}>
@@ -331,14 +332,6 @@ const ModalForItem = React.memo(function ({ codex, codexes, texts, onClose }) {
                 </Segment>
               </Grid.Column>
             }
-            {/* <Grid.Column width={16}>
-              <Segment padded>
-                <Label attached='top'>Source</Label>
-                <pre>
-                  {JSON.stringify(codex, null, 2)}
-                </pre>
-              </Segment>
-            </Grid.Column> */}
           </Grid.Row>
         </Grid>
       </Modal.Content>
