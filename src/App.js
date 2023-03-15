@@ -4,7 +4,7 @@ import { Button, Dropdown, Label, List, Icon, Image, Input } from 'semantic-ui-r
 import { Dimmer, Loader } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 import './App.css'
-import { LANGUAGES, LANGUAGE_DEFAULT, CATEGORIES, TABLE_MAX_ROWS } from './constants'
+import { LANGUAGES, LANGUAGE_DEFAULT, TABLE_MAX_ROWS } from './constants'
 
 const initialState = {
   loading: true,
@@ -19,7 +19,7 @@ const initialState = {
   },
   // i18n
   texts: {
-    category: [],
+    category: {},
   },
   options: {
     language: [],
@@ -92,14 +92,14 @@ function applyFilter(rows, { query, category }) {
 
 async function init(language, dispatch) {
   // load data
-  const origin = {}
+  const data = {}
   for (const lang of Object.keys(LANGUAGES)) {
-    origin[lang] = (await import(`./data/${lang}.json`)).default
+    data[lang] = await import(`./data/${lang}.json`)
   }
-  const codexes = {}
   const names = {}
-  for (const [lang, categoryItems] of Object.entries(origin)) {
-    for (const [category, items] of Object.entries(categoryItems)) {
+  const codexes = {}
+  for (const [lang, langItems] of Object.entries(data)) {
+    for (const [category, items] of Object.entries(langItems.codex)) {
       for (const [itemKey, item] of Object.entries(items)) {
         const key = `${category}:${itemKey}`
         if (names[key] == null) {
@@ -120,7 +120,7 @@ async function init(language, dispatch) {
     .map(([key, texts]) => [key, texts.join('|').toLowerCase()])
   // i18n
   const texts = {
-    category: CATEGORIES[language],
+    category: data[language].category,
   }
   const options = {
     language: Object.entries(LANGUAGES).map(([value, text]) => ({ value, text })),
@@ -239,9 +239,16 @@ const TableRowForItem = React.memo(function ({ codex, texts, onClick }) {
           <Button icon onClick={handleClick}>
             <Icon name='align justify' />
           </Button>
-          <Button icon as='a' href={`https://playorna.com${codex.path}`}
+          <Button icon as='a'
+            href={`https://playorna.com${codex.path}`}
             target='_blank' rel="noreferrer">
             <Icon name='home' />
+          </Button>
+          <Button icon as='a'
+            href={`https://orna.guide/items?show=${codex.ornaguide_id}`}
+            target='_blank' rel="noreferrer"
+            disabled={codex.category !== "items"}>
+            <Icon name='bookmark' />
           </Button>
         </Button.Group>
       </Table.Cell>
@@ -274,9 +281,7 @@ const ModalForItem = React.memo(function ({ codex, onClose }) {
                 </Segment>
               </Grid.Column>
             }
-          </Grid.Row>
-          <Grid.Row columns={1}>
-            <Grid.Column>
+            <Grid.Column width={16}>
               <Segment padded>
                 <Label attached='top'>Source</Label>
                 <pre>
