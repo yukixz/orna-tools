@@ -101,6 +101,7 @@ async function init(language, dispatch) {
   const codexes = {}
   for (const [lang, langItems] of Object.entries(data)) {
     for (const [category, items] of Object.entries(langItems.codex)) {
+      codexes[category] = {}
       for (const [itemKey, item] of Object.entries(items)) {
         const key = `${category}:${itemKey}`
         if (names[key] == null) {
@@ -109,7 +110,7 @@ async function init(language, dispatch) {
         names[key].push(item.name)
 
         if (lang === language) {
-          codexes[key] = {
+          codexes[key] = codexes[category][itemKey] = {
             ...item,
             category,
           }
@@ -222,7 +223,8 @@ function App() {
       </Container>
 
       {modal != null &&
-        <ModalForItem codex={modal.codex} texts={texts} onClose={handleCloseDetail} />
+        <ModalForItem codex={modal.codex} codexes={codexes} texts={texts}
+          onClose={handleCloseDetail} />
       }
     </div >
   )
@@ -264,7 +266,30 @@ const TableRowForItem = React.memo(function ({ codex, texts, onClick }) {
   )
 })
 
-const ModalForItem = React.memo(function ({ codex, texts, onClose }) {
+const ModalForItem = React.memo(function ({ codex, codexes, texts, onClose }) {
+  let causes_by_spells = null
+  if (codex.spells != null) {
+    causes_by_spells = {}
+    for (const spellKey of codex.spells) {
+      const spellCodex = codexes.spells[spellKey]
+      if (spellCodex.causes == null) {
+        continue
+      }
+      for (const [status, probability] of spellCodex.causes) {
+        if (causes_by_spells[status] == null) {
+          causes_by_spells[status] = {
+            probability: 0,
+            by: []
+          }
+        }
+        causes_by_spells[status].by.push(`${spellCodex.name} (${probability}%)`)
+        if (probability > causes_by_spells[status].probability) {
+          causes_by_spells[status].probability = probability
+        }
+      }
+    }
+  }
+
   return (
     <Modal open={true} onClose={onClose}>
       <Modal.Header>
@@ -289,14 +314,38 @@ const ModalForItem = React.memo(function ({ codex, texts, onClose }) {
                 </Segment>
               </Grid.Column>
             }
-            <Grid.Column width={16}>
+            {codex.spells != null &&
+              <Grid.Column>
+                <Segment padded>
+                  <Label attached='top'>{texts.text['Skills']}</Label>
+                  <List items={codex.spells.map(key => codexes.spells[key].name)} />
+                </Segment>
+              </Grid.Column>
+            }
+            {causes_by_spells != null &&
+              <Grid.Column width={12}>
+                <Segment padded>
+                  <Label attached='top'>{texts.text['Causes']} ({texts.text['Skills']})</Label>
+                  <Table>
+                    {Object.entries(causes_by_spells).map(([name, { probability, by }]) =>
+                      <Table.Row key={name}>
+                        <Table.Cell>{name}</Table.Cell>
+                        <Table.Cell>{probability}%</Table.Cell>
+                        <Table.Cell>{by.join(' ')}</Table.Cell>
+                      </Table.Row>
+                    )}
+                  </Table>
+                </Segment>
+              </Grid.Column>
+            }
+            {/* <Grid.Column width={16}>
               <Segment padded>
                 <Label attached='top'>Source</Label>
                 <pre>
                   {JSON.stringify(codex, null, 2)}
                 </pre>
               </Segment>
-            </Grid.Column>
+            </Grid.Column> */}
           </Grid.Row>
         </Grid>
       </Modal.Content>
