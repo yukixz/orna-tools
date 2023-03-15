@@ -9,7 +9,7 @@ import { LANGUAGES, LANGUAGE_DEFAULT, TABLE_MAX_ROWS } from './constants'
 const initialState = {
   loading: true,
   codexes: null,
-  rowsAll: null,
+  codexItems: null,
   rows: [],
   language: LANGUAGE_DEFAULT,
   // Filters
@@ -37,8 +37,8 @@ function reducer(state, action) {
         ...state,
         loading: false,
         codexes: action.codexes,
-        rowsAll: action.rowsAll,
-        rows: applyFilter(action.rowsAll, state.filters),
+        codexItems: action.codexItems,
+        rows: applyFilter(action.codexItems, state.filters),
         language: action.language,
         texts: {
           ...state.texts,
@@ -61,7 +61,7 @@ function reducer(state, action) {
       return {
         ...state,
         filters: filters,
-        rows: applyFilter(state.rowsAll, filters),
+        rows: applyFilter(state.codexItems, filters),
       }
     case 'MODAL_OPEN':
       return {
@@ -83,10 +83,10 @@ function reducer(state, action) {
 
 function applyFilter(rows, { query, category }) {
   if (query.length >= 1) {
-    rows = rows.filter(([key, text]) => text.includes(query))
+    rows = rows.filter(row => row.searches.includes(query))
   }
   if (category != null) {
-    rows = rows.filter(([key, text]) => key.startsWith(category))
+    rows = rows.filter(row => row.category === category)
   }
   return rows
 }
@@ -97,29 +97,20 @@ async function init(language, dispatch) {
   for (const lang of Object.keys(LANGUAGES)) {
     data[lang] = await import(`./data/${lang}.json`)
   }
-  const names = {}
-  const codexes = {}
-  for (const [lang, langItems] of Object.entries(data)) {
-    for (const [category, items] of Object.entries(langItems.codex)) {
-      codexes[category] = {}
-      for (const [itemKey, item] of Object.entries(items)) {
-        const key = `${category}:${itemKey}`
-        if (names[key] == null) {
-          names[key] = []
-        }
-        names[key].push(item.name)
-
-        if (lang === language) {
-          codexes[key] = codexes[category][itemKey] = {
-            ...item,
-            category,
-          }
-        }
-      }
+  const codexes = structuredClone(data[language].codex)
+  const codexItems = []
+  for (const [category, items] of Object.entries(codexes)) {
+    for (const [id, item] of Object.entries(items)) {
+      codexItems.push(item)
+      Object.assign(item, {
+        key: `${category}:${id}`,
+        id: id,
+        category: category,
+        searches: Object.keys(LANGUAGES).map(
+          lang => data[lang].codex[category][id].name).join('|'),
+      })
     }
   }
-  const rowsAll = Object.entries(names)
-    .map(([key, texts]) => [key, texts.join('|').toLowerCase()])
   // i18n
   const texts = {
     text: data[language].text,
@@ -130,7 +121,7 @@ async function init(language, dispatch) {
     category: Object.entries(texts.category).map(([value, text]) => ({ value, text })),
   }
   // dispatch
-  dispatch({ type: 'INITIALIZED', language, codexes, rowsAll, texts, options })
+  dispatch({ type: 'INITIALIZED', language, codexes, codexItems, texts, options })
 }
 
 function App() {
@@ -207,9 +198,9 @@ function App() {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {rows.slice(0, TABLE_MAX_ROWS).map(([key, text]) =>
-              <TableRowForItem key={key}
-                codex={codexes[key]} texts={texts} onClick={handleShowDetail} />
+            {rows.slice(0, TABLE_MAX_ROWS).map(codex =>
+              <TableRowForItem key={codex.key}
+                codex={codex} texts={texts} onClick={handleShowDetail} />
             )}
           </Table.Body>
           <Table.Footer>
@@ -318,7 +309,7 @@ const ModalForItem = React.memo(function ({ codex, codexes, texts, onClose }) {
               <Grid.Column>
                 <Segment padded>
                   <Label attached='top'>{texts.text['Skills']}</Label>
-                  <List items={codex.spells.map(key => codexes.spells[key].name)} />
+                  <List items={codex.spells.map(id => codexes.spells[id].name)} />
                 </Segment>
               </Grid.Column>
             }
@@ -327,13 +318,14 @@ const ModalForItem = React.memo(function ({ codex, codexes, texts, onClose }) {
                 <Segment padded>
                   <Label attached='top'>{texts.text['Causes']} ({texts.text['Skills']})</Label>
                   <Table>
-                    {Object.entries(causes_by_spells).map(([name, { probability, by }]) =>
-                      <Table.Row key={name}>
-                        <Table.Cell>{name}</Table.Cell>
-                        <Table.Cell>{probability}%</Table.Cell>
-                        <Table.Cell>{by.join(' ')}</Table.Cell>
-                      </Table.Row>
-                    )}
+                    {Object.entries(causes_by_spells).sort()
+                      .map(([name, { probability, by }]) =>
+                        <Table.Row key={name}>
+                          <Table.Cell>{name}</Table.Cell>
+                          <Table.Cell>{probability}%</Table.Cell>
+                          <Table.Cell>{by.join(' ')}</Table.Cell>
+                        </Table.Row>
+                      )}
                   </Table>
                 </Segment>
               </Grid.Column>
