@@ -107,7 +107,8 @@ async function init(language, dispatch) {
         id: id,
         category: category,
         searches: Object.keys(LANGUAGES).map(
-          lang => data[lang].codex[category][id].name).join('|'),
+          lang => data[lang].codex[category][id].name)
+          .join('|').toLowerCase(),
       })
     }
   }
