@@ -1,5 +1,6 @@
 import React from 'react'
-import { Container, Table, Input, Dropdown, Icon, Menu, Modal, Image, Button } from 'semantic-ui-react'
+import { Container, Grid, Table, Menu, Modal, Segment } from 'semantic-ui-react'
+import { Button, Dropdown, Label, List, Icon, Image, Input } from 'semantic-ui-react'
 import { Dimmer, Loader } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 import './App.css'
@@ -216,16 +217,7 @@ function App() {
       </Container>
 
       {modal != null &&
-        <Modal open={true} onClose={handleCloseDetail}>
-          <Modal.Header>
-            {modal.codex.name}
-          </Modal.Header>
-          <Modal.Content scrolling>
-            <pre>
-              {JSON.stringify(modal.codex, null, 2)}
-            </pre>
-          </Modal.Content>
-        </Modal>
+        <ModalForItem codex={modal.codex} onClose={handleCloseDetail} />
       }
     </div >
   )
@@ -254,6 +246,48 @@ const TableRowForItem = React.memo(function ({ codex, texts, onClick }) {
         </Button.Group>
       </Table.Cell>
     </Table.Row>
+  )
+})
+
+const ModalForItem = React.memo(function ({ codex, onClose }) {
+  return (
+    <Modal open={true} onClose={onClose}>
+      <Modal.Header>
+        {codex.name}
+      </Modal.Header>
+      <Modal.Content scrolling>
+        <Grid columns={4}>
+          <Grid.Row>
+            {codex.gives != null &&
+              <Grid.Column>
+                <Segment padded>
+                  <Label attached='top'>Gives</Label>
+                  <List items={codex.gives.map(([name, rate]) => `${name} (${rate}%)`)} />
+                </Segment>
+              </Grid.Column>
+            }
+            {codex.causes != null &&
+              <Grid.Column>
+                <Segment padded>
+                  <Label attached='top'>Causes</Label>
+                  <List items={codex.causes.map(([name, rate]) => `${name} (${rate}%)`)} />
+                </Segment>
+              </Grid.Column>
+            }
+          </Grid.Row>
+          <Grid.Row columns={1}>
+            <Grid.Column>
+              <Segment padded>
+                <Label attached='top'>Source</Label>
+                <pre>
+                  {JSON.stringify(codex, null, 2)}
+                </pre>
+              </Segment>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Modal.Content>
+    </Modal>
   )
 })
 
