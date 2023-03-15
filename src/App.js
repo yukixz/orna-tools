@@ -194,21 +194,20 @@ function App() {
               onChange={handleLanguageChange} />
           </Menu.Item>
         </Menu>
-        <Table celled striped selectable sortable>
+        <Table celled striped selectable>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Name</Table.HeaderCell>
               <Table.HeaderCell>Category</Table.HeaderCell>
-              <Table.HeaderCell collapsing>Link</Table.HeaderCell>
+              <Table.HeaderCell collapsing textAlign='center'>Action</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
             {state.rows.slice(0, TABLE_MAX_ROWS).map(([key, text]) => {
-              console.log(key)
               const codex = state.codex[key]
               return (
-                <Table.Row key={key} onClick={() => handleShowDetail(key, codex)}>
-                  <Table.Cell>
+                <Table.Row key={key}>
+                  <Table.Cell onClick={() => handleShowDetail(key, codex)}>
                     <Image src={codex.image_url} size='mini' inline />
                     {codex.name}
                   </Table.Cell>
@@ -216,9 +215,14 @@ function App() {
                     {state.texts.category[codex.category]}
                   </Table.Cell>
                   <Table.Cell>
-                    <a href={`https://playorna.com${codex.path}`} target='_blank' rel="noreferrer">
-                      <Icon name='home' />
-                    </a>
+                    <Button.Group>
+                      <Button icon onClick={() => handleShowDetail(key, codex)}>
+                        <Icon name='align justify' />
+                      </Button>
+                      <Button icon as='a' href={`https://playorna.com${codex.path}`} target='_blank' rel="noreferrer">
+                        <Icon name='home' />
+                      </Button>
+                    </Button.Group>
                   </Table.Cell>
                 </Table.Row>
               )
