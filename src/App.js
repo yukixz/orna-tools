@@ -329,6 +329,14 @@ const ModalForItem = React.memo(function ({ codex, codexes, texts, onClose }) {
                 </Segment>
               </Grid.Column>
             }
+            {codex.materials != null &&
+              <Grid.Column>
+                <Segment padded>
+                  <Label attached='top'>{texts.text['Materials']}</Label>
+                  <List items={codex.materials.map(id => codexes.items[id].name)} />
+                </Segment>
+              </Grid.Column>
+            }
           </Grid.Row>
         </Grid>
       </Modal.Content>
