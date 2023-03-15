@@ -14,7 +14,7 @@ const initialState = {
   language: LANGUAGE_DEFAULT,
   // Filters
   filters: {
-    category: null,
+    category: "",
     query: "",
   },
   // i18n
@@ -85,7 +85,7 @@ function applyFilter(rows, { query, category }) {
   if (query.length >= 1) {
     rows = rows.filter(row => row.searches.includes(query))
   }
-  if (category != null) {
+  if (category !== "") {
     rows = rows.filter(row => row.category === category)
   }
   return rows
