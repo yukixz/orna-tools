@@ -170,32 +170,29 @@ function App() {
           <Menu.Item as='a' header style={{ fontSize: '1.4em' }}>Orna Tools</Menu.Item>
           <Menu.Item as='a' header href='/'>Codex</Menu.Item>
           <Menu.Item as='a' header href='/clock/'>Clock</Menu.Item>
+          <Menu.Item as='a' header position='right'>
+            <Dropdown button floating
+              value={state.language} options={options.language}
+              onChange={handleLanguageChange} />
+          </Menu.Item>
         </Container>
       </Menu>
 
       <Container>
-        <Menu stackable borderless>
-          <Menu.Item>
-            <Input icon='search' placeholder='Search in any languages'
-              onChange={handleSearchChange} />
-          </Menu.Item>
-          <Menu.Item>
-            <Dropdown selection clearable placeholder='Category'
-              options={options.category}
-              onChange={handleCategoryChange} />
-          </Menu.Item>
-          <Menu.Item position='right'>
-            <Dropdown selection compact placeholder='Language'
-              options={options.language} value={state.language}
-              onChange={handleLanguageChange} />
-          </Menu.Item>
-        </Menu>
         <Table celled striped selectable>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell>Name</Table.HeaderCell>
+              <Table.HeaderCell>
+                <Input fluid icon='search'
+                  placeholder='Search in ANY languages'
+                  onChange={handleSearchChange} />
+              </Table.HeaderCell>
               <Table.HeaderCell>Tags</Table.HeaderCell>
-              <Table.HeaderCell>Category</Table.HeaderCell>
+              <Table.HeaderCell collapsing>
+                <Dropdown selection clearable placeholder='Category'
+                  options={options.category}
+                  onChange={handleCategoryChange} />
+              </Table.HeaderCell>
               <Table.HeaderCell collapsing textAlign='center'>Action</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
