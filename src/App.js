@@ -7,10 +7,15 @@ import { LANGUAGES, LANGUAGE_DEFAULT, CATEGORIES, TABLE_MAX_ROWS } from './const
 
 const initialState = {
   loading: true,
-  codex: null,
+  codexes: null,
   rowsAll: null,
   rows: [],
   language: LANGUAGE_DEFAULT,
+  // Filters
+  filters: {
+    category: null,
+    query: "",
+  },
   // i18n
   texts: {
     category: [],
@@ -19,16 +24,8 @@ const initialState = {
     language: [],
     category: [],
   },
-  // Filters
-  filters: {
-    category: null,
-    query: "",
-  },
   // Modal
-  modal: {
-    key: null,
-    codex: null,
-  },
+  modal: null,
 }
 
 function reducer(state, action) {
@@ -37,7 +34,7 @@ function reducer(state, action) {
       return {
         ...state,
         loading: false,
-        codex: action.codex,
+        codexes: action.codexes,
         rowsAll: action.rowsAll,
         rows: applyFilter(action.rowsAll, state.filters),
         language: action.language,
@@ -68,17 +65,13 @@ function reducer(state, action) {
       return {
         ...state,
         modal: {
-          key: action.key,
           codex: action.codex,
         }
       }
     case 'MODAL_CLOSE':
       return {
         ...state,
-        modal: {
-          key: null,
-          codex: null,
-        }
+        modal: null,
       }
 
     default:
@@ -102,7 +95,7 @@ async function init(language, dispatch) {
   for (const lang of Object.keys(LANGUAGES)) {
     origin[lang] = (await import(`./data/${lang}.json`)).default
   }
-  const codex = {}
+  const codexes = {}
   const names = {}
   for (const [lang, categoryItems] of Object.entries(origin)) {
     for (const [category, items] of Object.entries(categoryItems)) {
@@ -114,7 +107,7 @@ async function init(language, dispatch) {
         names[key].push(item.name)
 
         if (lang === language) {
-          codex[key] = {
+          codexes[key] = {
             ...item,
             category,
           }
@@ -133,12 +126,12 @@ async function init(language, dispatch) {
     category: Object.entries(texts.category).map(([value, text]) => ({ value, text })),
   }
   // dispatch
-  dispatch({ type: 'INITIALIZED', language, codex, rowsAll, texts, options })
+  dispatch({ type: 'INITIALIZED', language, codexes, rowsAll, texts, options })
 }
 
 function App() {
   const [state, dispatch] = React.useReducer(reducer, initialState)
-  const { modal } = state
+  const { rows, codexes, texts, options, modal } = state
 
   React.useEffect(() => {
     init(LANGUAGE_DEFAULT, dispatch).catch(console.error)
@@ -161,12 +154,20 @@ function App() {
     init(data.value, dispatch).catch(console.error)
   }, [])
 
-  const handleShowDetail = React.useCallback((key, codex) => {
-    dispatch({ type: 'MODAL_OPEN', key, codex })
+  const handleShowDetail = React.useCallback((codex) => {
+    dispatch({ type: 'MODAL_OPEN', codex })
+  }, [])
+
+  const handleCloseDetail = React.useCallback(() => {
+    dispatch({ type: 'MODAL_CLOSE' })
   }, [])
 
   return (
     <div>
+      <Dimmer active={state.loading}>
+        <Loader>Loading</Loader>
+      </Dimmer>
+
       <Menu inverted tabular>
         <Container>
           <Menu.Item as='a' header style={{ fontSize: '1.4em' }}>Orna Tools</Menu.Item>
@@ -176,21 +177,18 @@ function App() {
       </Menu>
 
       <Container>
-        <Dimmer active={state.loading}>
-          <Loader>Loading</Loader>
-        </Dimmer>
         <Menu stackable borderless>
           <Menu.Item>
             <Input icon='search' placeholder='Search...' onChange={handleSearchChange} />
           </Menu.Item>
           <Menu.Item>
             <Dropdown selection clearable placeholder='Category'
-              options={state.options.category}
+              options={options.category}
               onChange={handleCategoryChange} />
           </Menu.Item>
           <Menu.Item position='right'>
             <Dropdown selection compact placeholder='Language'
-              options={state.options.language} value={state.language}
+              options={options.language} value={state.language}
               onChange={handleLanguageChange} />
           </Menu.Item>
         </Menu>
@@ -203,59 +201,60 @@ function App() {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {state.rows.slice(0, TABLE_MAX_ROWS).map(([key, text]) => {
-              const codex = state.codex[key]
-              return (
-                <Table.Row key={key}>
-                  <Table.Cell onClick={() => handleShowDetail(key, codex)}>
-                    <Image src={codex.image_url} size='mini' inline />
-                    {codex.name}
-                  </Table.Cell>
-                  <Table.Cell>
-                    {state.texts.category[codex.category]}
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Button.Group>
-                      <Button icon onClick={() => handleShowDetail(key, codex)}>
-                        <Icon name='align justify' />
-                      </Button>
-                      <Button icon as='a' href={`https://playorna.com${codex.path}`} target='_blank' rel="noreferrer">
-                        <Icon name='home' />
-                      </Button>
-                    </Button.Group>
-                  </Table.Cell>
-                </Table.Row>
-              )
-            })}
+            {rows.slice(0, TABLE_MAX_ROWS).map(([key, text]) =>
+              <TableRowForItem key={key} codex={codexes[key]} texts={texts} onClick={handleShowDetail} />
+            )}
           </Table.Body>
           <Table.Footer>
-            {state.rows.length > TABLE_MAX_ROWS &&
-              <Table.Row fullWidth>
-                <Table.Cell>
-                  1-{TABLE_MAX_ROWS} / {state.rows.length}
-                </Table.Cell>
-              </Table.Row>
-            }
+            <Table.Row>
+              <Table.Cell>
+                ~{rows.length <= TABLE_MAX_ROWS ? rows.length : TABLE_MAX_ROWS} / {rows.length}
+              </Table.Cell>
+            </Table.Row>
           </Table.Footer>
         </Table>
       </Container>
 
-      <Modal open={modal.codex != null}
-        onClose={() => dispatch({ type: 'MODAL_CLOSE' })}>
-        {modal.codex != null &&
+      {modal != null &&
+        <Modal open={true} onClose={handleCloseDetail}>
           <Modal.Header>
             {modal.codex.name}
-          </Modal.Header>}
-        {modal.codex != null &&
+          </Modal.Header>
           <Modal.Content scrolling>
             <pre>
               {JSON.stringify(modal.codex, null, 2)}
             </pre>
           </Modal.Content>
-        }
-      </Modal>
+        </Modal>
+      }
     </div >
   )
 }
+
+const TableRowForItem = React.memo(function ({ codex, texts, onClick }) {
+  const handleClick = React.useCallback(() => onClick(codex), [codex, onClick])
+  return (
+    <Table.Row>
+      <Table.Cell onClick={handleClick}>
+        <Image src={codex.image_url} size='mini' inline />
+        {codex.name}
+      </Table.Cell>
+      <Table.Cell>
+        {texts.category[codex.category]}
+      </Table.Cell>
+      <Table.Cell>
+        <Button.Group>
+          <Button icon onClick={handleClick}>
+            <Icon name='align justify' />
+          </Button>
+          <Button icon as='a' href={`https://playorna.com${codex.path}`}
+            target='_blank' rel="noreferrer">
+            <Icon name='home' />
+          </Button>
+        </Button.Group>
+      </Table.Cell>
+    </Table.Row>
+  )
+})
 
 export default App
