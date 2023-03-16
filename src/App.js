@@ -1,6 +1,6 @@
 import React from 'react'
 import { Container, Grid, Table, Menu, Modal, Segment } from 'semantic-ui-react'
-import { Button, Dropdown, Label, List, Icon, Image, Input } from 'semantic-ui-react'
+import { Button, Dropdown, Label, Icon, Image, Input } from 'semantic-ui-react'
 import { Dimmer, Loader } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 import { LANGUAGES, LANGUAGE_DEFAULT, TABLE_MAX_ROWS } from './constants'
