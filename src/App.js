@@ -14,8 +14,12 @@ const initialState = {
   language: LANGUAGE_DEFAULT,
   // Filters
   filters: {
-    category: "",
     query: "",
+    category: "",
+    tag: "",
+    give: "",
+    cause: "",
+    immunity: "",
   },
   // i18n
   texts: {
@@ -81,12 +85,24 @@ function reducer(state, action) {
   }
 }
 
-function applyFilter(rows, { query, category }) {
+function applyFilter(rows, { query, category, tag, give, cause, immunity }) {
   if (query.length >= 1) {
     rows = rows.filter(row => row.searches.includes(query))
   }
   if (category !== "") {
     rows = rows.filter(row => row.category === category)
+  }
+  if (tag !== "") {
+    rows = rows.filter(row => (row.tags || []).includes(tag))
+  }
+  if (give !== "") {
+    rows = rows.filter(row => (row.gives || []).find(status => status[0] === give))
+  }
+  if (cause !== "") {
+    rows = rows.filter(row => (row.causes || []).find(status => status[0] === cause))
+  }
+  if (immunity !== "") {
+    rows = rows.filter(row => (row.immunities || []).find(status => status[0] === immunity))
   }
   return rows
 }
@@ -99,6 +115,8 @@ async function init(language, dispatch) {
   }
   const codexes = structuredClone(data[language].codex)
   const codexItems = []
+  const tags = new Set()
+  const statuses = new Set()
   for (const [category, items] of Object.entries(codexes)) {
     for (const [id, item] of Object.entries(items)) {
       codexItems.push(item)
@@ -110,6 +128,13 @@ async function init(language, dispatch) {
           lang => data[lang].codex[category][id].name)
           .join('|').toLowerCase(),
       })
+      for (const value of item.tags || []) {
+        tags.add(value)
+      }
+      for (const status of [].concat(item.gives, item.causes, item.immunities)) {
+        if (status == null) continue
+        statuses.add(status[0])
+      }
     }
   }
   codexItems.sort((a, b) => a.key.localeCompare(b.key))
@@ -121,6 +146,8 @@ async function init(language, dispatch) {
   const options = {
     language: Object.entries(LANGUAGES).map(([value, text]) => ({ value, text })),
     category: Object.entries(texts.category).map(([value, text]) => ({ value, text })),
+    tags: [].concat({ value: '', text: "--" }, Array.from(tags).sort().map(value => ({ value, text: value }))),
+    statuses: [].concat({ value: '', text: "--" }, Array.from(statuses).sort().map(value => ({ value, text: value }))),
   }
   // dispatch
   dispatch({ type: 'INITIALIZED', language, codexes, codexItems, texts, options })
@@ -132,6 +159,10 @@ function App() {
 
   React.useEffect(() => {
     init(LANGUAGE_DEFAULT, dispatch).catch(console.error)
+  }, [])
+
+  const handleLanguageChange = React.useCallback((event, data) => {
+    init(data.value, dispatch).catch(console.error)
   }, [])
 
   const searchChangeTimeout = React.useRef()
@@ -147,8 +178,20 @@ function App() {
     dispatch({ type: 'FILTERS_UPDATED', filters: { category: data.value } })
   }, [])
 
-  const handleLanguageChange = React.useCallback((event, data) => {
-    init(data.value, dispatch).catch(console.error)
+  const handleTagChange = React.useCallback((event, data) => {
+    dispatch({ type: 'FILTERS_UPDATED', filters: { tag: data.value } })
+  }, [])
+
+  const handleGiveChange = React.useCallback((event, data) => {
+    dispatch({ type: 'FILTERS_UPDATED', filters: { give: data.value } })
+  }, [])
+
+  const handleCauseChange = React.useCallback((event, data) => {
+    dispatch({ type: 'FILTERS_UPDATED', filters: { cause: data.value } })
+  }, [])
+
+  const handleImmunityChange = React.useCallback((event, data) => {
+    dispatch({ type: 'FILTERS_UPDATED', filters: { immunity: data.value } })
   }, [])
 
   const handleShowDetail = React.useCallback((codex) => {
@@ -179,6 +222,32 @@ function App() {
       </Menu>
 
       <Container>
+        <Menu>
+          <Menu.Item>
+            <Dropdown search
+              button labeled icon='filter' className='icon'
+              placeholder={texts.text['Tags']} options={options.tags}
+              onChange={handleTagChange} />
+          </Menu.Item>
+          <Menu.Item>
+            <Dropdown search
+              button labeled icon='filter' className='icon'
+              placeholder={texts.text['Gives']} options={options.statuses}
+              onChange={handleGiveChange} />
+          </Menu.Item>
+          <Menu.Item>
+            <Dropdown search
+              button labeled icon='filter' className='icon'
+              placeholder={texts.text['Causes']} options={options.statuses}
+              onChange={handleCauseChange} />
+          </Menu.Item>
+          <Menu.Item>
+            <Dropdown search
+              button labeled icon='filter' className='icon'
+              placeholder={texts.text['Immunities']} options={options.statuses}
+              onChange={handleImmunityChange} />
+          </Menu.Item>
+        </Menu>
         <Table celled striped selectable>
           <Table.Header>
             <Table.Row>
@@ -187,12 +256,12 @@ function App() {
                   placeholder='Search in ANY languages'
                   onChange={handleSearchChange} />
               </Table.HeaderCell>
-              <Table.HeaderCell>Tags</Table.HeaderCell>
               <Table.HeaderCell collapsing>
                 <Dropdown selection clearable placeholder='Category'
                   options={options.category}
                   onChange={handleCategoryChange} />
               </Table.HeaderCell>
+              <Table.HeaderCell>Tags</Table.HeaderCell>
               <Table.HeaderCell collapsing textAlign='center'>Action</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
@@ -229,10 +298,10 @@ const TableRowForItem = React.memo(function ({ codex, texts, onClick }) {
         {codex.name}
       </Table.Cell>
       <Table.Cell>
-        <List items={codex.tags} />
+        {texts.category[codex.category]}
       </Table.Cell>
       <Table.Cell>
-        {texts.category[codex.category]}
+        <List items={codex.tags} />
       </Table.Cell>
       <Table.Cell>
         <Button.Group>
@@ -288,15 +357,6 @@ const ModalForItem = React.memo(function ({ codex, codexes, texts, onClose }) {
       <Modal.Content scrolling>
         <Grid columns={4}>
           <Grid.Row>
-            {codex.gives != null &&
-              <SimpleModalColumn text={texts.text['Gives']}
-                items={codex.gives.map(([name, probability]) => `${name} (${probability}%)`)} />}
-            {codex.causes != null &&
-              <SimpleModalColumn text={texts.text['Causes']}
-                items={codex.causes.map(([name, probability]) => `${name} (${probability}%)`)} />}
-            {codex.immunities != null &&
-              <SimpleModalColumn text={texts.text['Immunities']}
-                items={codex.immunities} />}
             {codex.spells != null &&
               <SimpleModalColumn text={texts.text['Skills']}
                 items={codex.spells.map(id => codexes.spells[id].name)} />}
@@ -305,18 +365,29 @@ const ModalForItem = React.memo(function ({ codex, codexes, texts, onClose }) {
                 <Segment padded>
                   <Label attached='top'>{texts.text['Causes']} ({texts.text['Skills']})</Label>
                   <Table basic='very'>
-                    {Object.entries(causes_by_spells).sort()
-                      .map(([name, { probability, by }]) =>
-                        <Table.Row key={name}>
-                          <Table.Cell>{name}</Table.Cell>
-                          <Table.Cell>{probability}%</Table.Cell>
-                          <Table.Cell>{by.join(' ')}</Table.Cell>
-                        </Table.Row>
-                      )}
+                    <Table.Body>
+                      {Object.entries(causes_by_spells).sort()
+                        .map(([name, { probability, by }]) =>
+                          <Table.Row key={name}>
+                            <Table.Cell>{name}</Table.Cell>
+                            <Table.Cell>{probability}%</Table.Cell>
+                            <Table.Cell>{by.join(' ')}</Table.Cell>
+                          </Table.Row>
+                        )}
+                    </Table.Body>
                   </Table>
                 </Segment>
               </Grid.Column>
             }
+            {codex.gives != null &&
+              <SimpleModalColumn text={texts.text['Gives']}
+                items={codex.gives.map(([name, probability]) => `${name} (${probability}%)`)} />}
+            {codex.causes != null &&
+              <SimpleModalColumn text={texts.text['Causes']}
+                items={codex.causes.map(([name, probability]) => `${name} (${probability}%)`)} />}
+            {codex.immunities != null &&
+              <SimpleModalColumn text={texts.text['Immunities']}
+                items={codex.immunities.map(([name, probability]) => `${name} (${probability}%)`)} />}
             {codex.drops != null &&
               <SimpleModalColumn text={texts.text['Drops']}
                 items={codex.drops.map(id => codexes.items[id].name)} />}
@@ -334,17 +405,13 @@ const ModalForItem = React.memo(function ({ codex, codexes, texts, onClose }) {
 })
 
 const SimpleModalColumn = React.memo(function ({ text, items }) {
-  const renderTableRow = React.useCallback((data, index) => {
-    if (!Array.isArray(data)) {
-      data = [data]
-    }
-    return (
-      <Table.Row>
-        {data.map(value => <Table.Cell>{value}</Table.Cell>)}
-      </Table.Row>
-    )
-  }, [])
-
+  const renderTableRow = React.useCallback((data, index) =>
+    <Table.Row key={index}>
+      {(Array.isArray(data) ? data : [data]).map(value =>
+        <Table.Cell key={value}>{value}</Table.Cell>
+      )}
+    </Table.Row>
+    , [])
   return (
     <Grid.Column>
       <Segment padded>
