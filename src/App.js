@@ -3,7 +3,6 @@ import { Container, Grid, Table, Menu, Modal, Segment } from 'semantic-ui-react'
 import { Button, Dropdown, Label, List, Icon, Image, Input } from 'semantic-ui-react'
 import { Dimmer, Loader } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
-import './App.css'
 import { LANGUAGES, LANGUAGE_DEFAULT, TABLE_MAX_ROWS } from './constants'
 
 const initialState = {
@@ -208,10 +207,9 @@ function App() {
         <Loader>Loading</Loader>
       </Dimmer>
 
-      <Menu inverted tabular>
+      <Menu inverted>
         <Container>
-          <Menu.Item as='a' header style={{ fontSize: '1.4em' }}>Orna Tools</Menu.Item>
-          <Menu.Item as='a' header href='/'>Codex</Menu.Item>
+          <Menu.Item as='a' header href='/' style={{ fontSize: '1.4em' }}>Codex</Menu.Item>
           <Menu.Item as='a' header href='/clock/'>Clock</Menu.Item>
           <Menu.Item as='a' header position='right'>
             <Dropdown button floating
@@ -222,47 +220,50 @@ function App() {
       </Menu>
 
       <Container>
-        <Menu>
-          <Menu.Item>
-            <Dropdown search
+        <Grid as={Segment} columns={4} doubling>
+          <Grid.Column width={8}>
+            <Input fluid icon='search'
+              placeholder='Search in ANY languages'
+              onChange={handleSearchChange} />
+          </Grid.Column>
+          <Grid.Column>
+            <Dropdown fluid search
+              button labeled icon='filter' className='icon'
+              placeholder='Category' options={options.category}
+              onChange={handleCategoryChange} />
+          </Grid.Column>
+          <Grid.Column>
+            <Dropdown fluid search
               button labeled icon='filter' className='icon'
               placeholder={texts.text['Tags']} options={options.tags}
               onChange={handleTagChange} />
-          </Menu.Item>
-          <Menu.Item>
-            <Dropdown search
+          </Grid.Column>
+          <Grid.Column>
+            <Dropdown fluid search
               button labeled icon='filter' className='icon'
               placeholder={texts.text['Gives']} options={options.statuses}
               onChange={handleGiveChange} />
-          </Menu.Item>
-          <Menu.Item>
-            <Dropdown search
+          </Grid.Column>
+          <Grid.Column>
+            <Dropdown fluid search
               button labeled icon='filter' className='icon'
               placeholder={texts.text['Causes']} options={options.statuses}
               onChange={handleCauseChange} />
-          </Menu.Item>
-          <Menu.Item>
-            <Dropdown search
+          </Grid.Column>
+          <Grid.Column>
+            <Dropdown fluid search
               button labeled icon='filter' className='icon'
               placeholder={texts.text['Immunities']} options={options.statuses}
               onChange={handleImmunityChange} />
-          </Menu.Item>
-        </Menu>
+          </Grid.Column>
+        </Grid>
         <Table celled striped selectable>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell>
-                <Input fluid icon='search'
-                  placeholder='Search in ANY languages'
-                  onChange={handleSearchChange} />
-              </Table.HeaderCell>
-              <Table.HeaderCell collapsing>
-                <Dropdown selection clearable placeholder='Category'
-                  options={options.category}
-                  onChange={handleCategoryChange} />
-              </Table.HeaderCell>
+              <Table.HeaderCell>Name</Table.HeaderCell>
+              <Table.HeaderCell collapsing>Category</Table.HeaderCell>
               <Table.HeaderCell>{texts.text['Tags']}</Table.HeaderCell>
-              <Table.HeaderCell collapsing textAlign='center'>Action</Table.HeaderCell>
+              <Table.HeaderCell collapsing>Action</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
