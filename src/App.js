@@ -314,9 +314,8 @@ const TableRowForItem = React.memo(function ({ codex, texts, onClick }) {
             <Icon name='home' />
           </Button>
           <Button icon as='a'
-            href={`https://orna.guide/items?show=${codex.ornaguide_id}`}
-            target='_blank' rel="noreferrer"
-            disabled={codex.category !== "items"}>
+            href={`https://orna.guide/${codex.ornaguide_category}s?show=${codex.ornaguide_id}`}
+            target='_blank' rel="noreferrer">
             <Icon name='bookmark' />
           </Button>
         </Button.Group>
