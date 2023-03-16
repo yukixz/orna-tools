@@ -28,6 +28,7 @@ TEXTS = {
         "Drops": "Drops",
         "DroppedBy": "Dropped by",
         "Gives": "Gives",
+        "Tags": "Tags",
         "Immunities": "Immunities",
         "Materials": "Upgrade materials",
         "Skills": "Skills",
@@ -37,6 +38,7 @@ TEXTS = {
         "Drops": "掉落",
         "DroppedBy": "掉落来源",
         "Gives": "赋予",
+        "Tags": "标签",
         "Immunities": "免疫",
         "Materials": "升级素材",
         "Skills": "技能",
@@ -164,7 +166,7 @@ class Exporter:
             return (groups[0], int(groups[1]))
         matched = re.match(r'^(.+)$', text)
         groups = matched.groups()
-        return groups[0]
+        return (groups[0], None)
 
     def extract_key_by_href(self, node: Tag) -> str:
         path = node.select_one('a')['href']
