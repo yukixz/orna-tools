@@ -261,7 +261,7 @@ function App() {
                   options={options.category}
                   onChange={handleCategoryChange} />
               </Table.HeaderCell>
-              <Table.HeaderCell>Tags</Table.HeaderCell>
+              <Table.HeaderCell>{texts.text['Tags']}</Table.HeaderCell>
               <Table.HeaderCell collapsing textAlign='center'>Action</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
@@ -329,8 +329,8 @@ const ModalForItem = React.memo(function ({ codex, codexes, texts, onClose }) {
   let causes_by_spells = null
   if (codex.spells != null) {
     causes_by_spells = {}
-    for (const spellKey of codex.spells) {
-      const spellCodex = codexes.spells[spellKey]
+    for (const [category, key] of codex.spells) {
+      const spellCodex = codexes[category][key]
       if (spellCodex.causes == null) {
         continue
       }
@@ -359,7 +359,7 @@ const ModalForItem = React.memo(function ({ codex, codexes, texts, onClose }) {
           <Grid.Row>
             {codex.spells != null &&
               <SimpleModalColumn text={texts.text['Skills']}
-                items={codex.spells.map(id => codexes.spells[id].name)} />}
+                items={codex.spells.map(([category, id]) => codexes[category][id].name)} />}
             {causes_by_spells != null &&
               <Grid.Column width={12}>
                 <Segment padded>
@@ -390,13 +390,13 @@ const ModalForItem = React.memo(function ({ codex, codexes, texts, onClose }) {
                 items={codex.immunities.map(([name, probability]) => `${name} (${probability}%)`)} />}
             {codex.drops != null &&
               <SimpleModalColumn text={texts.text['Drops']}
-                items={codex.drops.map(id => codexes.items[id].name)} />}
+                items={codex.drops.map(([category, id]) => codexes[category][id].name)} />}
             {/* {codex.dropped_by != null &&
               <SimpleModalColumn text={texts.text['DroppedBy']}
                 items={codex.dropped_by.map(id => codexes.monsters[id].name)} />} */}
             {codex.materials != null &&
               <SimpleModalColumn text={texts.text['Materials']}
-                items={codex.materials.map(id => codexes.items[id].name)} />}
+                items={codex.materials.map(([category, id]) => codexes[category][id].name)} />}
           </Grid.Row>
         </Grid>
       </Modal.Content>

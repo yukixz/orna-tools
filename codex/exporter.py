@@ -62,6 +62,7 @@ class Exporter:
                     continue
                 if path in self.guide:
                     logger.error("codex duplicated path=%s", path)
+                item['category'] = guide.action
                 self.guide[path] = item
         logger.info("Prepared orna.guide items=%d", len(self.guide))
 
@@ -107,7 +108,7 @@ class Exporter:
             ).all()
         logger.info("Exporting codex items length=%d", len(pages))
         for page in pages:
-            key = self.key_by_url(page.path)
+            _, key = self.key_by_url(page.path)
             if page.code != 200:
                 logger.warning("Skipped lang=%s key=%s:%s code=%s",
                                lang, category, key, page.code)
@@ -117,7 +118,7 @@ class Exporter:
         return ret
 
     def key_by_url(self, path: str) -> str:
-        return re.match(r"/codex/\w+?/([\w-]+?)/", path).group(1)
+        return re.match(r"/codex/(\w+?)/([\w-]+?)/", path).groups()
 
     def extract_name(self, soup) -> Union[str, None]:
         return soup.select_one(".herotext").string
@@ -179,6 +180,7 @@ class Exporter:
             "name": self.extract_name(soup),
             "path": page.path,
             "ornaguide_id": guide.get('id'),
+            "ornaguide_category": guide.get('category'),
             "image_url": self.extract_image_url(soup),
             "description": self.extract_description(soup),
             "tags": self.extract_tags(soup),
@@ -200,11 +202,7 @@ class Exporter:
         for key, value in tuple(ret.items()):
             if value is None:
                 del ret[key]
-            if isinstance(value, str) and len(value) == 0:
-                del ret[key]
-            if isinstance(value, list) and len(value) == 0:
-                del ret[key]
-            if isinstance(value, tuple) and len(value) == 0:
+            if isinstance(value, (str, list, tuple)) and len(value) == 0:
                 del ret[key]
         return ret
 
