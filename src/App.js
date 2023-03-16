@@ -357,9 +357,15 @@ const ModalForItem = React.memo(function ({ codex, codexes, texts, onClose }) {
       <Modal.Content scrolling>
         <Grid columns={4}>
           <Grid.Row>
-            {codex.spells != null &&
-              <SimpleModalColumn text={texts.text['Skills']}
-                items={codex.spells.map(([category, id]) => codexes[category][id].name)} />}
+            <ModalColumnForStatuses text={texts.text['Gives']} items={codex.gives} />
+            <ModalColumnForStatuses text={texts.text['Causes']} items={codex.causes} />
+            <ModalColumnForStatuses text={texts.text['Immunities']} items={codex.immunities} />
+            <ModalColumnForCodexItems text={texts.text['Drops']} items={codex.drops} codexes={codexes} />
+            <ModalColumnForCodexItems text={texts.text['DroppedBy']} items={codex.dropped_by} codexes={codexes} />
+            <ModalColumnForCodexItems text={texts.text['Materials']} items={codex.materials} codexes={codexes} />
+          </Grid.Row>
+          <Grid.Row>
+            <ModalColumnForCodexItems text={texts.text['Skills']} items={codex.spells} codexes={codexes} />
             {causes_by_spells != null &&
               <Grid.Column width={12}>
                 <Segment padded>
@@ -379,24 +385,6 @@ const ModalForItem = React.memo(function ({ codex, codexes, texts, onClose }) {
                 </Segment>
               </Grid.Column>
             }
-            {codex.gives != null &&
-              <SimpleModalColumn text={texts.text['Gives']}
-                items={codex.gives.map(([name, probability]) => `${name} (${probability}%)`)} />}
-            {codex.causes != null &&
-              <SimpleModalColumn text={texts.text['Causes']}
-                items={codex.causes.map(([name, probability]) => `${name} (${probability}%)`)} />}
-            {codex.immunities != null &&
-              <SimpleModalColumn text={texts.text['Immunities']}
-                items={codex.immunities.map(([name, probability]) => `${name} (${probability}%)`)} />}
-            {codex.drops != null &&
-              <SimpleModalColumn text={texts.text['Drops']}
-                items={codex.drops.map(([category, id]) => codexes[category][id].name)} />}
-            {/* {codex.dropped_by != null &&
-              <SimpleModalColumn text={texts.text['DroppedBy']}
-                items={codex.dropped_by.map(id => codexes.monsters[id].name)} />} */}
-            {codex.materials != null &&
-              <SimpleModalColumn text={texts.text['Materials']}
-                items={codex.materials.map(([category, id]) => codexes[category][id].name)} />}
           </Grid.Row>
         </Grid>
       </Modal.Content>
@@ -404,19 +392,42 @@ const ModalForItem = React.memo(function ({ codex, codexes, texts, onClose }) {
   )
 })
 
-const SimpleModalColumn = React.memo(function ({ text, items }) {
-  const renderTableRow = React.useCallback((data, index) =>
-    <Table.Row key={index}>
-      {(Array.isArray(data) ? data : [data]).map(value =>
-        <Table.Cell key={value}>{value}</Table.Cell>
-      )}
-    </Table.Row>
-    , [])
+const ModalColumnForStatuses = React.memo(function ({ text, items }) {
+  if (items == null) return
   return (
     <Grid.Column>
       <Segment padded>
         <Label attached='top'>{text}</Label>
-        <Table basic='very' renderBodyRow={renderTableRow} tableData={items}></Table>
+        <Table basic='very'>
+          <Table.Body>
+            {items.map(([name, probability]) =>
+              <Table.Row key={name}>
+                <Table.Cell>{name}</Table.Cell>
+                {probability != null && <Table.Cell>{probability}%</Table.Cell>}
+              </Table.Row>
+            )}
+          </Table.Body>
+        </Table>
+      </Segment>
+    </Grid.Column>
+  )
+})
+
+const ModalColumnForCodexItems = React.memo(function ({ text, items, codexes }) {
+  if (items == null) return
+  return (
+    <Grid.Column>
+      <Segment padded>
+        <Label attached='top'>{text}</Label>
+        <Table basic='very'>
+          <Table.Body>
+            {items.map(([category, id]) => codexes[category][id]).map(item =>
+              <Table.Row key={item.key}>
+                <Table.Cell>{item.name}</Table.Cell>
+              </Table.Row>
+            )}
+          </Table.Body>
+        </Table>
       </Segment>
     </Grid.Column>
   )
