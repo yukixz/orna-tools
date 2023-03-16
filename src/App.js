@@ -351,44 +351,38 @@ const ModalForItem = React.memo(function ({ codex, codexes, texts, onClose }) {
         {codex.name} ({codex.id})
       </Modal.Header>
       <Modal.Content scrolling>
-        <Grid columns={4}>
+        <Grid columns={2} doubling>
           {codex.description != null &&
-            <Grid.Row>
-              <Grid.Column width={16}>
-                {codex.description}
-              </Grid.Column>
-            </Grid.Row>
+            <Grid.Column width={16}>
+              {codex.description}
+            </Grid.Column>
           }
-          <Grid.Row>
-            <ModalColumnForStatuses text={texts.text['Gives']} items={codex.gives} />
-            <ModalColumnForStatuses text={texts.text['Causes']} items={codex.causes} />
-            <ModalColumnForStatuses text={texts.text['Immunities']} items={codex.immunities} />
-            <ModalColumnForCodexItems text={texts.text['Drops']} items={codex.drops} codexes={codexes} />
-            <ModalColumnForCodexItems text={texts.text['DroppedBy']} items={codex.dropped_by} codexes={codexes} />
-            <ModalColumnForCodexItems text={texts.text['Materials']} items={codex.materials} codexes={codexes} />
-          </Grid.Row>
-          <Grid.Row>
-            <ModalColumnForCodexItems text={texts.text['Skills']} items={codex.spells} codexes={codexes} />
-            {causes_by_spells != null &&
-              <Grid.Column width={12}>
-                <Segment padded>
-                  <Label attached='top'>{texts.text['Causes']} ({texts.text['Skills']})</Label>
-                  <Table basic='very'>
-                    <Table.Body>
-                      {Object.entries(causes_by_spells).sort()
-                        .map(([name, { probability, by }]) =>
-                          <Table.Row key={name}>
-                            <Table.Cell>{name}</Table.Cell>
-                            <Table.Cell>{probability}%</Table.Cell>
-                            <Table.Cell>{by.join(' ')}</Table.Cell>
-                          </Table.Row>
-                        )}
-                    </Table.Body>
-                  </Table>
-                </Segment>
-              </Grid.Column>
-            }
-          </Grid.Row>
+          <ModalColumnForCodexItems text={texts.text['Skills']} items={codex.spells} codexes={codexes} />
+          {causes_by_spells != null &&
+            <Grid.Column>
+              <Segment>
+                <Label attached='top'>{texts.text['Causes']} ({texts.text['Skills']})</Label>
+                <Table basic='very'>
+                  <Table.Body>
+                    {Object.entries(causes_by_spells).sort()
+                      .map(([name, { probability, by }]) =>
+                        <Table.Row key={name}>
+                          <Table.Cell>{name}</Table.Cell>
+                          <Table.Cell>{probability}%</Table.Cell>
+                          <Table.Cell>{by.join(' ')}</Table.Cell>
+                        </Table.Row>
+                      )}
+                  </Table.Body>
+                </Table>
+              </Segment>
+            </Grid.Column>
+          }
+          <ModalColumnForStatuses text={texts.text['Gives']} items={codex.gives} />
+          <ModalColumnForStatuses text={texts.text['Causes']} items={codex.causes} />
+          <ModalColumnForStatuses text={texts.text['Immunities']} items={codex.immunities} />
+          <ModalColumnForCodexItems text={texts.text['Drops']} items={codex.drops} codexes={codexes} />
+          <ModalColumnForCodexItems text={texts.text['DroppedBy']} items={codex.dropped_by} codexes={codexes} />
+          <ModalColumnForCodexItems text={texts.text['Materials']} items={codex.materials} codexes={codexes} />
         </Grid>
       </Modal.Content>
     </Modal>
@@ -399,7 +393,7 @@ const ModalColumnForStatuses = React.memo(function ({ text, items }) {
   if (items == null) return
   return (
     <Grid.Column>
-      <Segment padded>
+      <Segment>
         <Label attached='top'>{text}</Label>
         <Table basic='very'>
           <Table.Body>
@@ -420,7 +414,7 @@ const ModalColumnForCodexItems = React.memo(function ({ text, items, codexes }) 
   if (items == null) return
   return (
     <Grid.Column>
-      <Segment padded>
+      <Segment>
         <Label attached='top'>{text}</Label>
         <Table basic='very'>
           <Table.Body>
