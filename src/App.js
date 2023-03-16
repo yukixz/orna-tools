@@ -256,7 +256,7 @@ function App() {
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Name</Table.HeaderCell>
-              <Table.HeaderCell collapsing>Category</Table.HeaderCell>
+              <Table.HeaderCell>Category</Table.HeaderCell>
               <Table.HeaderCell collapsing>Action</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
