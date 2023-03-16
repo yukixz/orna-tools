@@ -355,6 +355,13 @@ const ModalForItem = React.memo(function ({ codex, codexes, texts, onClose }) {
       </Modal.Header>
       <Modal.Content scrolling>
         <Grid columns={4}>
+          {codex.description != null &&
+            <Grid.Row>
+              <Grid.Column width={16}>
+                {codex.description}
+              </Grid.Column>
+            </Grid.Row>
+          }
           <Grid.Row>
             <ModalColumnForStatuses text={texts.text['Gives']} items={codex.gives} />
             <ModalColumnForStatuses text={texts.text['Causes']} items={codex.causes} />
