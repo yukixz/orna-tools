@@ -257,12 +257,11 @@ function App() {
               onChange={handleImmunityChange} />
           </Grid.Column>
         </Grid>
-        <Table celled striped selectable>
+        <Table celled striped selectable unstackable>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Name</Table.HeaderCell>
               <Table.HeaderCell collapsing>Category</Table.HeaderCell>
-              <Table.HeaderCell>{texts.text['Tags']}</Table.HeaderCell>
               <Table.HeaderCell collapsing>Action</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
@@ -274,7 +273,7 @@ function App() {
           </Table.Body>
           <Table.Footer>
             <Table.Row>
-              <Table.Cell>
+              <Table.Cell disabled colSpan='4'>
                 ~{rows.length <= TABLE_MAX_ROWS ? rows.length : TABLE_MAX_ROWS} / {rows.length}
               </Table.Cell>
             </Table.Row>
@@ -300,9 +299,6 @@ const TableRowForItem = React.memo(function ({ codex, texts, onClick }) {
       </Table.Cell>
       <Table.Cell>
         {texts.category[codex.category]}
-      </Table.Cell>
-      <Table.Cell>
-        <List items={codex.tags} />
       </Table.Cell>
       <Table.Cell>
         <Button.Group>
