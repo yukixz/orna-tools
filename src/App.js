@@ -145,8 +145,8 @@ async function init(language, dispatch) {
   const options = {
     language: Object.entries(LANGUAGES).map(([value, text]) => ({ value, text })),
     category: Object.entries(texts.category).map(([value, text]) => ({ value, text })),
-    tags: [].concat({ value: '', text: "--" }, Array.from(tags).sort().map(value => ({ value, text: value }))),
-    statuses: [].concat({ value: '', text: "--" }, Array.from(statuses).sort().map(value => ({ value, text: value }))),
+    tags: Array.from(tags).sort().map(value => ({ value, text: value })),
+    statuses: Array.from(statuses).sort().map(value => ({ value, text: value })),
   }
   // dispatch
   dispatch({ type: 'INITIALIZED', language, codexes, codexItems, texts, options })
@@ -227,32 +227,27 @@ function App() {
               onChange={handleSearchChange} />
           </Grid.Column>
           <Grid.Column>
-            <Dropdown fluid search
-              button labeled icon='filter' className='icon'
+            <Dropdown fluid search selection clearable
               placeholder='Category' options={options.category}
               onChange={handleCategoryChange} />
           </Grid.Column>
           <Grid.Column>
-            <Dropdown fluid search
-              button labeled icon='filter' className='icon'
+            <Dropdown fluid search selection clearable
               placeholder={texts.text['Tags']} options={options.tags}
               onChange={handleTagChange} />
           </Grid.Column>
           <Grid.Column>
-            <Dropdown fluid search
-              button labeled icon='filter' className='icon'
+            <Dropdown fluid search selection clearable
               placeholder={texts.text['Gives']} options={options.statuses}
               onChange={handleGiveChange} />
           </Grid.Column>
           <Grid.Column>
-            <Dropdown fluid search
-              button labeled icon='filter' className='icon'
+            <Dropdown fluid search selection clearable
               placeholder={texts.text['Causes']} options={options.statuses}
               onChange={handleCauseChange} />
           </Grid.Column>
           <Grid.Column>
-            <Dropdown fluid search
-              button labeled icon='filter' className='icon'
+            <Dropdown fluid search selection clearable
               placeholder={texts.text['Immunities']} options={options.statuses}
               onChange={handleImmunityChange} />
           </Grid.Column>
