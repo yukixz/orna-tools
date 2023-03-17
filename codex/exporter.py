@@ -95,7 +95,7 @@ class Exporter:
         soup = BeautifulSoup(page.html, "html.parser")
         nodes = soup.select("a.codex-link")
         catetories = {
-            re.match(r'^/codex/(\w+)/$', node['href']).group(1): node.text.strip()
+            re.match(r'^/codex/(\w+)/$', node['href']).group(1): node.text.strip().title()
             for node in nodes
         }
 
