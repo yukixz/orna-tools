@@ -359,7 +359,7 @@ const ModalForItem = React.memo(function ({ codex, codexes, texts, onClose }) {
                 <Label attached='top'>{texts.text['Causes']} ({texts.text['Skills']})</Label>
                 <Table basic='very'>
                   <Table.Body>
-                    {Object.entries(causes_by_spells).sort()
+                    {Object.entries(causes_by_spells)
                       .map(([name, { probability, by }]) =>
                         <Table.Row key={name}>
                           <Table.Cell>{name}</Table.Cell>
