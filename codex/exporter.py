@@ -6,12 +6,11 @@ import logging
 import os.path
 import re
 import sys
-from typing import Union
 
 import sqlalchemy
 from bs4 import BeautifulSoup, Tag
 from orm import Base, GuideAPI, Page
-from sqlalchemy import and_, func
+from sqlalchemy import and_
 from sqlalchemy.orm import Session
 
 logging.basicConfig(
@@ -19,7 +18,7 @@ logging.basicConfig(
     stream=sys.stdout,
 )
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 
 CATEGORIES = ("items", "monsters", "bosses", "followers", "raids", "spells")
 TEXTS = {
@@ -27,31 +26,41 @@ TEXTS = {
         "Causes": "Causes",
         "Drops": "Drops",
         "DroppedBy": "Dropped by",
+        "Event": "Event",
+        "Family": "Family",
         "Gives": "Gives",
         "Tags": "Tags",
+        "Tier": "Tier",
         "Immunities": "Immunities",
         "Materials": "Upgrade materials",
+        "Rarity": "Rarity",
         "Skills": "Skills",
     },
     "zh-hans": {
         "Causes": "造成",
         "Drops": "掉落",
         "DroppedBy": "掉落来源",
+        "Event": "活动",
+        "Family": "种类",
         "Gives": "赋予",
         "Tags": "标签",
+        "Tier": "阶级",
         "Immunities": "免疫",
         "Materials": "升级素材",
+        "Rarity": "稀有度",
         "Skills": "技能",
     }
 }
 
 
 class Exporter:
-    def __init__(self, db_engine) -> None:
+    def __init__(self, db_engine, lang):
         self.db_engine = db_engine
+        self.lang = lang
+        self.texts = TEXTS[lang]
         self.guide = {}
 
-    def prepare(self) -> None:
+    def prepare(self):
         with Session(self.db_engine) as session:
             guides = session.query(GuideAPI).all()
         for guide in guides:
@@ -66,22 +75,22 @@ class Exporter:
                 self.guide[path] = item
         logger.info("Prepared orna.guide items=%d", len(self.guide))
 
-    def export(self, lang) -> dict:
-        logger.info("Exporting lang=%s", lang)
+    def export(self):
+        logger.info("Exporting lang=%s", self.lang)
         data = {}
-        data['text'] = TEXTS[lang]
-        data['category'] = self.export_category(lang)
+        data['text'] = self.texts
+        data['category'] = self.export_category()
         data['codex'] = {}
         for category in CATEGORIES:
-            data['codex'][category] = self.export_codex(category, lang)
+            data['codex'][category] = self.export_codex(category)
         return data
 
-    def export_category(self, lang) -> dict:
+    def export_category(self):
         logger.info("Exporting category")
 
         with Session(self.db_engine) as session:
             page = session.query(Page).filter(
-                and_(Page.path == "/codex/", Page.lang == lang)
+                and_(Page.path == "/codex/", Page.lang == self.lang)
             ).one()
         soup = BeautifulSoup(page.html, "html.parser")
         nodes = soup.select("a.codex-link")
@@ -97,69 +106,152 @@ class Exporter:
         }
         return catetories
 
-    def export_codex(self, category, lang) -> dict:
+    def export_codex(self, category):
         logger.info("Exporting codex category=%s", category)
         ret = {}
-        texts = TEXTS[lang]
 
         with Session(self.db_engine) as session:
             pages = session.query(Page).filter(
-                and_(Page.path.like(f"/codex/{category}/%"), Page.lang == lang)
+                and_(Page.path.like(
+                    f"/codex/{category}/%"), Page.lang == self.lang)
             ).all()
         logger.info("Exporting codex items length=%d", len(pages))
         for page in pages:
-            _, key = self.key_by_url(page.path)
+            _, key = self.key_from_url(page.path)
             if page.code != 200:
-                logger.warning("Skipped lang=%s key=%s:%s code=%s",
-                               lang, category, key, page.code)
+                logger.info("Skipped key=%s:%s code=%s",
+                            category, key, page.code)
                 continue
-            ret[key] = self.parse_item(page, texts)
+            try:
+                ret[key] = self.parse_item(page)
+            except:
+                logger.error("key=%s", key)
+                raise
 
         return ret
 
-    def key_by_url(self, path: str) -> str:
+    def key_from_url(self, path: str):
         return re.match(r"/codex/(\w+?)/([\w-]+?)/", path).groups()
 
-    def extract_name(self, soup) -> Union[str, None]:
+    def parse_item(self, page: Page):
+        soup = BeautifulSoup(page.html, "html.parser")
+        codex = {
+            "name": self.extract_name(soup),
+            "path": page.path,
+        }
+
+        # codex page
+        extractors = iter([
+            (self.extract_info,),
+            (self.extract_list,
+             "causes", self.texts["Causes"], self.parse_status),
+            (self.extract_list,
+             "gives", self.texts["Gives"], self.parse_status),
+            (self.extract_list,
+             "immunities", self.texts["Immunities"], self.parse_status),
+            (self.extract_list,
+             "dropped_by", self.texts["DroppedBy"], self.parse_href),
+            (self.extract_list,
+             "materials", self.texts["Materials"], self.parse_href),
+            (self.extract_list,
+             "spells", self.texts["Skills"], self.parse_href),
+            (self.extract_list,
+             "drops", self.texts["Drops"], self.parse_href),
+        ])
+        nodes = list(filter(
+            lambda node: isinstance(node, Tag) and node.name != 'hr',
+            soup.select_one(".codex-page").children))
+
+        try:
+            extract, *extract_args = next(extractors)
+            while len(nodes) >= 1:
+                ret = extract(nodes, *extract_args)
+                if ret is not None:
+                    codex.update(ret)
+                else:
+                    extract, *extract_args = next(extractors)
+        except StopIteration:
+            pass
+
+        # orna.guide
+        guide = self.guide.get(page.path)
+        if guide is not None:
+            codex.update({
+                "ornaguide_id": guide['id'],
+                "ornaguide_category": guide['category'],
+            })
+
+        # cleanup
+        for key, value in tuple(codex.items()):
+            if value is None:
+                del codex[key]
+            if isinstance(value, (str, list, tuple)) and len(value) == 0:
+                del codex[key]
+        return codex
+
+    def normalize(self, string: str):
+        string = string \
+            .replace('✓', '') \
+            .replace('★', '') \
+            .strip()
+        try:
+            return int(string)
+        except ValueError:
+            return string
+
+    def extract_name(self, soup: BeautifulSoup):
         return soup.select_one(".herotext").string
 
-    def extract_image_url(self, soup) -> Union[str, None]:
-        return soup.select_one(".codex-page-icon img")['src']
-
-    def extract_description(self, soup) -> Union[str, None]:
-        node = soup.select_one("pre.codex-page-description")
-        if node is None:
-            return None
-        return node.string
-
-    def extract_family_by(self, soup, text) -> Union[str, None]:
-        pass
-
-    def extract_tags(self, soup) -> Union[str, None]:
-        return tuple(map(
-            lambda e: e.string.replace('✓', '').strip(),
-            soup.select(".codex-page-tag")))
-
-    def find_h4(self, soup, text: str) -> Union[Tag, None]:
-        text = text.lower() + ':'
-        for node in soup.select(".codex-page h4"):
-            if node.string.lower() == text:
-                return node
+    def extract_info(self, nodes: list[Tag]):
+        node = nodes.pop(0)
+        classes = node.get('class', tuple())
+        # image
+        sub = node.select_one('.codex-page-icon img')
+        if sub is not None:
+            return {'image_url': sub['src']}
+        # tags
+        subs = node.select('.codex-page-tag')
+        if len(subs) >= 1:
+            return {'tags': tuple(map(
+                lambda e: self.normalize(e.string), subs))}
+        # meta
+        if 'codex-page-description' in classes:
+            string = ''.join(node.stripped_strings)
+            for key in ("Event", "Family", "Rarity", "Tier"):
+                prefix = f"{self.texts[key]}:"
+                if string.startswith(prefix):
+                    return {key: self.normalize(string.removeprefix(prefix))}
+            return {'description': string}
+        if 'codex-page-meta' in classes:
+            string = ''.join(node.stripped_strings)
+            for key in ("Tier", ):
+                prefix = f"{self.texts[key]}:"
+                if string.startswith(prefix):
+                    return {key: self.normalize(string.removeprefix(prefix))}
+            return {}
+        # stats
+        if 'codex-stats' in classes:
+            return {}
+        # bypass until h4
+        if node.name != 'h4':
+            return {}
+        # goto next extractor
+        nodes.insert(0, node)
         return None
 
-    def extract_drops_by_h4(self, note_node: Union[Tag, None], extract: func) -> Union[list, None]:
-        if note_node is None:
+    def extract_list(self, nodes: list[Tag], key: str, label: str, extract):
+        first = nodes[0]
+        if not (first.name == 'h4' and
+                first.string.lower().startswith(label.lower())):
             return None
-        ret = []
-        for node in note_node.next_siblings:
-            if node.name is None:
-                continue
-            if node.name != "div":
-                break
-            ret.append(extract(node))
-        return ret
+        nodes.pop(0)
 
-    def extract_status(self, node: Tag) -> tuple[str, int]:
+        valid_nodes = []
+        while len(nodes) >= 1 and nodes[0].name == 'div':
+            valid_nodes.append(nodes.pop(0))
+        return {key: [extract(node) for node in valid_nodes]}
+
+    def parse_status(self, node: Tag):
         text = node.select_one('span').string
         matched = re.match(r'^(.+) \((\d+)%\)$', text)
         if matched is not None:
@@ -169,54 +261,21 @@ class Exporter:
         groups = matched.groups()
         return (groups[0], None)
 
-    def extract_key_by_href(self, node: Tag) -> str:
+    def parse_href(self, node: Tag):
         path = node.select_one('a')['href']
-        return self.key_by_url(path)
-
-    def parse_item(self, page: Page, texts: dict) -> dict:
-        soup = BeautifulSoup(page.html, "html.parser")
-        guide = self.guide.get(page.path, {})
-        ret = {
-            "name": self.extract_name(soup),
-            "path": page.path,
-            "ornaguide_id": guide.get('id'),
-            "ornaguide_category": guide.get('category'),
-            "image_url": self.extract_image_url(soup),
-            "description": self.extract_description(soup),
-            "tags": self.extract_tags(soup),
-            "causes": self.extract_drops_by_h4(
-                self.find_h4(soup, texts["Causes"]), self.extract_status),
-            "gives": self.extract_drops_by_h4(
-                self.find_h4(soup, texts["Gives"]), self.extract_status),
-            "immunities": self.extract_drops_by_h4(
-                self.find_h4(soup, texts["Immunities"]), self.extract_status),
-            "spells": self.extract_drops_by_h4(
-                self.find_h4(soup, texts["Skills"]), self.extract_key_by_href),
-            "drops": self.extract_drops_by_h4(
-                self.find_h4(soup, texts["Drops"]), self.extract_key_by_href),
-            "dropped_by": self.extract_drops_by_h4(
-                self.find_h4(soup, texts["DroppedBy"]), self.extract_key_by_href),
-            "materials": self.extract_drops_by_h4(
-                self.find_h4(soup, texts["Materials"]), self.extract_key_by_href),
-        }
-        for key, value in tuple(ret.items()):
-            if value is None:
-                del ret[key]
-            if isinstance(value, (str, list, tuple)) and len(value) == 0:
-                del ret[key]
-        return ret
+        return self.key_from_url(path)
 
 
 def main():
     db_engine = sqlalchemy.create_engine("sqlite:///db.sqlite3")
     Base.metadata.create_all(db_engine)
 
-    exporter = Exporter(db_engine)
-    exporter.prepare()
     for lang in ["en", "zh-hans"]:
-        data = exporter.export(lang)
-        with open(f"./exports/{lang}.json", 'w', encoding='utf-8') as f:
-            f.write(json.dumps(data, indent=2, ensure_ascii=False))
+        exporter = Exporter(db_engine, lang)
+        exporter.prepare()
+        data = exporter.export()
+        with open(f"./exports/{lang}.json", 'w', encoding='utf-8') as file:
+            file.write(json.dumps(data, indent=2, ensure_ascii=False))
 
 
 if __name__ == '__main__':
