@@ -3,7 +3,7 @@
 
 import logging
 import sys
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 import requests_cache
 import sqlalchemy
@@ -35,6 +35,8 @@ class Crawler:
             allowable_codes=[200, 404],
             match_headers=True,
         )
+        self.fetched_count = 0
+        self.fetched_last_reported = datetime.now()
 
     def fetch_html(self, path, lang) -> requests_cache.Response:
         logger.debug("path=%s lang=%s", path, lang)
@@ -53,6 +55,11 @@ class Crawler:
                     "AppleWebKit/537.36 (KHTML, like Gecko) "
                     "Chrome/108.0.0.0 Safari/537.36"),
             })
+        self.fetched_count += 1
+        if datetime.now() >= self.fetched_last_reported + timedelta(minutes=1):
+            logger.info("fetched %d from last reported", self.fetched_count)
+            self.fetched_count = 0
+            self.fetched_last_reported = datetime.now()
         return resp
 
     def fetch_page(self, path, lang) -> None:
