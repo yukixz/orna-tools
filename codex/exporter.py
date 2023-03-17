@@ -23,32 +23,32 @@ logger.setLevel(logging.DEBUG)
 CATEGORIES = ("items", "monsters", "bosses", "followers", "raids", "spells")
 TEXTS = {
     "en": {
-        "Causes": "Causes",
-        "Drops": "Drops",
-        "DroppedBy": "Dropped by",
-        "Event": "Event",
-        "Family": "Family",
-        "Gives": "Gives",
-        "Tags": "Tags",
-        "Tier": "Tier",
-        "Immunities": "Immunities",
-        "Materials": "Upgrade materials",
-        "Rarity": "Rarity",
-        "Skills": "Skills",
+        "causes": "Causes",
+        "drops": "Drops",
+        "droppedBy": "Dropped by",
+        "event": "Event",
+        "family": "Family",
+        "gives": "Gives",
+        "tags": "Tags",
+        "tier": "Tier",
+        "immunities": "Immunities",
+        "materials": "Upgrade materials",
+        "rarity": "Rarity",
+        "skills": "Skills",
     },
     "zh-hans": {
-        "Causes": "造成",
-        "Drops": "掉落",
-        "DroppedBy": "掉落来源",
-        "Event": "活动",
-        "Family": "种类",
-        "Gives": "赋予",
-        "Tags": "标签",
-        "Tier": "阶级",
-        "Immunities": "免疫",
-        "Materials": "升级素材",
-        "Rarity": "稀有度",
-        "Skills": "技能",
+        "causes": "造成",
+        "drops": "掉落",
+        "droppedBy": "掉落来源",
+        "event": "活动",
+        "family": "种类",
+        "gives": "赋予",
+        "tags": "标签",
+        "tier": "阶级",
+        "immunities": "免疫",
+        "materials": "升级素材",
+        "rarity": "稀有度",
+        "skills": "技能",
     }
 }
 
@@ -144,19 +144,19 @@ class Exporter:
         extractors = iter([
             (self.extract_info,),
             (self.extract_list,
-             "causes", self.texts["Causes"], self.parse_status),
+             "causes", self.texts["causes"], self.parse_status),
             (self.extract_list,
-             "gives", self.texts["Gives"], self.parse_status),
+             "gives", self.texts["gives"], self.parse_status),
             (self.extract_list,
-             "immunities", self.texts["Immunities"], self.parse_status),
+             "immunities", self.texts["immunities"], self.parse_status),
             (self.extract_list,
-             "dropped_by", self.texts["DroppedBy"], self.parse_href),
+             "dropped_by", self.texts["droppedBy"], self.parse_href),
             (self.extract_list,
-             "materials", self.texts["Materials"], self.parse_href),
+             "materials", self.texts["materials"], self.parse_href),
             (self.extract_list,
-             "spells", self.texts["Skills"], self.parse_href),
+             "spells", self.texts["skills"], self.parse_href),
             (self.extract_list,
-             "drops", self.texts["Drops"], self.parse_href),
+             "drops", self.texts["drops"], self.parse_href),
         ])
         nodes = list(filter(
             lambda node: isinstance(node, Tag) and node.name != 'hr',
@@ -217,14 +217,14 @@ class Exporter:
         # meta
         if 'codex-page-description' in classes:
             string = ''.join(node.stripped_strings)
-            for key in ("Event", "Family", "Rarity", "Tier"):
+            for key in ("event", "family", "rarity", "tier"):
                 prefix = f"{self.texts[key]}:"
                 if string.startswith(prefix):
                     return {key: self.normalize(string.removeprefix(prefix))}
             return {'description': string}
         if 'codex-page-meta' in classes:
             string = ''.join(node.stripped_strings)
-            for key in ("Tier", ):
+            for key in ("tier", ):
                 prefix = f"{self.texts[key]}:"
                 if string.startswith(prefix):
                     return {key: self.normalize(string.removeprefix(prefix))}

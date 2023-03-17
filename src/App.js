@@ -235,22 +235,22 @@ function App() {
           </Grid.Column>
           <Grid.Column>
             <Dropdown fluid search selection clearable
-              placeholder={texts.text['Tags']} options={options.tags}
+              placeholder={texts.text['tags']} options={options.tags}
               onChange={handleTagChange} />
           </Grid.Column>
           <Grid.Column>
             <Dropdown fluid search selection clearable
-              placeholder={texts.text['Gives']} options={options.statuses}
+              placeholder={texts.text['gives']} options={options.statuses}
               onChange={handleGiveChange} />
           </Grid.Column>
           <Grid.Column>
             <Dropdown fluid search selection clearable
-              placeholder={texts.text['Causes']} options={options.statuses}
+              placeholder={texts.text['causes']} options={options.statuses}
               onChange={handleCauseChange} />
           </Grid.Column>
           <Grid.Column>
             <Dropdown fluid search selection clearable
-              placeholder={texts.text['Immunities']} options={options.statuses}
+              placeholder={texts.text['immunities']} options={options.statuses}
               onChange={handleImmunityChange} />
           </Grid.Column>
         </Grid>
@@ -376,15 +376,15 @@ const ModalForItem = React.memo(function ({ codex, codexes, texts, onClose }) {
       <Modal.Content scrolling>
         <Grid columns={2} doubling>
           <ModalCard description={codex.description} tags={codex.tags} />
-          <ModalSegment label={texts.text['Skills']} tableData={codex.spells} tableRenderRow={renderRowForCodexItems} />
-          <ModalSegment label={`${texts.text['Causes']} (${texts.text['Skills']})`}
+          <ModalSegment label={texts.text['skills']} tableData={codex.spells} tableRenderRow={renderRowForCodexItems} />
+          <ModalSegment label={`${texts.text['causes']} (${texts.text['skills']})`}
             tableData={causes_by_spells} tableRenderRow={renderRowForCausesBySpells} />
-          <ModalSegment label={texts.text['Gives']} tableData={codex.gives} tableRenderRow={renderRowForStatuses} />
-          <ModalSegment label={texts.text['Causes']} tableData={codex.causes} tableRenderRow={renderRowForStatuses} />
-          <ModalSegment label={texts.text['Immunities']} tableData={codex.immunities} tableRenderRow={renderRowForStatuses} />
-          <ModalSegment label={texts.text['Drops']} tableData={codex.drops} tableRenderRow={renderRowForCodexItems} />
-          <ModalSegment label={texts.text['DroppedBy']} tableData={codex.dropped_by} tableRenderRow={renderRowForCodexItems} />
-          <ModalSegment label={texts.text['Materials']} tableData={codex.materials} tableRenderRow={renderRowForCodexItems} />
+          <ModalSegment label={texts.text['gives']} tableData={codex.gives} tableRenderRow={renderRowForStatuses} />
+          <ModalSegment label={texts.text['causes']} tableData={codex.causes} tableRenderRow={renderRowForStatuses} />
+          <ModalSegment label={texts.text['immunities']} tableData={codex.immunities} tableRenderRow={renderRowForStatuses} />
+          <ModalSegment label={texts.text['drops']} tableData={codex.drops} tableRenderRow={renderRowForCodexItems} />
+          <ModalSegment label={texts.text['droppedBy']} tableData={codex.dropped_by} tableRenderRow={renderRowForCodexItems} />
+          <ModalSegment label={texts.text['materials']} tableData={codex.materials} tableRenderRow={renderRowForCodexItems} />
         </Grid>
       </Modal.Content>
     </Modal >
