@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Grid, Table, Menu, Modal, Segment } from 'semantic-ui-react'
+import { Container, Grid, Table, Menu, Modal, Segment, Card } from 'semantic-ui-react'
 import { Button, Dropdown, Label, Icon, Image, Input } from 'semantic-ui-react'
 import { Dimmer, Loader } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
@@ -28,6 +28,8 @@ const initialState = {
   options: {
     language: [],
     category: [],
+    tags: [],
+    statuses: [],
   },
   // Modal
   modal: null,
@@ -340,6 +342,32 @@ const ModalForItem = React.memo(function ({ codex, codexes, texts, onClose }) {
     }
   }
 
+  const renderRowForCodexItems = React.useCallback(([category, id]) => {
+    const item = codexes[category][id]
+    return (
+      <Table.Row key={item.key}>
+        <Table.Cell>{item.name}</Table.Cell>
+      </Table.Row>
+    )
+  }, [codexes])
+  const renderRowForStatuses = React.useCallback(([name, probability]) => {
+    return (
+      <Table.Row key={name}>
+        <Table.Cell>{name}</Table.Cell>
+        {probability != null && <Table.Cell>{probability}%</Table.Cell>}
+      </Table.Row>
+    )
+  }, [])
+  const renderRowForCausesBySpells = React.useCallback(([name, { probability, by }]) => {
+    return (
+      <Table.Row key={name}>
+        <Table.Cell>{name}</Table.Cell>
+        <Table.Cell>{probability}%</Table.Cell>
+        <Table.Cell>{by.join(' ')}</Table.Cell>
+      </Table.Row>
+    )
+  }, [])
+
   return (
     <Modal open={true} onClose={onClose}>
       <Modal.Header>
@@ -347,81 +375,49 @@ const ModalForItem = React.memo(function ({ codex, codexes, texts, onClose }) {
       </Modal.Header>
       <Modal.Content scrolling>
         <Grid columns={2} doubling>
-          {codex.description != null &&
-            <Grid.Column width={16}>
-              {codex.description}
-            </Grid.Column>
-          }
-          <ModalColumnForCodexItems text={texts.text['Skills']} items={codex.spells} codexes={codexes} />
-          {causes_by_spells != null &&
-            <Grid.Column>
-              <Segment>
-                <Label attached='top'>{texts.text['Causes']} ({texts.text['Skills']})</Label>
-                <Table basic='very'>
-                  <Table.Body>
-                    {Object.entries(causes_by_spells)
-                      .map(([name, { probability, by }]) =>
-                        <Table.Row key={name}>
-                          <Table.Cell>{name}</Table.Cell>
-                          <Table.Cell>{probability}%</Table.Cell>
-                          <Table.Cell>{by.join(' ')}</Table.Cell>
-                        </Table.Row>
-                      )}
-                  </Table.Body>
-                </Table>
-              </Segment>
-            </Grid.Column>
-          }
-          <ModalColumnForStatuses text={texts.text['Gives']} items={codex.gives} />
-          <ModalColumnForStatuses text={texts.text['Causes']} items={codex.causes} />
-          <ModalColumnForStatuses text={texts.text['Immunities']} items={codex.immunities} />
-          <ModalColumnForCodexItems text={texts.text['Drops']} items={codex.drops} codexes={codexes} />
-          <ModalColumnForCodexItems text={texts.text['DroppedBy']} items={codex.dropped_by} codexes={codexes} />
-          <ModalColumnForCodexItems text={texts.text['Materials']} items={codex.materials} codexes={codexes} />
+          <ModalCard description={codex.description} tags={codex.tags} />
+          <ModalSegment label={texts.text['Skills']} tableData={codex.spells} tableRenderRow={renderRowForCodexItems} />
+          <ModalSegment label={`${texts.text['Causes']} (${texts.text['Skills']})`}
+            tableData={causes_by_spells} tableRenderRow={renderRowForCausesBySpells} />
+          <ModalSegment label={texts.text['Gives']} tableData={codex.gives} tableRenderRow={renderRowForStatuses} />
+          <ModalSegment label={texts.text['Causes']} tableData={codex.causes} tableRenderRow={renderRowForStatuses} />
+          <ModalSegment label={texts.text['Immunities']} tableData={codex.immunities} tableRenderRow={renderRowForStatuses} />
+          <ModalSegment label={texts.text['Drops']} tableData={codex.drops} tableRenderRow={renderRowForCodexItems} />
+          <ModalSegment label={texts.text['DroppedBy']} tableData={codex.dropped_by} tableRenderRow={renderRowForCodexItems} />
+          <ModalSegment label={texts.text['Materials']} tableData={codex.materials} tableRenderRow={renderRowForCodexItems} />
         </Grid>
       </Modal.Content>
-    </Modal>
+    </Modal >
   )
 })
 
-const ModalColumnForStatuses = React.memo(function ({ text, items }) {
-  if (items == null) return
+const ModalSegment = React.memo(function ({ label, tableData, tableRenderRow }) {
+  if (!tableData) return
   return (
     <Grid.Column>
       <Segment>
-        <Label attached='top'>{text}</Label>
-        <Table basic='very'>
-          <Table.Body>
-            {items.map(([name, probability]) =>
-              <Table.Row key={name}>
-                <Table.Cell>{name}</Table.Cell>
-                {probability != null && <Table.Cell>{probability}%</Table.Cell>}
-              </Table.Row>
-            )}
-          </Table.Body>
-        </Table>
+        {label != null &&
+          <Label attached='top'>{label}</Label>}
+        {tableData != null &&
+          <Table basic='very'
+            tableData={Array.isArray(tableData) ? tableData : Object.entries(tableData)}
+            renderBodyRow={tableRenderRow} />}
       </Segment>
-    </Grid.Column>
+    </Grid.Column >
   )
 })
 
-const ModalColumnForCodexItems = React.memo(function ({ text, items, codexes }) {
-  if (items == null) return
+const ModalCard = React.memo(function ({ description, tags }) {
+  if (!description && !tags) return
   return (
-    <Grid.Column>
-      <Segment>
-        <Label attached='top'>{text}</Label>
-        <Table basic='very'>
-          <Table.Body>
-            {items.map(([category, id]) => codexes[category][id]).map(item =>
-              <Table.Row key={item.key}>
-                <Table.Cell>{item.name}</Table.Cell>
-              </Table.Row>
-            )}
-          </Table.Body>
-        </Table>
-      </Segment>
-    </Grid.Column>
+    <Grid.Column width={16} >
+      <Card fluid>
+        <Card.Content>
+          {description && <Card.Description>{description}</Card.Description>}
+          {tags && <Card.Meta>{tags.map(tag => <Label key={tag}>{tag}</Label>)}</Card.Meta>}
+        </Card.Content>
+      </Card>
+    </Grid.Column >
   )
 })
 
