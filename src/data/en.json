@@ -93487,6 +93487,98 @@
             "omega-olympia-warsword"
           ]
         ]
+      },
+      "arisen-covyn": {
+        "name": "Arisen Covyn",
+        "path": "/codex/raids/arisen-covyn/",
+        "image_url": "https://playorna.com/static/img/packs/nfs/covyn_2023.png",
+        "tags": [
+          "Other Realms Raid"
+        ],
+        "spells": [
+          [
+            "spells",
+            "arcane-strikes-iv"
+          ],
+          [
+            "spells",
+            "gloomstrike-iii"
+          ],
+          [
+            "spells",
+            "hexacut"
+          ],
+          [
+            "spells",
+            "loststrike-iii"
+          ],
+          [
+            "spells",
+            "magic-scythe"
+          ],
+          [
+            "spells",
+            "magic-thinblade"
+          ],
+          [
+            "spells",
+            "omnistrikes-ii"
+          ],
+          [
+            "spells",
+            "quad-edge"
+          ],
+          [
+            "spells",
+            "sacrestrike-iii"
+          ],
+          [
+            "spells",
+            "sortie-ii"
+          ],
+          [
+            "spells",
+            "wyvern-speed-iii"
+          ],
+          [
+            "spells",
+            "x-slash-iii"
+          ]
+        ]
+      },
+      "covyn": {
+        "name": "Covyn",
+        "path": "/codex/raids/covyn/",
+        "image_url": "https://playorna.com/static/img/packs/nfs/covyn.png",
+        "tags": [
+          "Other Realms Raid"
+        ],
+        "spells": [
+          [
+            "spells",
+            "arcane-strikes-ii"
+          ],
+          [
+            "spells",
+            "darkstrike-iii"
+          ],
+          [
+            "spells",
+            "fright"
+          ],
+          [
+            "spells",
+            "holystrike-iii"
+          ],
+          [
+            "spells",
+            "lacuna"
+          ],
+          [
+            "spells",
+            "omnistrike-iii"
+          ]
+        ]
       }
     },
     "spells": {
