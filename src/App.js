@@ -1,8 +1,10 @@
 import React from 'react'
+import Select from 'react-select';
 import { Container, Grid, Table, Menu, Modal, Segment, Card } from 'semantic-ui-react'
 import { Button, Dropdown, Label, Icon, Image, Input } from 'semantic-ui-react'
 import { Dimmer, Loader } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
+import './App.css'
 import { LANGUAGES, LANGUAGE_DEFAULT, TABLE_MAX_ROWS } from './constants'
 
 const initialState = {
@@ -14,12 +16,12 @@ const initialState = {
   // Filters
   filters: {
     query: "",
-    category: "",
-    tag: "",
-    cause: "",
-    cure: "",
-    give: "",
-    immunity: "",
+    category: null,
+    tag: null,
+    cause: null,
+    cure: null,
+    give: null,
+    immunity: null,
   },
   // i18n
   texts: {
@@ -91,22 +93,22 @@ function applyFilter(rows, { query, category, tag, cause, cure, give, immunity }
   if (query.length >= 1) {
     rows = rows.filter(row => row.searches.includes(query))
   }
-  if (category !== "") {
+  if (category) {
     rows = rows.filter(row => row.category === category)
   }
-  if (tag !== "") {
+  if (tag) {
     rows = rows.filter(row => (row.tags || []).includes(tag))
   }
-  if (cause !== "") {
+  if (cause) {
     rows = rows.filter(row => (row.causes || []).find(status => status[0] === cause))
   }
-  if (cure !== "") {
+  if (cure) {
     rows = rows.filter(row => (row.cures || []).find(status => status[0] === cure))
   }
-  if (give !== "") {
+  if (give) {
     rows = rows.filter(row => (row.gives || []).find(status => status[0] === give))
   }
-  if (immunity !== "") {
+  if (immunity) {
     rows = rows.filter(row => (row.immunities || []).find(status => status[0] === immunity))
   }
   return rows
@@ -150,9 +152,9 @@ async function init(language, dispatch) {
   }
   const options = {
     language: Object.entries(LANGUAGES).map(([value, text]) => ({ value, text })),
-    category: Object.entries(texts.category).map(([value, text]) => ({ value, text })),
-    tags: Array.from(tags).sort().map(value => ({ value, text: value })),
-    statuses: Array.from(statuses).sort().map(value => ({ value, text: value })),
+    category: Object.entries(texts.category).map(([value, label]) => ({ value, label })),
+    tags: Array.from(tags).sort().map(value => ({ value, label: value })),
+    statuses: Array.from(statuses).sort().map(value => ({ value, label: value })),
   }
   // dispatch
   dispatch({ type: 'INITIALIZED', language, codexes, codexItems, texts, options })
@@ -179,28 +181,28 @@ function App() {
     }, 200)
   }, [])
 
-  const handleCategoryChange = React.useCallback((event, data) => {
-    dispatch({ type: 'FILTERS_UPDATED', filters: { category: data.value } })
+  const handleCategoryChange = React.useCallback((target) => {
+    dispatch({ type: 'FILTERS_UPDATED', filters: { category: target?.value } })
   }, [])
 
-  const handleTagChange = React.useCallback((event, data) => {
-    dispatch({ type: 'FILTERS_UPDATED', filters: { tag: data.value } })
+  const handleTagChange = React.useCallback((target) => {
+    dispatch({ type: 'FILTERS_UPDATED', filters: { tag: target?.value } })
   }, [])
 
-  const handleCauseChange = React.useCallback((event, data) => {
-    dispatch({ type: 'FILTERS_UPDATED', filters: { cause: data.value } })
+  const handleCauseChange = React.useCallback((target) => {
+    dispatch({ type: 'FILTERS_UPDATED', filters: { cause: target?.value } })
   }, [])
 
-  const handleGiveChange = React.useCallback((event, data) => {
-    dispatch({ type: 'FILTERS_UPDATED', filters: { give: data.value } })
+  const handleGiveChange = React.useCallback((target) => {
+    dispatch({ type: 'FILTERS_UPDATED', filters: { give: target?.value } })
   }, [])
 
-  const handleCureChange = React.useCallback((event, data) => {
-    dispatch({ type: 'FILTERS_UPDATED', filters: { cure: data.value } })
+  const handleCureChange = React.useCallback((target) => {
+    dispatch({ type: 'FILTERS_UPDATED', filters: { cure: target?.value } })
   }, [])
 
-  const handleImmunityChange = React.useCallback((event, data) => {
-    dispatch({ type: 'FILTERS_UPDATED', filters: { immunity: data.value } })
+  const handleImmunityChange = React.useCallback((target) => {
+    dispatch({ type: 'FILTERS_UPDATED', filters: { immunity: target?.value } })
   }, [])
 
   const handleShowDetail = React.useCallback((codex) => {
@@ -230,43 +232,24 @@ function App() {
       </Menu>
 
       <Container>
-        <Grid as={Segment} columns={4} doubling>
+        <Grid as={Segment} columns={4} doubling className='filter'>
           <Grid.Column width={8}>
-            <Input fluid icon='search'
-              placeholder='Search in ANY languages'
-              onChange={handleSearchChange} />
+            <label>Search in ANY languages</label>
+            <Input fluid icon='search' onChange={handleSearchChange} />
           </Grid.Column>
-          <Grid.Column>
-            <Dropdown fluid search selection clearable
-              placeholder='Category' options={options.category}
-              onChange={handleCategoryChange} />
-          </Grid.Column>
-          <Grid.Column>
-            <Dropdown fluid search selection clearable
-              placeholder={texts.text['tags']} options={options.tags}
-              onChange={handleTagChange} />
-          </Grid.Column>
-          <Grid.Column>
-            <Dropdown fluid search selection clearable
-              placeholder={texts.text['causes']} options={options.statuses}
-              onChange={handleCauseChange} />
-          </Grid.Column>
-          <Grid.Column>
-            <Dropdown fluid search selection clearable
-              placeholder={texts.text['cures']} options={options.statuses}
-              onChange={handleCureChange} />
-          </Grid.Column>
-          <Grid.Column>
-            <Dropdown fluid search selection clearable
-              placeholder={texts.text['gives']} options={options.statuses}
-              onChange={handleGiveChange} />
-          </Grid.Column>
-          <Grid.Column>
-            <Dropdown fluid search selection clearable
-              placeholder={texts.text['immunities']} options={options.statuses}
-              onChange={handleImmunityChange} />
-          </Grid.Column>
-        </Grid>
+          <DropdownFilterColumn label='Category' options={options.category}
+            onChange={handleCategoryChange} />
+          <DropdownFilterColumn label={texts.text['tags']} options={options.tags}
+            onChange={handleTagChange} />
+          <DropdownFilterColumn label={texts.text['causes']} options={options.statuses}
+            onChange={handleCauseChange} />
+          <DropdownFilterColumn label={texts.text['cures']} options={options.statuses}
+            onChange={handleCureChange} />
+          <DropdownFilterColumn label={texts.text['gives']} options={options.statuses}
+            onChange={handleGiveChange} />
+          <DropdownFilterColumn label={texts.text['immunities']} options={options.statuses}
+            onChange={handleImmunityChange} />
+        </Grid >
         <Table celled striped selectable unstackable>
           <Table.Header>
             <Table.Row>
@@ -289,15 +272,26 @@ function App() {
             </Table.Row>
           </Table.Footer>
         </Table>
-      </Container>
+      </Container >
 
-      {modal != null &&
+      {
+        modal != null &&
         <ModalForItem codex={modal.codex} codexes={codexes} texts={texts}
           onClose={handleCloseDetail} />
       }
     </div >
   )
 }
+
+const DropdownFilterColumn = React.memo(function ({ label, options, onChange }) {
+  return (
+    <Grid.Column>
+      <label>{label}</label>
+      <Select isSearchable isClearable
+        placeholder={label} options={options} onChange={onChange} />
+    </Grid.Column >
+  )
+})
 
 const TableRowForItem = React.memo(function ({ codex, texts, onClick }) {
   const handleClick = React.useCallback(() => onClick(codex), [codex, onClick])
