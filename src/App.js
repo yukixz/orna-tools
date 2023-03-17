@@ -16,8 +16,9 @@ const initialState = {
     query: "",
     category: "",
     tag: "",
-    give: "",
     cause: "",
+    cure: "",
+    give: "",
     immunity: "",
   },
   // i18n
@@ -86,7 +87,7 @@ function reducer(state, action) {
   }
 }
 
-function applyFilter(rows, { query, category, tag, give, cause, immunity }) {
+function applyFilter(rows, { query, category, tag, cause, cure, give, immunity }) {
   if (query.length >= 1) {
     rows = rows.filter(row => row.searches.includes(query))
   }
@@ -96,11 +97,14 @@ function applyFilter(rows, { query, category, tag, give, cause, immunity }) {
   if (tag !== "") {
     rows = rows.filter(row => (row.tags || []).includes(tag))
   }
-  if (give !== "") {
-    rows = rows.filter(row => (row.gives || []).find(status => status[0] === give))
-  }
   if (cause !== "") {
     rows = rows.filter(row => (row.causes || []).find(status => status[0] === cause))
+  }
+  if (cure !== "") {
+    rows = rows.filter(row => (row.cures || []).find(status => status[0] === cure))
+  }
+  if (give !== "") {
+    rows = rows.filter(row => (row.gives || []).find(status => status[0] === give))
   }
   if (immunity !== "") {
     rows = rows.filter(row => (row.immunities || []).find(status => status[0] === immunity))
@@ -183,12 +187,16 @@ function App() {
     dispatch({ type: 'FILTERS_UPDATED', filters: { tag: data.value } })
   }, [])
 
+  const handleCauseChange = React.useCallback((event, data) => {
+    dispatch({ type: 'FILTERS_UPDATED', filters: { cause: data.value } })
+  }, [])
+
   const handleGiveChange = React.useCallback((event, data) => {
     dispatch({ type: 'FILTERS_UPDATED', filters: { give: data.value } })
   }, [])
 
-  const handleCauseChange = React.useCallback((event, data) => {
-    dispatch({ type: 'FILTERS_UPDATED', filters: { cause: data.value } })
+  const handleCureChange = React.useCallback((event, data) => {
+    dispatch({ type: 'FILTERS_UPDATED', filters: { cure: data.value } })
   }, [])
 
   const handleImmunityChange = React.useCallback((event, data) => {
@@ -240,13 +248,18 @@ function App() {
           </Grid.Column>
           <Grid.Column>
             <Dropdown fluid search selection clearable
-              placeholder={texts.text['gives']} options={options.statuses}
-              onChange={handleGiveChange} />
+              placeholder={texts.text['causes']} options={options.statuses}
+              onChange={handleCauseChange} />
           </Grid.Column>
           <Grid.Column>
             <Dropdown fluid search selection clearable
-              placeholder={texts.text['causes']} options={options.statuses}
-              onChange={handleCauseChange} />
+              placeholder={texts.text['cures']} options={options.statuses}
+              onChange={handleCureChange} />
+          </Grid.Column>
+          <Grid.Column>
+            <Dropdown fluid search selection clearable
+              placeholder={texts.text['gives']} options={options.statuses}
+              onChange={handleGiveChange} />
           </Grid.Column>
           <Grid.Column>
             <Dropdown fluid search selection clearable

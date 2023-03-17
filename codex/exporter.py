@@ -24,6 +24,7 @@ CATEGORIES = ("items", "monsters", "bosses", "followers", "raids", "spells")
 TEXTS = {
     "en": {
         "causes": "Causes",
+        "cures": "Cures",
         "drops": "Drops",
         "droppedBy": "Dropped by",
         "event": "Event",
@@ -38,6 +39,7 @@ TEXTS = {
     },
     "zh-hans": {
         "causes": "造成",
+        "cures": "治疗",
         "drops": "掉落",
         "droppedBy": "掉落来源",
         "event": "活动",
@@ -145,6 +147,8 @@ class Exporter:
             (self.extract_info,),
             (self.extract_list,
              "causes", self.texts["causes"], self.parse_status),
+            (self.extract_list,
+             "cures", self.texts["cures"], self.parse_status),
             (self.extract_list,
              "gives", self.texts["gives"], self.parse_status),
             (self.extract_list,
