@@ -233,31 +233,28 @@ function App() {
 
       <Container>
         <Grid as={Segment} columns={4} doubling id='filters'>
-          <Grid.Column width={8}>
-            <label>Search in ANY languages</label>
-            <Input fluid icon='search' onChange={handleSearchChange} />
-          </Grid.Column>
-          <DropdownFilterColumn label='Category' options={options.category}
-            onChange={handleCategoryChange} />
-          <DropdownFilterColumn label={texts.text['tags']} options={options.tags}
-            onChange={handleTagChange} />
-          <DropdownFilterColumn label={texts.text['causes']} options={options.statuses}
-            onChange={handleCauseChange} />
-          <DropdownFilterColumn label={texts.text['cures']} options={options.statuses}
-            onChange={handleCureChange} />
-          <DropdownFilterColumn label={texts.text['gives']} options={options.statuses}
-            onChange={handleGiveChange} />
-          <DropdownFilterColumn label={texts.text['immunities']} options={options.statuses}
-            onChange={handleImmunityChange} />
+          <Grid.Row>
+            <Grid.Column width={8}>
+              <label>Search in ANY language</label>
+              <Input fluid icon='search' onChange={handleSearchChange} />
+            </Grid.Column>
+            <DropdownFilterColumn label='Category' options={options.category}
+              onChange={handleCategoryChange} />
+            <DropdownFilterColumn label={texts.text['tags']} options={options.tags}
+              onChange={handleTagChange} />
+          </Grid.Row>
+          <Grid.Row>
+            <DropdownFilterColumn label={texts.text['causes']} options={options.statuses}
+              onChange={handleCauseChange} />
+            <DropdownFilterColumn label={texts.text['cures']} options={options.statuses}
+              onChange={handleCureChange} />
+            <DropdownFilterColumn label={texts.text['gives']} options={options.statuses}
+              onChange={handleGiveChange} />
+            <DropdownFilterColumn label={texts.text['immunities']} options={options.statuses}
+              onChange={handleImmunityChange} />
+          </Grid.Row>
         </Grid >
         <Table celled striped selectable unstackable>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>Name</Table.HeaderCell>
-              <Table.HeaderCell>Category</Table.HeaderCell>
-              <Table.HeaderCell collapsing>Action</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
           <Table.Body>
             {rows.slice(0, TABLE_MAX_ROWS).map(codex =>
               <TableRowForItem key={codex.key}
@@ -267,7 +264,7 @@ function App() {
           <Table.Footer>
             <Table.Row>
               <Table.Cell disabled colSpan='4'>
-                ~{rows.length <= TABLE_MAX_ROWS ? rows.length : TABLE_MAX_ROWS} / {rows.length}
+                {rows.length <= TABLE_MAX_ROWS ? rows.length : TABLE_MAX_ROWS} / {rows.length}
               </Table.Cell>
             </Table.Row>
           </Table.Footer>
@@ -288,7 +285,7 @@ const DropdownFilterColumn = React.memo(function ({ label, options, onChange }) 
     <Grid.Column>
       <label>{label}</label>
       <Select isSearchable isClearable
-        placeholder={label} options={options} onChange={onChange} />
+        placeholder='--' options={options} onChange={onChange} />
     </Grid.Column >
   )
 })
@@ -302,7 +299,7 @@ const TableRowForItem = React.memo(function ({ codex, texts, onClick }) {
         {codex.name}
       </Table.Cell>
       <Table.Cell>
-        {texts.category[codex.category]}
+        <CodexLabels codex={codex} texts={texts} disable={{ family: true }} />
       </Table.Cell>
       <Table.Cell>
         <Button.Group>
@@ -322,6 +319,19 @@ const TableRowForItem = React.memo(function ({ codex, texts, onClick }) {
         </Button.Group>
       </Table.Cell>
     </Table.Row>
+  )
+})
+
+const CodexLabels = React.memo(function ({ codex, texts, disable = {} }) {
+  return (
+    <Label.Group size='small'>
+      <Label>{texts.category[codex.category]}</Label>
+      {!disable.tier && codex.tier && <Label><Icon name='star' />{codex.tier}</Label>}
+      {/* {!disable.family && codex.family && <Label>{codex.family}</Label>} */}
+      {/* {!disable.rarity && codex.rarity && <Label>{codex.rarity}</Label>} */}
+      {/* {!disable.event && codex.event && <Label><Icon name='map' />{codex.event}</Label>} */}
+      {/* {!disable.tags && codex.tags && codex.tags.map(tag => <Label key={`tag:${tag}`}>{tag}</Label>)} */}
+    </Label.Group>
   )
 })
 
