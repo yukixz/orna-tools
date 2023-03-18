@@ -18,6 +18,10 @@ const initialState = {
     query: "",
     category: null,
     tag: null,
+    tier: null,
+    family: null,
+    rarity: null,
+    event: null,
     cause: null,
     cure: null,
     give: null,
@@ -33,6 +37,10 @@ const initialState = {
     category: [],
     tags: [],
     statuses: [],
+    tiers: [],
+    families: [],
+    rarities: [],
+    events: [],
   },
   // Modal
   modal: null,
@@ -89,27 +97,39 @@ function reducer(state, action) {
   }
 }
 
-function applyFilter(rows, { query, category, tag, cause, cure, give, immunity }) {
-  if (query.length >= 1) {
-    rows = rows.filter(row => row.searches.includes(query))
+function applyFilter(rows, filters) {
+  if (filters.query.length >= 1) {
+    rows = rows.filter(row => row.searches.includes(filters.query))
   }
-  if (category) {
-    rows = rows.filter(row => row.category === category)
+  if (filters.category) {
+    rows = rows.filter(row => row.category === filters.category)
   }
-  if (tag) {
-    rows = rows.filter(row => (row.tags || []).includes(tag))
+  if (filters.tag) {
+    rows = rows.filter(row => (row.tags || []).includes(filters.tag))
   }
-  if (cause) {
-    rows = rows.filter(row => (row.causes || []).find(status => status[0] === cause))
+  if (filters.tier) {
+    rows = rows.filter(row => row.tier === filters.tier)
   }
-  if (cure) {
-    rows = rows.filter(row => (row.cures || []).find(status => status[0] === cure))
+  if (filters.family) {
+    rows = rows.filter(row => row.family === filters.family)
   }
-  if (give) {
-    rows = rows.filter(row => (row.gives || []).find(status => status[0] === give))
+  if (filters.rarity) {
+    rows = rows.filter(row => row.rarity === filters.rarity)
   }
-  if (immunity) {
-    rows = rows.filter(row => (row.immunities || []).find(status => status[0] === immunity))
+  if (filters.event) {
+    rows = rows.filter(row => row.event === filters.event)
+  }
+  if (filters.cause) {
+    rows = rows.filter(row => (row.causes || []).find(status => status[0] === filters.cause))
+  }
+  if (filters.cure) {
+    rows = rows.filter(row => (row.cures || []).find(status => status[0] === filters.cure))
+  }
+  if (filters.give) {
+    rows = rows.filter(row => (row.gives || []).find(status => status[0] === filters.give))
+  }
+  if (filters.immunity) {
+    rows = rows.filter(row => (row.immunities || []).find(status => status[0] === filters.immunity))
   }
   return rows
 }
@@ -122,8 +142,14 @@ async function init(language, dispatch) {
   }
   const codexes = structuredClone(data[language].codex)
   const codexItems = []
-  const tags = new Set()
-  const statuses = new Set()
+  const options = {
+    tags: new Set(),
+    statuses: new Set(),
+    tiers: new Set(),
+    families: new Set(),
+    rarities: new Set(),
+    events: new Set(),
+  }
   for (const [category, items] of Object.entries(codexes)) {
     for (const [id, item] of Object.entries(items)) {
       codexItems.push(item)
@@ -135,12 +161,34 @@ async function init(language, dispatch) {
           lang => data[lang].codex[category][id].name)
           .join('|').toLowerCase(),
       })
-      for (const value of item.tags || []) {
-        tags.add(value)
+      // item.x is value
+      for (const [to, from] of [
+        ['tiers', 'tier'],
+        ['families', 'family'],
+        ['rarities', 'rarity'],
+        ['events', 'event'],
+      ]) {
+        if (item[from] == null) continue
+        options[to].add(item[from])
       }
-      for (const status of [].concat(item.gives, item.causes, item.immunities)) {
-        if (status == null) continue
-        statuses.add(status[0])
+      // item.x is [value, ...]
+      for (const [to, from] of [['tags', 'tags']]) {
+        if (item[from] == null) continue
+        for (const value of item[from]) {
+          options[to].add(value)
+        }
+      }
+      // item.x is [[value, ...unused], ...]
+      for (const [to, from] of [
+        ['statuses', 'causes'],
+        ['statuses', 'cures'],
+        ['statuses', 'gives'],
+        ['statuses', 'immunities'],
+      ]) {
+        if (item[from] == null) continue
+        for (const status of item[from]) {
+          options[to].add(status[0])
+        }
       }
     }
   }
@@ -150,13 +198,15 @@ async function init(language, dispatch) {
     text: data[language].text,
     category: data[language].category,
   }
-  const options = {
+  for (const [key, values] of Object.entries(options)) {
+    options[key] = Array.from(values).sort().map(value => ({ value, label: value }))
+  }
+  Object.assign(options, {
     language: Object.entries(LANGUAGES).map(([value, text]) => ({ value, text })),
     category: Object.entries(texts.category).map(([value, label]) => ({ value, label })),
-    tags: Array.from(tags).sort().map(value => ({ value, label: value })),
-    statuses: Array.from(statuses).sort().map(value => ({ value, label: value })),
-  }
+  })
   // dispatch
+  console.log(options)
   dispatch({ type: 'INITIALIZED', language, codexes, codexItems, texts, options })
 }
 
@@ -189,16 +239,32 @@ function App() {
     dispatch({ type: 'FILTERS_UPDATED', filters: { tag: target?.value } })
   }, [])
 
+  const handleTierChange = React.useCallback((target) => {
+    dispatch({ type: 'FILTERS_UPDATED', filters: { tier: target?.value } })
+  }, [])
+
+  const handleFamilyChange = React.useCallback((target) => {
+    dispatch({ type: 'FILTERS_UPDATED', filters: { family: target?.value } })
+  }, [])
+
+  const handleRarityChange = React.useCallback((target) => {
+    dispatch({ type: 'FILTERS_UPDATED', filters: { rarity: target?.value } })
+  }, [])
+
+  const handleEventChange = React.useCallback((target) => {
+    dispatch({ type: 'FILTERS_UPDATED', filters: { event: target?.value } })
+  }, [])
+
   const handleCauseChange = React.useCallback((target) => {
     dispatch({ type: 'FILTERS_UPDATED', filters: { cause: target?.value } })
   }, [])
 
-  const handleGiveChange = React.useCallback((target) => {
-    dispatch({ type: 'FILTERS_UPDATED', filters: { give: target?.value } })
-  }, [])
-
   const handleCureChange = React.useCallback((target) => {
     dispatch({ type: 'FILTERS_UPDATED', filters: { cure: target?.value } })
+  }, [])
+
+  const handleGiveChange = React.useCallback((target) => {
+    dispatch({ type: 'FILTERS_UPDATED', filters: { give: target?.value } })
   }, [])
 
   const handleImmunityChange = React.useCallback((target) => {
@@ -242,6 +308,16 @@ function App() {
               onChange={handleCategoryChange} />
             <DropdownFilterColumn label={texts.text['tags']} options={options.tags}
               onChange={handleTagChange} />
+          </Grid.Row>
+          <Grid.Row>
+            <DropdownFilterColumn label={texts.text['tier']} options={options.tiers}
+              onChange={handleTierChange} />
+            <DropdownFilterColumn label={texts.text['family']} options={options.families}
+              onChange={handleFamilyChange} />
+            <DropdownFilterColumn label={texts.text['rarity']} options={options.rarities}
+              onChange={handleRarityChange} />
+            <DropdownFilterColumn label={texts.text['event']} options={options.events}
+              onChange={handleEventChange} />
           </Grid.Row>
           <Grid.Row>
             <DropdownFilterColumn label={texts.text['causes']} options={options.statuses}
