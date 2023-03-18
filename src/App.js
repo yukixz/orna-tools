@@ -232,7 +232,7 @@ function App() {
       </Menu>
 
       <Container>
-        <Grid as={Segment} columns={4} doubling className='filter'>
+        <Grid as={Segment} columns={4} doubling id='filters'>
           <Grid.Column width={8}>
             <label>Search in ANY languages</label>
             <Input fluid icon='search' onChange={handleSearchChange} />

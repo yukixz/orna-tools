@@ -3,3 +3,10 @@
     font-weight: bold;
     margin-left: 0.25rem;
 }
+
+/* Mobile Only */
+@media only screen and (max-width: 767px) {
+    #filters.grid>.column.wide {
+        width: 100% !important;
+    }
+}
