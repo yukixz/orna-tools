@@ -1,6 +1,7 @@
 {
   "text": {
     "causes": "Causes",
+    "cures": "Cures",
     "drops": "Drops",
     "droppedBy": "Dropped by",
     "event": "Event",
@@ -1532,6 +1533,82 @@
         "image_url": "https://playorna.com/static/img/useables/ambrosia.png",
         "description": "The brew of a terrible witch. It restores a moderate amount of HP and Mana while curing any negative status effects.",
         "tier": 8,
+        "cures": [
+          [
+            "Att ↓",
+            null
+          ],
+          [
+            "Def ↓",
+            null
+          ],
+          [
+            "Def ↓↓",
+            null
+          ],
+          [
+            "T. Def ↓",
+            null
+          ],
+          [
+            "T. Att ↓",
+            null
+          ],
+          [
+            "T. Mag ↓",
+            null
+          ],
+          [
+            "Mag ↓",
+            null
+          ],
+          [
+            "T. Res ↓",
+            null
+          ],
+          [
+            "T. Mag ↓↓",
+            null
+          ],
+          [
+            "T. Att ↓↓",
+            null
+          ],
+          [
+            "T. Def ↓↓",
+            null
+          ],
+          [
+            "T. Def ↓↓↓",
+            null
+          ],
+          [
+            "T. Res ↓↓",
+            null
+          ],
+          [
+            "Res ↓↓",
+            null
+          ],
+          [
+            "Res ↓",
+            null
+          ],
+          [
+            "T. Dex ↓",
+            null
+          ]
+        ],
+        "dropped_by": [
+          [
+            "raids",
+            "arisen-morrigan"
+          ],
+          [
+            "raids",
+            "the-morrigan"
+          ]
+        ],
         "ornaguide_id": 1056,
         "ornaguide_category": "item"
       },
@@ -2101,6 +2178,22 @@
         "tags": [
           "Found in shops",
           "Found in chests"
+        ],
+        "cures": [
+          [
+            "Poisoned",
+            null
+          ]
+        ],
+        "dropped_by": [
+          [
+            "monsters",
+            "green-slime"
+          ],
+          [
+            "raids",
+            "dracon"
+          ]
         ],
         "ornaguide_id": 4,
         "ornaguide_category": "item"
@@ -17500,6 +17593,54 @@
         "tags": [
           "Found in chests"
         ],
+        "cures": [
+          [
+            "Poisoned",
+            null
+          ],
+          [
+            "Bleeding",
+            null
+          ],
+          [
+            "Burning",
+            null
+          ],
+          [
+            "Frozen",
+            null
+          ],
+          [
+            "Paralyzed",
+            null
+          ],
+          [
+            "Rot",
+            null
+          ],
+          [
+            "Blind",
+            null
+          ],
+          [
+            "Asleep",
+            null
+          ],
+          [
+            "Blight",
+            null
+          ]
+        ],
+        "dropped_by": [
+          [
+            "raids",
+            "dracon"
+          ],
+          [
+            "raids",
+            "pumpkin-spider"
+          ]
+        ],
         "ornaguide_id": 445,
         "ornaguide_category": "item"
       },
@@ -22470,6 +22611,70 @@
         "image_url": "https://playorna.com/static/img/useables/drake_blood.png",
         "description": "A tonic made of a dragon's blood. It will cure any elemental blight that a dragon may have inflicted upon you.",
         "tier": 5,
+        "cures": [
+          [
+            "Blight",
+            null
+          ],
+          [
+            "Fireblight",
+            null
+          ],
+          [
+            "Waterblight",
+            null
+          ],
+          [
+            "Earthblight",
+            null
+          ],
+          [
+            "Lightningblight",
+            null
+          ],
+          [
+            "Drakeblight",
+            null
+          ],
+          [
+            "Darkblight",
+            null
+          ],
+          [
+            "Holyblight",
+            null
+          ]
+        ],
+        "dropped_by": [
+          [
+            "bosses",
+            "agathodaemon"
+          ],
+          [
+            "bosses",
+            "illuyanka-made-of-stone"
+          ],
+          [
+            "bosses",
+            "lotan-coiled-one"
+          ],
+          [
+            "bosses",
+            "quetzalcoatl-feathered-one"
+          ],
+          [
+            "bosses",
+            "vritra-the-steadfast"
+          ],
+          [
+            "bosses",
+            "ymir-amphiptere"
+          ],
+          [
+            "bosses",
+            "zaltys-friendly-one"
+          ]
+        ],
         "ornaguide_id": 1607,
         "ornaguide_category": "item"
       },
@@ -36021,6 +36226,74 @@
         "image_url": "https://playorna.com/static/img/useables/ichor.png",
         "description": "A restorative elixir that removes any stat lowering ailments against you.",
         "tier": 4,
+        "cures": [
+          [
+            "Att ↓",
+            null
+          ],
+          [
+            "Def ↓",
+            null
+          ],
+          [
+            "Def ↓↓",
+            null
+          ],
+          [
+            "T. Def ↓",
+            null
+          ],
+          [
+            "T. Att ↓",
+            null
+          ],
+          [
+            "T. Mag ↓",
+            null
+          ],
+          [
+            "Mag ↓",
+            null
+          ],
+          [
+            "T. Res ↓",
+            null
+          ],
+          [
+            "T. Mag ↓↓",
+            null
+          ],
+          [
+            "T. Att ↓↓",
+            null
+          ],
+          [
+            "T. Def ↓↓",
+            null
+          ],
+          [
+            "T. Def ↓↓↓",
+            null
+          ],
+          [
+            "Res ↓↓",
+            null
+          ],
+          [
+            "Res ↓",
+            null
+          ],
+          [
+            "T. Dex ↓",
+            null
+          ]
+        ],
+        "dropped_by": [
+          [
+            "raids",
+            "pumpkin-spider"
+          ]
+        ],
         "ornaguide_id": 1343,
         "ornaguide_category": "item"
       },
@@ -39747,6 +40020,30 @@
         "image_url": "https://playorna.com/static/img/jewels/30.png",
         "description": "An artifact capable of unmarking one from Lyonesse execution.",
         "tier": 5,
+        "cures": [
+          [
+            "Lyon's Mark",
+            null
+          ]
+        ],
+        "dropped_by": [
+          [
+            "bosses",
+            "arisen-king-meliodas"
+          ],
+          [
+            "bosses",
+            "false-king-meliodas"
+          ],
+          [
+            "raids",
+            "arisen-warlock-trevelyan"
+          ],
+          [
+            "raids",
+            "fallen-warlock-trevelyan"
+          ]
+        ],
         "ornaguide_id": 1400,
         "ornaguide_category": "item"
       },
@@ -42318,6 +42615,56 @@
         "image_url": "https://playorna.com/static/img/useables/nostrum.png",
         "description": "Some say the Cure-all is a bit of snake oil. This concoction aims to cure its drinker of many ailments.",
         "tier": 4,
+        "cures": [
+          [
+            "Poisoned",
+            null
+          ],
+          [
+            "Bleeding",
+            null
+          ],
+          [
+            "Burning",
+            null
+          ],
+          [
+            "Frozen",
+            null
+          ],
+          [
+            "Paralyzed",
+            null
+          ],
+          [
+            "Rot",
+            null
+          ],
+          [
+            "Cursed",
+            null
+          ],
+          [
+            "Blind",
+            null
+          ],
+          [
+            "Asleep",
+            null
+          ],
+          [
+            "Stunned",
+            null
+          ],
+          [
+            "Blight",
+            null
+          ],
+          [
+            "Petrified",
+            null
+          ]
+        ],
         "ornaguide_id": 1342,
         "ornaguide_category": "item"
       },
@@ -45122,6 +45469,142 @@
         "image_url": "https://playorna.com/static/img/useables/panacea.png",
         "description": "The universal remedy.",
         "tier": 4,
+        "cures": [
+          [
+            "Poisoned",
+            null
+          ],
+          [
+            "Bleeding",
+            null
+          ],
+          [
+            "Burning",
+            null
+          ],
+          [
+            "Frozen",
+            null
+          ],
+          [
+            "Paralyzed",
+            null
+          ],
+          [
+            "Rot",
+            null
+          ],
+          [
+            "Cursed",
+            null
+          ],
+          [
+            "Toxic",
+            null
+          ],
+          [
+            "Blind",
+            null
+          ],
+          [
+            "Asleep",
+            null
+          ],
+          [
+            "Drenched",
+            null
+          ],
+          [
+            "Stunned",
+            null
+          ],
+          [
+            "Blight",
+            null
+          ],
+          [
+            "Petrified",
+            null
+          ],
+          [
+            "Att ↓",
+            null
+          ],
+          [
+            "Def ↓",
+            null
+          ],
+          [
+            "Def ↓↓",
+            null
+          ],
+          [
+            "Mag ↓",
+            null
+          ],
+          [
+            "Res ↓↓",
+            null
+          ],
+          [
+            "Res ↓",
+            null
+          ],
+          [
+            "T. Dex ↓",
+            null
+          ]
+        ],
+        "dropped_by": [
+          [
+            "bosses",
+            "fafnir-66402ab7"
+          ],
+          [
+            "raids",
+            "arisen-ebon-scruug"
+          ],
+          [
+            "raids",
+            "arisen-kerberos"
+          ],
+          [
+            "raids",
+            "arisen-naggeneen"
+          ],
+          [
+            "raids",
+            "arisen-pumpkinhead"
+          ],
+          [
+            "raids",
+            "ebon-scruug"
+          ],
+          [
+            "raids",
+            "fey-yeti"
+          ],
+          [
+            "raids",
+            "kerberos"
+          ],
+          [
+            "raids",
+            "mimic-king-of-kings"
+          ],
+          [
+            "raids",
+            "naggeneen"
+          ],
+          [
+            "raids",
+            "pumpkinhead"
+          ],
+          [
+            "raids",
+            "scruug"
+          ]
+        ],
         "ornaguide_id": 12,
         "ornaguide_category": "item"
       },
@@ -52478,6 +52961,12 @@
         "image_url": "https://playorna.com/static/img/useables/energy_potion.png",
         "description": "A simple tonic that cures one of petrification.",
         "tier": 3,
+        "cures": [
+          [
+            "Petrified",
+            null
+          ]
+        ],
         "ornaguide_id": 1505,
         "ornaguide_category": "item"
       },

@@ -1,6 +1,7 @@
 {
   "text": {
     "causes": "造成",
+    "cures": "治疗",
     "drops": "掉落",
     "droppedBy": "掉落来源",
     "event": "活动",
@@ -1532,6 +1533,82 @@
         "image_url": "https://playorna.com/static/img/useables/ambrosia.png",
         "description": "恐怖女巫的佳酿。能大幅回复生命值和魔力值并解除对属性的负面效果。",
         "tier": 8,
+        "cures": [
+          [
+            "Att ↓",
+            null
+          ],
+          [
+            "Def ↓",
+            null
+          ],
+          [
+            "Def ↓↓",
+            null
+          ],
+          [
+            "T. Def ↓",
+            null
+          ],
+          [
+            "T. Att ↓",
+            null
+          ],
+          [
+            "T. Mag ↓",
+            null
+          ],
+          [
+            "Mag ↓",
+            null
+          ],
+          [
+            "T. Res ↓",
+            null
+          ],
+          [
+            "T. Mag ↓↓",
+            null
+          ],
+          [
+            "T. Att ↓↓",
+            null
+          ],
+          [
+            "T. Def ↓↓",
+            null
+          ],
+          [
+            "T. Def ↓↓↓",
+            null
+          ],
+          [
+            "T. Res ↓↓",
+            null
+          ],
+          [
+            "Res ↓↓",
+            null
+          ],
+          [
+            "Res ↓",
+            null
+          ],
+          [
+            "T. Dex ↓",
+            null
+          ]
+        ],
+        "dropped_by": [
+          [
+            "raids",
+            "arisen-morrigan"
+          ],
+          [
+            "raids",
+            "the-morrigan"
+          ]
+        ],
         "ornaguide_id": 1056,
         "ornaguide_category": "item"
       },
@@ -2101,6 +2178,22 @@
         "tags": [
           "商店售卖",
           "宝箱掉落"
+        ],
+        "cures": [
+          [
+            "中毒",
+            null
+          ]
+        ],
+        "dropped_by": [
+          [
+            "monsters",
+            "green-slime"
+          ],
+          [
+            "raids",
+            "dracon"
+          ]
         ],
         "ornaguide_id": 4,
         "ornaguide_category": "item"
@@ -17500,6 +17593,54 @@
         "tags": [
           "宝箱掉落"
         ],
+        "cures": [
+          [
+            "中毒",
+            null
+          ],
+          [
+            "流血",
+            null
+          ],
+          [
+            "燃烧",
+            null
+          ],
+          [
+            "冰冻",
+            null
+          ],
+          [
+            "麻痹",
+            null
+          ],
+          [
+            "腐败",
+            null
+          ],
+          [
+            "致盲",
+            null
+          ],
+          [
+            "入睡",
+            null
+          ],
+          [
+            "枯萎",
+            null
+          ]
+        ],
+        "dropped_by": [
+          [
+            "raids",
+            "dracon"
+          ],
+          [
+            "raids",
+            "pumpkin-spider"
+          ]
+        ],
         "ornaguide_id": 445,
         "ornaguide_category": "item"
       },
@@ -22470,6 +22611,70 @@
         "image_url": "https://playorna.com/static/img/useables/drake_blood.png",
         "description": "使用龙血所制作的药水。能治疗任何由龙造成的元素疫病。",
         "tier": 5,
+        "cures": [
+          [
+            "枯萎",
+            null
+          ],
+          [
+            "火之疫病",
+            null
+          ],
+          [
+            "水之疫病",
+            null
+          ],
+          [
+            "地之疫病",
+            null
+          ],
+          [
+            "雷之疫病",
+            null
+          ],
+          [
+            "龙兽疫病",
+            null
+          ],
+          [
+            "暗黑疫病",
+            null
+          ],
+          [
+            "神圣疫病",
+            null
+          ]
+        ],
+        "dropped_by": [
+          [
+            "bosses",
+            "agathodaemon"
+          ],
+          [
+            "bosses",
+            "illuyanka-made-of-stone"
+          ],
+          [
+            "bosses",
+            "lotan-coiled-one"
+          ],
+          [
+            "bosses",
+            "quetzalcoatl-feathered-one"
+          ],
+          [
+            "bosses",
+            "vritra-the-steadfast"
+          ],
+          [
+            "bosses",
+            "ymir-amphiptere"
+          ],
+          [
+            "bosses",
+            "zaltys-friendly-one"
+          ]
+        ],
         "ornaguide_id": 1607,
         "ornaguide_category": "item"
       },
@@ -36021,6 +36226,74 @@
         "image_url": "https://playorna.com/static/img/useables/ichor.png",
         "description": "能移除任何降低属性之异常状态的恢复性秘药。",
         "tier": 4,
+        "cures": [
+          [
+            "Att ↓",
+            null
+          ],
+          [
+            "Def ↓",
+            null
+          ],
+          [
+            "Def ↓↓",
+            null
+          ],
+          [
+            "T. Def ↓",
+            null
+          ],
+          [
+            "T. Att ↓",
+            null
+          ],
+          [
+            "T. Mag ↓",
+            null
+          ],
+          [
+            "Mag ↓",
+            null
+          ],
+          [
+            "T. Res ↓",
+            null
+          ],
+          [
+            "T. Mag ↓↓",
+            null
+          ],
+          [
+            "T. Att ↓↓",
+            null
+          ],
+          [
+            "T. Def ↓↓",
+            null
+          ],
+          [
+            "T. Def ↓↓↓",
+            null
+          ],
+          [
+            "Res ↓↓",
+            null
+          ],
+          [
+            "Res ↓",
+            null
+          ],
+          [
+            "T. Dex ↓",
+            null
+          ]
+        ],
+        "dropped_by": [
+          [
+            "raids",
+            "pumpkin-spider"
+          ]
+        ],
         "ornaguide_id": 1343,
         "ornaguide_category": "item"
       },
@@ -39747,6 +40020,30 @@
         "image_url": "https://playorna.com/static/img/jewels/30.png",
         "description": "能防止被当作里昂内斯处决执行对象的神器。",
         "tier": 5,
+        "cures": [
+          [
+            "里昂的标记",
+            null
+          ]
+        ],
+        "dropped_by": [
+          [
+            "bosses",
+            "arisen-king-meliodas"
+          ],
+          [
+            "bosses",
+            "false-king-meliodas"
+          ],
+          [
+            "raids",
+            "arisen-warlock-trevelyan"
+          ],
+          [
+            "raids",
+            "fallen-warlock-trevelyan"
+          ]
+        ],
         "ornaguide_id": 1400,
         "ornaguide_category": "item"
       },
@@ -42318,6 +42615,56 @@
         "image_url": "https://playorna.com/static/img/useables/nostrum.png",
         "description": "据说灵药是由一点蛇油所制成。这个调剂用来治疗各种疾病。",
         "tier": 4,
+        "cures": [
+          [
+            "中毒",
+            null
+          ],
+          [
+            "流血",
+            null
+          ],
+          [
+            "燃烧",
+            null
+          ],
+          [
+            "冰冻",
+            null
+          ],
+          [
+            "麻痹",
+            null
+          ],
+          [
+            "腐败",
+            null
+          ],
+          [
+            "诅咒",
+            null
+          ],
+          [
+            "致盲",
+            null
+          ],
+          [
+            "入睡",
+            null
+          ],
+          [
+            "晕眩",
+            null
+          ],
+          [
+            "枯萎",
+            null
+          ],
+          [
+            "石化",
+            null
+          ]
+        ],
         "ornaguide_id": 1342,
         "ornaguide_category": "item"
       },
@@ -45122,6 +45469,142 @@
         "image_url": "https://playorna.com/static/img/useables/panacea.png",
         "description": "乱世中的唯一救赎。",
         "tier": 4,
+        "cures": [
+          [
+            "中毒",
+            null
+          ],
+          [
+            "流血",
+            null
+          ],
+          [
+            "燃烧",
+            null
+          ],
+          [
+            "冰冻",
+            null
+          ],
+          [
+            "麻痹",
+            null
+          ],
+          [
+            "腐败",
+            null
+          ],
+          [
+            "诅咒",
+            null
+          ],
+          [
+            "剧毒",
+            null
+          ],
+          [
+            "致盲",
+            null
+          ],
+          [
+            "入睡",
+            null
+          ],
+          [
+            "湿滑",
+            null
+          ],
+          [
+            "晕眩",
+            null
+          ],
+          [
+            "枯萎",
+            null
+          ],
+          [
+            "石化",
+            null
+          ],
+          [
+            "Att ↓",
+            null
+          ],
+          [
+            "Def ↓",
+            null
+          ],
+          [
+            "Def ↓↓",
+            null
+          ],
+          [
+            "Mag ↓",
+            null
+          ],
+          [
+            "Res ↓↓",
+            null
+          ],
+          [
+            "Res ↓",
+            null
+          ],
+          [
+            "T. Dex ↓",
+            null
+          ]
+        ],
+        "dropped_by": [
+          [
+            "bosses",
+            "fafnir-66402ab7"
+          ],
+          [
+            "raids",
+            "arisen-ebon-scruug"
+          ],
+          [
+            "raids",
+            "arisen-kerberos"
+          ],
+          [
+            "raids",
+            "arisen-naggeneen"
+          ],
+          [
+            "raids",
+            "arisen-pumpkinhead"
+          ],
+          [
+            "raids",
+            "ebon-scruug"
+          ],
+          [
+            "raids",
+            "fey-yeti"
+          ],
+          [
+            "raids",
+            "kerberos"
+          ],
+          [
+            "raids",
+            "mimic-king-of-kings"
+          ],
+          [
+            "raids",
+            "naggeneen"
+          ],
+          [
+            "raids",
+            "pumpkinhead"
+          ],
+          [
+            "raids",
+            "scruug"
+          ]
+        ],
         "ornaguide_id": 12,
         "ornaguide_category": "item"
       },
@@ -52478,6 +52961,12 @@
         "image_url": "https://playorna.com/static/img/useables/energy_potion.png",
         "description": "能治疗石化的药水。",
         "tier": 3,
+        "cures": [
+          [
+            "石化",
+            null
+          ]
+        ],
         "ornaguide_id": 1505,
         "ornaguide_category": "item"
       },
