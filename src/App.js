@@ -140,7 +140,8 @@ async function init(language, dispatch) {
   for (const lang of Object.keys(LANGUAGES)) {
     data[lang] = await import(`./data/${lang}.json`)
   }
-  const codexes = structuredClone(data[language].codex)
+  // Wanna using structuredClone, but cant make polyfill work
+  const codexes = JSON.parse(JSON.stringify(data[language].codex))
   const codexItems = []
   const options = {
     tags: new Set(),
