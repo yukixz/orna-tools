@@ -1,34 +1,17 @@
 import React from 'react'
 import { Grid, Table, Modal, Segment, Card, Label } from 'semantic-ui-react'
+import { CodexModalContext, CodexModalDispatchContext } from '../context/CodexModalContext'
+import { DataContext } from '../context/DataContext'
 
 
-export default function CodexModal({ codex, codexes, texts, dispatch }) {
+export default function CodexModal() {
+  const codex = React.useContext(CodexModalContext)
+  const dispatch = React.useContext(CodexModalDispatchContext)
+  const { codexes, i18n } = React.useContext(DataContext)
+
   const handleClose = React.useCallback(() => {
-    dispatch({ type: 'CODEX_MODAL_CLOSE' })
+    dispatch({ type: 'CLOSE' })
   }, [dispatch])
-
-  let causes_by_spells = null
-  if (codex.spells != null) {
-    causes_by_spells = {}
-    for (const [category, key] of codex.spells) {
-      const spellCodex = codexes[category][key]
-      if (spellCodex.causes == null) {
-        continue
-      }
-      for (const [status, probability] of spellCodex.causes) {
-        if (causes_by_spells[status] == null) {
-          causes_by_spells[status] = {
-            probability: 0,
-            by: []
-          }
-        }
-        causes_by_spells[status].by.push(`${spellCodex.name} (${probability}%)`)
-        if (probability > causes_by_spells[status].probability) {
-          causes_by_spells[status].probability = probability
-        }
-      }
-    }
-  }
 
   const renderRowForCodexItems = React.useCallback(([category, id]) => {
     const item = codexes[category][id]
@@ -56,6 +39,34 @@ export default function CodexModal({ codex, codexes, texts, dispatch }) {
     )
   }, [])
 
+
+  if (codex == null) {
+    return null
+  }
+
+
+  let causes_by_spells = null
+  if (codex.spells != null) {
+    causes_by_spells = {}
+    for (const [category, key] of codex.spells) {
+      const spellCodex = codexes[category][key]
+      if (spellCodex.causes == null) {
+        continue
+      }
+      for (const [status, probability] of spellCodex.causes) {
+        if (causes_by_spells[status] == null) {
+          causes_by_spells[status] = {
+            probability: 0,
+            by: []
+          }
+        }
+        causes_by_spells[status].by.push(`${spellCodex.name} (${probability}%)`)
+        if (probability > causes_by_spells[status].probability) {
+          causes_by_spells[status].probability = probability
+        }
+      }
+    }
+  }
   return (
     <Modal open={true} onClose={handleClose}>
       <Modal.Header>
@@ -64,15 +75,15 @@ export default function CodexModal({ codex, codexes, texts, dispatch }) {
       <Modal.Content scrolling>
         <Grid columns={2} doubling>
           <ModalCard description={codex.description} tags={codex.tags} />
-          <ModalSegment label={texts.text['skills']} tableData={codex.spells} tableRenderRow={renderRowForCodexItems} />
-          <ModalSegment label={`${texts.text['causes']} (${texts.text['skills']})`}
+          <ModalSegment label={i18n.text['skills']} tableData={codex.spells} tableRenderRow={renderRowForCodexItems} />
+          <ModalSegment label={`${i18n.text['causes']} (${i18n.text['skills']})`}
             tableData={causes_by_spells} tableRenderRow={renderRowForCausesBySpells} />
-          <ModalSegment label={texts.text['gives']} tableData={codex.gives} tableRenderRow={renderRowForStatuses} />
-          <ModalSegment label={texts.text['causes']} tableData={codex.causes} tableRenderRow={renderRowForStatuses} />
-          <ModalSegment label={texts.text['immunities']} tableData={codex.immunities} tableRenderRow={renderRowForStatuses} />
-          <ModalSegment label={texts.text['drops']} tableData={codex.drops} tableRenderRow={renderRowForCodexItems} />
-          <ModalSegment label={texts.text['droppedBy']} tableData={codex.dropped_by} tableRenderRow={renderRowForCodexItems} />
-          <ModalSegment label={texts.text['materials']} tableData={codex.materials} tableRenderRow={renderRowForCodexItems} />
+          <ModalSegment label={i18n.text['gives']} tableData={codex.gives} tableRenderRow={renderRowForStatuses} />
+          <ModalSegment label={i18n.text['causes']} tableData={codex.causes} tableRenderRow={renderRowForStatuses} />
+          <ModalSegment label={i18n.text['immunities']} tableData={codex.immunities} tableRenderRow={renderRowForStatuses} />
+          <ModalSegment label={i18n.text['drops']} tableData={codex.drops} tableRenderRow={renderRowForCodexItems} />
+          <ModalSegment label={i18n.text['droppedBy']} tableData={codex.dropped_by} tableRenderRow={renderRowForCodexItems} />
+          <ModalSegment label={i18n.text['materials']} tableData={codex.materials} tableRenderRow={renderRowForCodexItems} />
         </Grid>
       </Modal.Content>
     </Modal >

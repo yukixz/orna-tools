@@ -1,9 +1,13 @@
 import React from 'react'
 import Select from 'react-select'
 import { Grid, Segment, Input } from 'semantic-ui-react'
+import { DataContext, DataDispatchContext } from '../context/DataContext'
 import './Filters.css'
 
-export default function Filters({ texts, options, dispatch }) {
+export default function Filters() {
+  const { options, i18n } = React.useContext(DataContext)
+  const dispatch = React.useContext(DataDispatchContext)
+
   const searchChangeTimeout = React.useRef()
   const handleSearchChange = React.useCallback((event, data) => {
     clearTimeout(searchChangeTimeout.current)
@@ -62,27 +66,27 @@ export default function Filters({ texts, options, dispatch }) {
         </Grid.Column>
         <DropdownFilterColumn label='Category' options={options.category}
           onChange={handleCategoryChange} />
-        <DropdownFilterColumn label={texts.text['tags']} options={options.tags}
+        <DropdownFilterColumn label={i18n.text['tags']} options={options.tags}
           onChange={handleTagChange} />
       </Grid.Row>
       <Grid.Row>
-        <DropdownFilterColumn label={texts.text['tier']} options={options.tiers}
+        <DropdownFilterColumn label={i18n.text['tier']} options={options.tiers}
           onChange={handleTierChange} />
-        <DropdownFilterColumn label={texts.text['family']} options={options.families}
+        <DropdownFilterColumn label={i18n.text['family']} options={options.families}
           onChange={handleFamilyChange} />
-        <DropdownFilterColumn label={texts.text['rarity']} options={options.rarities}
+        <DropdownFilterColumn label={i18n.text['rarity']} options={options.rarities}
           onChange={handleRarityChange} />
-        <DropdownFilterColumn label={texts.text['event']} options={options.events}
+        <DropdownFilterColumn label={i18n.text['event']} options={options.events}
           onChange={handleEventChange} />
       </Grid.Row>
       <Grid.Row>
-        <DropdownFilterColumn label={texts.text['causes']} options={options.statuses}
+        <DropdownFilterColumn label={i18n.text['causes']} options={options.statuses}
           onChange={handleCauseChange} />
-        <DropdownFilterColumn label={texts.text['cures']} options={options.statuses}
+        <DropdownFilterColumn label={i18n.text['cures']} options={options.statuses}
           onChange={handleCureChange} />
-        <DropdownFilterColumn label={texts.text['gives']} options={options.statuses}
+        <DropdownFilterColumn label={i18n.text['gives']} options={options.statuses}
           onChange={handleGiveChange} />
-        <DropdownFilterColumn label={texts.text['immunities']} options={options.statuses}
+        <DropdownFilterColumn label={i18n.text['immunities']} options={options.statuses}
           onChange={handleImmunityChange} />
       </Grid.Row>
     </Grid >
