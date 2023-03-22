@@ -1,11 +1,11 @@
 import React from 'react'
-import Select from 'react-select';
-import { Container, Grid, Table, Menu, Modal, Segment, Card } from 'semantic-ui-react'
-import { Button, Dropdown, Label, Icon, Image, Input } from 'semantic-ui-react'
-import { Dimmer, Loader } from 'semantic-ui-react'
+import { Container, Dimmer, Loader } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
-import './App.css'
-import { LANGUAGES, LANGUAGE_DEFAULT, TABLE_MAX_ROWS } from './constants'
+import CodexTable from './components/CodexTable'
+import CodexModal from './components/CodexModal'
+import Filters from './components/Filters'
+import Header from './components/Header'
+import { LANGUAGES, LANGUAGE_DEFAULT } from './data/setting'
 
 const initialState = {
   loading: true,
@@ -79,14 +79,14 @@ function reducer(state, action) {
         filters: filters,
         rows: applyFilter(state.codexItems, filters),
       }
-    case 'MODAL_OPEN':
+    case 'CODEX_MODAL_OPEN':
       return {
         ...state,
         modal: {
           codex: action.codex,
         }
       }
-    case 'MODAL_CLOSE':
+    case 'CODEX_MODAL_CLOSE':
       return {
         ...state,
         modal: null,
@@ -210,7 +210,7 @@ async function init(language, dispatch) {
   dispatch({ type: 'INITIALIZED', language, codexes, codexItems, texts, options })
 }
 
-function App() {
+export default function App() {
   const [state, dispatch] = React.useReducer(reducer, initialState)
   const { rows, codexes, texts, options, modal } = state
 
@@ -222,296 +222,20 @@ function App() {
     init(data.value, dispatch).catch(console.error)
   }, [])
 
-  const searchChangeTimeout = React.useRef()
-  const handleSearchChange = React.useCallback((event, data) => {
-    clearTimeout(searchChangeTimeout.current)
-    searchChangeTimeout.current = setTimeout(() => {
-      const query = data.value.trim().toLowerCase()
-      dispatch({ type: 'FILTERS_UPDATED', filters: { query } })
-    }, 200)
-  }, [])
-
-  const handleCategoryChange = React.useCallback((target) => {
-    dispatch({ type: 'FILTERS_UPDATED', filters: { category: target?.value } })
-  }, [])
-
-  const handleTagChange = React.useCallback((target) => {
-    dispatch({ type: 'FILTERS_UPDATED', filters: { tag: target?.value } })
-  }, [])
-
-  const handleTierChange = React.useCallback((target) => {
-    dispatch({ type: 'FILTERS_UPDATED', filters: { tier: target?.value } })
-  }, [])
-
-  const handleFamilyChange = React.useCallback((target) => {
-    dispatch({ type: 'FILTERS_UPDATED', filters: { family: target?.value } })
-  }, [])
-
-  const handleRarityChange = React.useCallback((target) => {
-    dispatch({ type: 'FILTERS_UPDATED', filters: { rarity: target?.value } })
-  }, [])
-
-  const handleEventChange = React.useCallback((target) => {
-    dispatch({ type: 'FILTERS_UPDATED', filters: { event: target?.value } })
-  }, [])
-
-  const handleCauseChange = React.useCallback((target) => {
-    dispatch({ type: 'FILTERS_UPDATED', filters: { cause: target?.value } })
-  }, [])
-
-  const handleCureChange = React.useCallback((target) => {
-    dispatch({ type: 'FILTERS_UPDATED', filters: { cure: target?.value } })
-  }, [])
-
-  const handleGiveChange = React.useCallback((target) => {
-    dispatch({ type: 'FILTERS_UPDATED', filters: { give: target?.value } })
-  }, [])
-
-  const handleImmunityChange = React.useCallback((target) => {
-    dispatch({ type: 'FILTERS_UPDATED', filters: { immunity: target?.value } })
-  }, [])
-
-  const handleShowDetail = React.useCallback((codex) => {
-    dispatch({ type: 'MODAL_OPEN', codex })
-  }, [])
-
-  const handleCloseDetail = React.useCallback(() => {
-    dispatch({ type: 'MODAL_CLOSE' })
-  }, [])
-
   return (
     <div>
       <Dimmer active={state.loading}>
         <Loader>Loading</Loader>
       </Dimmer>
-
-      <Menu inverted>
-        <Container>
-          <Menu.Item as='a' header href='/' style={{ fontSize: '1.4em' }}>Codex</Menu.Item>
-          <Menu.Item as='a' header href='/clock/'>Clock</Menu.Item>
-          <Menu.Item as='a' header position='right'>
-            <Dropdown button floating
-              value={state.language} options={options.language}
-              onChange={handleLanguageChange} />
-          </Menu.Item>
-        </Container>
-      </Menu>
-
+      <Header options={options.language} language={state.language}
+        onChange={handleLanguageChange} />
       <Container>
-        <Grid as={Segment} columns={4} doubling id='filters'>
-          <Grid.Row>
-            <Grid.Column width={8}>
-              <label>Search in ANY language</label>
-              <Input fluid icon='search' onChange={handleSearchChange} />
-            </Grid.Column>
-            <DropdownFilterColumn label='Category' options={options.category}
-              onChange={handleCategoryChange} />
-            <DropdownFilterColumn label={texts.text['tags']} options={options.tags}
-              onChange={handleTagChange} />
-          </Grid.Row>
-          <Grid.Row>
-            <DropdownFilterColumn label={texts.text['tier']} options={options.tiers}
-              onChange={handleTierChange} />
-            <DropdownFilterColumn label={texts.text['family']} options={options.families}
-              onChange={handleFamilyChange} />
-            <DropdownFilterColumn label={texts.text['rarity']} options={options.rarities}
-              onChange={handleRarityChange} />
-            <DropdownFilterColumn label={texts.text['event']} options={options.events}
-              onChange={handleEventChange} />
-          </Grid.Row>
-          <Grid.Row>
-            <DropdownFilterColumn label={texts.text['causes']} options={options.statuses}
-              onChange={handleCauseChange} />
-            <DropdownFilterColumn label={texts.text['cures']} options={options.statuses}
-              onChange={handleCureChange} />
-            <DropdownFilterColumn label={texts.text['gives']} options={options.statuses}
-              onChange={handleGiveChange} />
-            <DropdownFilterColumn label={texts.text['immunities']} options={options.statuses}
-              onChange={handleImmunityChange} />
-          </Grid.Row>
-        </Grid >
-        <Table celled striped selectable unstackable>
-          <Table.Body>
-            {rows.slice(0, TABLE_MAX_ROWS).map(codex =>
-              <TableRowForItem key={codex.key}
-                codex={codex} texts={texts} onClick={handleShowDetail} />
-            )}
-          </Table.Body>
-          <Table.Footer>
-            <Table.Row>
-              <Table.Cell disabled colSpan='4'>
-                {rows.length <= TABLE_MAX_ROWS ? rows.length : TABLE_MAX_ROWS} / {rows.length}
-              </Table.Cell>
-            </Table.Row>
-          </Table.Footer>
-        </Table>
+        <Filters texts={texts} options={options} dispatch={dispatch} />
+        <CodexTable rows={rows} texts={texts} dispatch={dispatch} />
       </Container >
-
-      {
-        modal != null &&
-        <ModalForItem codex={modal.codex} codexes={codexes} texts={texts}
-          onClose={handleCloseDetail} />
-      }
+      {modal != null &&
+        <CodexModal codex={modal.codex} codexes={codexes} texts={texts}
+          dispatch={dispatch} />}
     </div >
   )
 }
-
-const DropdownFilterColumn = React.memo(function ({ label, options, onChange }) {
-  return (
-    <Grid.Column>
-      <label>{label}</label>
-      <Select isSearchable isClearable
-        placeholder='--' options={options} onChange={onChange} />
-    </Grid.Column >
-  )
-})
-
-const TableRowForItem = React.memo(function ({ codex, texts, onClick }) {
-  const handleClick = React.useCallback(() => onClick(codex), [codex, onClick])
-  return (
-    <Table.Row>
-      <Table.Cell onClick={handleClick}>
-        <Image src={codex.image_url} size='mini' inline />
-        {codex.name}
-      </Table.Cell>
-      <Table.Cell>
-        <CodexLabels codex={codex} texts={texts} disable={{ family: true }} />
-      </Table.Cell>
-      <Table.Cell>
-        <Button.Group>
-          <Button icon onClick={handleClick}>
-            <Icon name='align justify' />
-          </Button>
-          <Button icon as='a'
-            href={`https://playorna.com${codex.path}`}
-            target='_blank' rel="noreferrer">
-            <Icon name='home' />
-          </Button>
-          <Button icon as='a'
-            href={`https://orna.guide/${codex.ornaguide_category}s?show=${codex.ornaguide_id}`}
-            target='_blank' rel="noreferrer">
-            <Icon name='bookmark' />
-          </Button>
-        </Button.Group>
-      </Table.Cell>
-    </Table.Row>
-  )
-})
-
-const CodexLabels = React.memo(function ({ codex, texts, disable = {} }) {
-  return (
-    <Label.Group size='small'>
-      <Label>{texts.category[codex.category]}</Label>
-      {!disable.tier && codex.tier && <Label><Icon name='star' />{codex.tier}</Label>}
-      {/* {!disable.family && codex.family && <Label>{codex.family}</Label>} */}
-      {/* {!disable.rarity && codex.rarity && <Label>{codex.rarity}</Label>} */}
-      {/* {!disable.event && codex.event && <Label><Icon name='map' />{codex.event}</Label>} */}
-      {/* {!disable.tags && codex.tags && codex.tags.map(tag => <Label key={`tag:${tag}`}>{tag}</Label>)} */}
-    </Label.Group>
-  )
-})
-
-const ModalForItem = React.memo(function ({ codex, codexes, texts, onClose }) {
-  let causes_by_spells = null
-  if (codex.spells != null) {
-    causes_by_spells = {}
-    for (const [category, key] of codex.spells) {
-      const spellCodex = codexes[category][key]
-      if (spellCodex.causes == null) {
-        continue
-      }
-      for (const [status, probability] of spellCodex.causes) {
-        if (causes_by_spells[status] == null) {
-          causes_by_spells[status] = {
-            probability: 0,
-            by: []
-          }
-        }
-        causes_by_spells[status].by.push(`${spellCodex.name} (${probability}%)`)
-        if (probability > causes_by_spells[status].probability) {
-          causes_by_spells[status].probability = probability
-        }
-      }
-    }
-  }
-
-  const renderRowForCodexItems = React.useCallback(([category, id]) => {
-    const item = codexes[category][id]
-    return (
-      <Table.Row key={item.key}>
-        <Table.Cell>{item.name}</Table.Cell>
-      </Table.Row>
-    )
-  }, [codexes])
-  const renderRowForStatuses = React.useCallback(([name, probability]) => {
-    return (
-      <Table.Row key={name}>
-        <Table.Cell>{name}</Table.Cell>
-        {probability != null && <Table.Cell>{probability}%</Table.Cell>}
-      </Table.Row>
-    )
-  }, [])
-  const renderRowForCausesBySpells = React.useCallback(([name, { probability, by }]) => {
-    return (
-      <Table.Row key={name}>
-        <Table.Cell>{name}</Table.Cell>
-        <Table.Cell>{probability}%</Table.Cell>
-        <Table.Cell>{by.join(' ')}</Table.Cell>
-      </Table.Row>
-    )
-  }, [])
-
-  return (
-    <Modal open={true} onClose={onClose}>
-      <Modal.Header>
-        {codex.name} ({codex.id})
-      </Modal.Header>
-      <Modal.Content scrolling>
-        <Grid columns={2} doubling>
-          <ModalCard description={codex.description} tags={codex.tags} />
-          <ModalSegment label={texts.text['skills']} tableData={codex.spells} tableRenderRow={renderRowForCodexItems} />
-          <ModalSegment label={`${texts.text['causes']} (${texts.text['skills']})`}
-            tableData={causes_by_spells} tableRenderRow={renderRowForCausesBySpells} />
-          <ModalSegment label={texts.text['gives']} tableData={codex.gives} tableRenderRow={renderRowForStatuses} />
-          <ModalSegment label={texts.text['causes']} tableData={codex.causes} tableRenderRow={renderRowForStatuses} />
-          <ModalSegment label={texts.text['immunities']} tableData={codex.immunities} tableRenderRow={renderRowForStatuses} />
-          <ModalSegment label={texts.text['drops']} tableData={codex.drops} tableRenderRow={renderRowForCodexItems} />
-          <ModalSegment label={texts.text['droppedBy']} tableData={codex.dropped_by} tableRenderRow={renderRowForCodexItems} />
-          <ModalSegment label={texts.text['materials']} tableData={codex.materials} tableRenderRow={renderRowForCodexItems} />
-        </Grid>
-      </Modal.Content>
-    </Modal >
-  )
-})
-
-const ModalSegment = React.memo(function ({ label, tableData, tableRenderRow }) {
-  if (!tableData) return
-  return (
-    <Grid.Column>
-      <Segment>
-        {label != null &&
-          <Label attached='top'>{label}</Label>}
-        {tableData != null &&
-          <Table basic='very'
-            tableData={Array.isArray(tableData) ? tableData : Object.entries(tableData)}
-            renderBodyRow={tableRenderRow} />}
-      </Segment>
-    </Grid.Column >
-  )
-})
-
-const ModalCard = React.memo(function ({ description, tags }) {
-  if (!description && !tags) return
-  return (
-    <Grid.Column width={16} >
-      <Card fluid>
-        <Card.Content>
-          {description && <Card.Description>{description}</Card.Description>}
-          {tags && <Card.Meta>{tags.map(tag => <Label key={tag}>{tag}</Label>)}</Card.Meta>}
-        </Card.Content>
-      </Card>
-    </Grid.Column >
-  )
-})
-
-export default App

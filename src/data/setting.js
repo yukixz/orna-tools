@@ -4,4 +4,4 @@ export const LANGUAGES = {
 }
 export const LANGUAGE_DEFAULT = "zh-hans"
 
-export const TABLE_MAX_ROWS = 100
+export const CODEX_TABLE_MAX_ROWS = 100
