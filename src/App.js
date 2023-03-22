@@ -207,7 +207,6 @@ async function init(language, dispatch) {
     category: Object.entries(texts.category).map(([value, label]) => ({ value, label })),
   })
   // dispatch
-  console.log(options)
   dispatch({ type: 'INITIALIZED', language, codexes, codexItems, texts, options })
 }
 
