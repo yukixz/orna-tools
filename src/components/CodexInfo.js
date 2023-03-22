@@ -1,17 +1,10 @@
 import React from 'react'
-import { Grid, Table, Modal, Segment, Card, Label } from 'semantic-ui-react'
-import { CodexModalContext, CodexModalDispatchContext } from '../context/CodexModalContext'
+import { Grid, Table, Segment, Card, Label, Container, Header } from 'semantic-ui-react'
 import { DataContext } from '../context/DataContext'
 
 
-export default function CodexModal() {
-  const codex = React.useContext(CodexModalContext)
-  const dispatch = React.useContext(CodexModalDispatchContext)
+export default function CodexInfo({ codex }) {
   const { codexes, i18n } = React.useContext(DataContext)
-
-  const handleClose = React.useCallback(() => {
-    dispatch({ type: 'CLOSE' })
-  }, [dispatch])
 
   const renderRowForCodexItems = React.useCallback(([category, id]) => {
     const item = codexes[category][id]
@@ -68,29 +61,25 @@ export default function CodexModal() {
     }
   }
   return (
-    <Modal open={true} onClose={handleClose}>
-      <Modal.Header>
-        {codex.name} ({codex.id})
-      </Modal.Header>
-      <Modal.Content scrolling>
-        <Grid columns={2} doubling>
-          <ModalCard description={codex.description} tags={codex.tags} />
-          <ModalSegment label={i18n.text['skills']} tableData={codex.spells} tableRenderRow={renderRowForCodexItems} />
-          <ModalSegment label={`${i18n.text['causes']} (${i18n.text['skills']})`}
-            tableData={causes_by_spells} tableRenderRow={renderRowForCausesBySpells} />
-          <ModalSegment label={i18n.text['gives']} tableData={codex.gives} tableRenderRow={renderRowForStatuses} />
-          <ModalSegment label={i18n.text['causes']} tableData={codex.causes} tableRenderRow={renderRowForStatuses} />
-          <ModalSegment label={i18n.text['immunities']} tableData={codex.immunities} tableRenderRow={renderRowForStatuses} />
-          <ModalSegment label={i18n.text['drops']} tableData={codex.drops} tableRenderRow={renderRowForCodexItems} />
-          <ModalSegment label={i18n.text['droppedBy']} tableData={codex.dropped_by} tableRenderRow={renderRowForCodexItems} />
-          <ModalSegment label={i18n.text['materials']} tableData={codex.materials} tableRenderRow={renderRowForCodexItems} />
-        </Grid>
-      </Modal.Content>
-    </Modal >
+    <Container as={Segment}>
+      <Header>{codex.name}</Header>
+      <Grid columns={2} doubling>
+        <CodexCard description={codex.description} tags={codex.tags} />
+        <CodexSegment label={i18n.text['skills']} tableData={codex.spells} tableRenderRow={renderRowForCodexItems} />
+        <CodexSegment label={`${i18n.text['causes']} (${i18n.text['skills']})`}
+          tableData={causes_by_spells} tableRenderRow={renderRowForCausesBySpells} />
+        <CodexSegment label={i18n.text['gives']} tableData={codex.gives} tableRenderRow={renderRowForStatuses} />
+        <CodexSegment label={i18n.text['causes']} tableData={codex.causes} tableRenderRow={renderRowForStatuses} />
+        <CodexSegment label={i18n.text['immunities']} tableData={codex.immunities} tableRenderRow={renderRowForStatuses} />
+        <CodexSegment label={i18n.text['drops']} tableData={codex.drops} tableRenderRow={renderRowForCodexItems} />
+        <CodexSegment label={i18n.text['droppedBy']} tableData={codex.dropped_by} tableRenderRow={renderRowForCodexItems} />
+        <CodexSegment label={i18n.text['materials']} tableData={codex.materials} tableRenderRow={renderRowForCodexItems} />
+      </Grid>
+    </Container >
   )
 }
 
-const ModalCard = React.memo(function ({ description, tags }) {
+const CodexCard = React.memo(function ({ description, tags }) {
   if (!description && !tags) return
   return (
     <Grid.Column width={16} >
@@ -104,7 +93,7 @@ const ModalCard = React.memo(function ({ description, tags }) {
   )
 })
 
-const ModalSegment = React.memo(function ({ label, tableData, tableRenderRow }) {
+const CodexSegment = React.memo(function ({ label, tableData, tableRenderRow }) {
   if (!tableData) return
   return (
     <Grid.Column>

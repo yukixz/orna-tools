@@ -1,22 +1,22 @@
 import React from 'react'
+import * as ReactRouter from 'react-router-dom'
 import { Table, Button, Label, Icon, Image } from 'semantic-ui-react'
-import { CodexModalDispatchContext } from '../context/CodexModalContext'
 import { DataContext } from '../context/DataContext'
 import { CODEX_TABLE_MAX_ROWS } from '../data/setting'
 
 export default function CodexTable() {
   const { rows } = React.useContext(DataContext)
-  const dispatchCodexModal = React.useContext(CodexModalDispatchContext)
-
-  const handleShowDetail = React.useCallback((codex) => {
-    dispatchCodexModal({ type: 'OPEN', codex })
-  }, [dispatchCodexModal])
 
   return (
     <Table celled striped selectable unstackable>
+      <Table.Header>
+        <Table.HeaderCell>Codex</Table.HeaderCell>
+        <Table.HeaderCell></Table.HeaderCell>
+        <Table.HeaderCell collapsing></Table.HeaderCell>
+      </Table.Header>
       <Table.Body>
         {rows.slice(0, CODEX_TABLE_MAX_ROWS).map(codex =>
-          <TableRowForItem key={codex.key} codex={codex} onClick={handleShowDetail} />
+          <TableRowForItem key={codex.key} codex={codex} />
         )}
       </Table.Body>
       <Table.Footer>
@@ -30,8 +30,11 @@ export default function CodexTable() {
   )
 }
 
-const TableRowForItem = React.memo(function ({ codex, onClick }) {
-  const handleClick = React.useCallback(() => onClick(codex), [codex, onClick])
+const TableRowForItem = React.memo(function ({ codex }) {
+  const navigate = ReactRouter.useNavigate()
+  const handleClick = React.useCallback(() => {
+    navigate(`/codex/${codex.category}/${codex.id}`)
+  }, [codex, navigate])
 
   return (
     <Table.Row>
