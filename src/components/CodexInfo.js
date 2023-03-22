@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { Grid, Table, Segment, Card, Label, Container, Header } from 'semantic-ui-react'
 import { DataContext } from '../context/DataContext'
 
@@ -10,7 +11,7 @@ export default function CodexInfo({ codex }) {
     const item = codexes[category][id]
     return (
       <Table.Row key={item.key}>
-        <Table.Cell>{item.name}</Table.Cell>
+        <Table.Cell><Link to={`/codex/${category}/${id}`}>{item.name}</Link></Table.Cell>
       </Table.Row>
     )
   }, [codexes])
