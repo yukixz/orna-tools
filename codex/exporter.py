@@ -7,9 +7,8 @@ import os.path
 import re
 import sys
 
-import sqlalchemy
 from bs4 import BeautifulSoup, Tag
-from orm import Base, GuideAPI, Page
+from orm import GuideAPI, Page
 from sqlalchemy import and_
 from sqlalchemy.orm import Session
 
@@ -20,7 +19,6 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
-CATEGORIES = ("items", "monsters", "bosses", "followers", "raids", "spells")
 TEXTS = {
     "en": {
         "causes": "Causes",
@@ -83,7 +81,7 @@ class Exporter:
         data['text'] = self.texts
         data['category'] = self.export_category()
         data['codex'] = {}
-        for category in CATEGORIES:
+        for category in data['category'].keys():
             data['codex'][category] = self.export_codex(category)
         return data
 
@@ -268,19 +266,3 @@ class Exporter:
     def parse_href(self, node: Tag):
         path = node.select_one('a')['href']
         return self.key_from_url(path)
-
-
-def main():
-    db_engine = sqlalchemy.create_engine("sqlite:///db.sqlite3")
-    Base.metadata.create_all(db_engine)
-
-    for lang in ["en", "zh-hans"]:
-        exporter = Exporter(db_engine, lang)
-        exporter.prepare()
-        data = exporter.export()
-        with open(f"./exports/{lang}.json", 'w', encoding='utf-8') as file:
-            file.write(json.dumps(data, indent=2, ensure_ascii=False))
-
-
-if __name__ == '__main__':
-    main()

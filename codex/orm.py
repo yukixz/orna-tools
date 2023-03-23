@@ -8,6 +8,10 @@ from sqlalchemy.orm import declarative_base
 Base = declarative_base()
 
 
+def migrate(engine):
+    Base.metadata.create_all(engine)
+
+
 class Page(Base):
     __tablename__ = "pages"
     id = Column(Integer, primary_key=True)

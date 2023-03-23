@@ -6,9 +6,8 @@ import sys
 from datetime import datetime, timedelta
 
 import requests_cache
-import sqlalchemy
 from bs4 import BeautifulSoup
-from orm import Base, GuideAPI, Page
+from orm import GuideAPI, Page
 from sqlalchemy import and_
 from sqlalchemy.orm import Session
 
@@ -137,17 +136,3 @@ class Crawler:
             for tier in range(1, 10 + 1):
                 self.fetch_guide(category, tier)
         logger.info("Crawl done.")
-
-
-def main():
-    db_engine = sqlalchemy.create_engine("sqlite:///db.sqlite3")
-    Base.metadata.create_all(db_engine)
-
-    crawler = Crawler(db_engine)
-    for lang in ("en", "zh-hans"):
-        crawler.crawl(lang)
-    crawler.crawl_guide()
-
-
-if __name__ == '__main__':
-    main()
