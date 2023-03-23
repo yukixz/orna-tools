@@ -59867,8 +59867,328 @@
         ],
         "ornaguide_id": 1817,
         "ornaguide_category": "item"
+      },
+      "balins-left-b2db2fdb": {
+        "name": "Balin's Left",
+        "path": "/codex/items/balins-left-b2db2fdb/",
+        "image_url": "https://playorna.com/static/img/weapons/avalon_great_sword.png",
+        "description": "A heavy great sword carried in Sir Balin's left hand. A blow from this blade can lower an opponent's magic power.",
+        "tier": 7,
+        "causes": [
+          [
+            "Mag ↓",
+            null
+          ]
+        ],
+        "dropped_by": [
+          [
+            "raids",
+            "the-fool-ef1c6cb2"
+          ]
+        ],
+        "materials": [
+          [
+            "items",
+            "platinum"
+          ]
+        ]
+      },
+      "covyns-great-scythe": {
+        "name": "Covyn's Great Scythe",
+        "path": "/codex/items/covyns-great-scythe/",
+        "image_url": "https://playorna.com/static/img/weapons/covyn_scythe_arisen.png",
+        "description": "Attack with both hands gripped tightly, dealing paltry to immense damage. Requires 2 turns in battle.",
+        "tier": 10,
+        "dropped_by": [
+          [
+            "raids",
+            "arisen-covyn"
+          ]
+        ],
+        "materials": [
+          [
+            "items",
+            "witchstone"
+          ],
+          [
+            "items",
+            "mythril"
+          ],
+          [
+            "items",
+            "hardened-steel"
+          ]
+        ]
+      },
+      "covyns-hemmed-robe": {
+        "name": "Covyn's Hemmed Robe",
+        "path": "/codex/items/covyns-hemmed-robe/",
+        "image_url": "https://playorna.com/static/img/armor/covyn_robe_arisen.png",
+        "description": "Robe of Covyn, the evil northern organizer of pixels.",
+        "tier": 10,
+        "immunities": [
+          [
+            "Doom",
+            null
+          ]
+        ],
+        "dropped_by": [
+          [
+            "raids",
+            "arisen-covyn"
+          ]
+        ],
+        "materials": [
+          [
+            "items",
+            "hide"
+          ],
+          [
+            "items",
+            "runestone"
+          ],
+          [
+            "items",
+            "silk"
+          ]
+        ]
+      },
+      "covyns-hemmed-skirt": {
+        "name": "Covyn's Hemmed Skirt",
+        "path": "/codex/items/covyns-hemmed-skirt/",
+        "image_url": "https://playorna.com/static/img/armor/covyn_bottom_arisen.png",
+        "description": "Robe of Covyn, the evil northern organizer of pixels.",
+        "tier": 10,
+        "immunities": [
+          [
+            "Doom",
+            null
+          ]
+        ],
+        "dropped_by": [
+          [
+            "raids",
+            "arisen-covyn"
+          ]
+        ],
+        "materials": [
+          [
+            "items",
+            "hide"
+          ],
+          [
+            "items",
+            "runestone"
+          ],
+          [
+            "items",
+            "silk"
+          ]
+        ]
+      },
+      "covyns-hood": {
+        "name": "Covyn's Hood",
+        "path": "/codex/items/covyns-hood/",
+        "image_url": "https://playorna.com/static/img/armor/covyn_hood.png",
+        "description": "Hood of Covyn, the evil northern organizer of pixels.",
+        "tier": 5,
+        "immunities": [
+          [
+            "Cursed",
+            null
+          ],
+          [
+            "Petrified",
+            null
+          ]
+        ],
+        "dropped_by": [
+          [
+            "raids",
+            "covyn"
+          ]
+        ],
+        "materials": [
+          [
+            "items",
+            "avalon-ore"
+          ]
+        ]
+      },
+      "covyns-robe": {
+        "name": "Covyn's Robe",
+        "path": "/codex/items/covyns-robe/",
+        "image_url": "https://playorna.com/static/img/armor/covyn_robe.png",
+        "description": "Robe of Covyn, the evil northern organizer of pixels.",
+        "tier": 5,
+        "immunities": [
+          [
+            "Doom",
+            null
+          ]
+        ],
+        "dropped_by": [
+          [
+            "raids",
+            "covyn"
+          ]
+        ],
+        "materials": [
+          [
+            "items",
+            "hide"
+          ],
+          [
+            "items",
+            "runestone"
+          ],
+          [
+            "items",
+            "silk"
+          ]
+        ]
+      },
+      "covyns-scythe": {
+        "name": "Covyn's Scythe",
+        "path": "/codex/items/covyns-scythe/",
+        "image_url": "https://playorna.com/static/img/weapons/covyn_scythe.png",
+        "description": "Attack with both hands gripped tightly, dealing paltry to immense damage. Requires 2 turns in battle.",
+        "tier": 5,
+        "dropped_by": [
+          [
+            "raids",
+            "covyn"
+          ]
+        ],
+        "materials": [
+          [
+            "items",
+            "steel"
+          ],
+          [
+            "items",
+            "wood"
+          ],
+          [
+            "items",
+            "stone"
+          ]
+        ]
+      },
+      "covyns-skirt": {
+        "name": "Covyn's Skirt",
+        "path": "/codex/items/covyns-skirt/",
+        "image_url": "https://playorna.com/static/img/armor/covyn_bottom.png",
+        "description": "Robe of Covyn, the evil northern organizer of pixels.",
+        "tier": 5,
+        "immunities": [
+          [
+            "Doom",
+            null
+          ]
+        ],
+        "dropped_by": [
+          [
+            "raids",
+            "covyn"
+          ]
+        ],
+        "materials": [
+          [
+            "items",
+            "hide"
+          ],
+          [
+            "items",
+            "runestone"
+          ],
+          [
+            "items",
+            "silk"
+          ]
+        ]
+      },
+      "covyns-wolven-hood": {
+        "name": "Covyn's Wolven Hood",
+        "path": "/codex/items/covyns-wolven-hood/",
+        "image_url": "https://playorna.com/static/img/armor/covyn_hood_arisen.png",
+        "description": "Hood of Covyn, the evil northern organizer of pixels.",
+        "tier": 10,
+        "immunities": [
+          [
+            "Cursed",
+            null
+          ],
+          [
+            "Petrified",
+            null
+          ]
+        ],
+        "dropped_by": [
+          [
+            "raids",
+            "arisen-covyn"
+          ]
+        ],
+        "materials": [
+          [
+            "items",
+            "avalon-ore"
+          ]
+        ]
+      },
+      "crimson-summoning-scroll-aries": {
+        "name": "Crimson Summoning Scroll (Aries)",
+        "path": "/codex/items/crimson-summoning-scroll-aries/",
+        "image_url": "https://playorna.com/static/img/useables/crimson_summoning_scroll.png",
+        "description": "A scroll containing the ancient techniques of the summon. Reading it will summon a projection of one of the Crimson warriors, as part of the Crimson Festival.",
+        "tier": 7
+      },
+      "crimson-summoning-scroll-cerus": {
+        "name": "Crimson Summoning Scroll (Cerus)",
+        "path": "/codex/items/crimson-summoning-scroll-cerus/",
+        "image_url": "https://playorna.com/static/img/useables/crimson_summoning_scroll.png",
+        "description": "A scroll containing the ancient techniques of the summon. Reading it will summon a projection of one of the Crimson warriors, as part of the Crimson Festival.",
+        "tier": 7
+      },
+      "crimson-summoning-scroll-perseus": {
+        "name": "Crimson Summoning Scroll (Perseus)",
+        "path": "/codex/items/crimson-summoning-scroll-perseus/",
+        "image_url": "https://playorna.com/static/img/useables/crimson_summoning_scroll.png",
+        "description": "A scroll containing the ancient techniques of the summon. Reading it will summon a projection of one of the Crimson warriors, as part of the Crimson Festival.",
+        "tier": 7
+      },
+      "duskbreaker-64b29d3a": {
+        "name": "Duskbreaker",
+        "path": "/codex/items/duskbreaker-64b29d3a/",
+        "image_url": "https://playorna.com/static/img/weapons/dawn_staff.png",
+        "description": "A powerful magical archstaff of Dokkalfar royalty. It grants one immunity from blindness and falling asleep in battle.",
+        "tier": 8,
+        "immunities": [
+          [
+            "Blind",
+            null
+          ],
+          [
+            "Asleep",
+            null
+          ]
+        ],
+        "dropped_by": [
+          [
+            "bosses",
+            "queen-of-dokkalfar"
+          ]
+        ],
+        "materials": [
+          [
+            "items",
+            "pure-lightstone"
+          ]
+        ]
       }
     },
+    "classes": {},
     "monsters": {
       "adamantine-knight": {
         "name": "Adamantine Knight",
@@ -74018,6 +74338,47 @@
         ],
         "ornaguide_id": 156,
         "ornaguide_category": "monster"
+      },
+      "alfar-50af8af8": {
+        "name": "Alfar (Arisen) ",
+        "path": "/codex/monsters/alfar-50af8af8/",
+        "image_url": "https://playorna.com/static/img/monsters/alfar_arisen.png",
+        "event": "A Year's End",
+        "family": "Goblin Horde",
+        "rarity": "Common",
+        "tier": 8,
+        "spells": [
+          [
+            "spells",
+            "drain-iii"
+          ],
+          [
+            "spells",
+            "guarding-strike"
+          ],
+          [
+            "spells",
+            "guarding-strikes"
+          ],
+          [
+            "spells",
+            "jump-ii"
+          ],
+          [
+            "spells",
+            "slow-2"
+          ]
+        ],
+        "drops": [
+          [
+            "items",
+            "alfar-trinket"
+          ],
+          [
+            "items",
+            "strangers-gift"
+          ]
+        ]
       }
     },
     "bosses": {
@@ -89170,6 +89531,37 @@
         ],
         "ornaguide_id": 38,
         "ornaguide_category": "pet"
+      },
+      "medusa": {
+        "name": "Medusa",
+        "path": "/codex/followers/medusa/",
+        "image_url": "https://playorna.com/static/img/bosses/medusa2.png",
+        "description": "Available for a limited time only.",
+        "event": "The Crimson Festival",
+        "rarity": "Cryptid",
+        "tier": 10,
+        "spells": [
+          [
+            "spells",
+            "arrowstorm"
+          ],
+          [
+            "spells",
+            "stone-stare"
+          ],
+          [
+            "spells",
+            "full-bend-ii"
+          ],
+          [
+            "spells",
+            "magic-arrow-iv"
+          ],
+          [
+            "spells",
+            "magic-chakram"
+          ]
+        ]
       }
     },
     "raids": {
@@ -111957,7 +112349,66 @@
         ],
         "ornaguide_id": 162,
         "ornaguide_category": "skill"
+      },
+      "medusa-stare": {
+        "name": "Medusa Stare",
+        "path": "/codex/spells/medusa-stare/",
+        "image_url": "https://playorna.com/static/img/spells/flare.png",
+        "description": "Deal magic damage with a chance to petrify.",
+        "tier": 8,
+        "causes": [
+          [
+            "Petrified",
+            100
+          ],
+          [
+            "Paralyzed",
+            100
+          ],
+          [
+            "Stunned",
+            100
+          ],
+          [
+            "Blind",
+            100
+          ]
+        ]
+      },
+      "poison-volley": {
+        "name": "Poison Volley (Off-hand)",
+        "path": "/codex/spells/poison-volley/",
+        "image_url": "https://playorna.com/static/img/spells/multi_attack.png",
+        "description": "Deals damage thrice and may poison an opponent.",
+        "tier": 1,
+        "tags": [
+          "Off-hand ability"
+        ],
+        "causes": [
+          [
+            "Poisoned",
+            30
+          ]
+        ]
+      },
+      "song-of-skadi": {
+        "name": "Song of Skadi (Off-hand)",
+        "path": "/codex/spells/song-of-skadi/",
+        "image_url": "https://playorna.com/static/img/spells/control.png",
+        "description": "Increases the chance of your follower performing an offensive spell. This skill will be most effective when Valhallan classes attempt it.",
+        "tier": 1,
+        "tags": [
+          "Off-hand ability"
+        ],
+        "gives": [
+          [
+            "Skadi",
+            100
+          ]
+        ]
       }
-    }
+    },
+    "buildings": {},
+    "dungeons": {}
   }
 }

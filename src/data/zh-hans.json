@@ -59867,8 +59867,328 @@
         ],
         "ornaguide_id": 1817,
         "ornaguide_category": "item"
+      },
+      "balins-left-b2db2fdb": {
+        "name": "巴林左剑",
+        "path": "/codex/items/balins-left-b2db2fdb/",
+        "image_url": "https://playorna.com/static/img/weapons/avalon_great_sword.png",
+        "description": "巴林爵士拿在左手的厚重大剑。它的冲击能降低对手的魔攻。",
+        "tier": 7,
+        "causes": [
+          [
+            "Mag ↓",
+            null
+          ]
+        ],
+        "dropped_by": [
+          [
+            "raids",
+            "the-fool-ef1c6cb2"
+          ]
+        ],
+        "materials": [
+          [
+            "items",
+            "platinum"
+          ]
+        ]
+      },
+      "covyns-great-scythe": {
+        "name": "Covyn大镰",
+        "path": "/codex/items/covyns-great-scythe/",
+        "image_url": "https://playorna.com/static/img/weapons/covyn_scythe_arisen.png",
+        "description": "用尽双手之力攻击，造成极为浮动的伤害。在战斗中需要 2 回合发动。",
+        "tier": 10,
+        "dropped_by": [
+          [
+            "raids",
+            "arisen-covyn"
+          ]
+        ],
+        "materials": [
+          [
+            "items",
+            "witchstone"
+          ],
+          [
+            "items",
+            "mythril"
+          ],
+          [
+            "items",
+            "hardened-steel"
+          ]
+        ]
+      },
+      "covyns-hemmed-robe": {
+        "name": "Covym褶边法袍",
+        "path": "/codex/items/covyns-hemmed-robe/",
+        "image_url": "https://playorna.com/static/img/armor/covyn_robe_arisen.png",
+        "description": "邪恶的北族像素画师 Covyn 所穿戴的法袍。",
+        "tier": 10,
+        "immunities": [
+          [
+            "厄运",
+            null
+          ]
+        ],
+        "dropped_by": [
+          [
+            "raids",
+            "arisen-covyn"
+          ]
+        ],
+        "materials": [
+          [
+            "items",
+            "hide"
+          ],
+          [
+            "items",
+            "runestone"
+          ],
+          [
+            "items",
+            "silk"
+          ]
+        ]
+      },
+      "covyns-hemmed-skirt": {
+        "name": "Covyn褶边裙",
+        "path": "/codex/items/covyns-hemmed-skirt/",
+        "image_url": "https://playorna.com/static/img/armor/covyn_bottom_arisen.png",
+        "description": "邪恶的北族像素画师 Covyn 所穿戴的法袍。",
+        "tier": 10,
+        "immunities": [
+          [
+            "厄运",
+            null
+          ]
+        ],
+        "dropped_by": [
+          [
+            "raids",
+            "arisen-covyn"
+          ]
+        ],
+        "materials": [
+          [
+            "items",
+            "hide"
+          ],
+          [
+            "items",
+            "runestone"
+          ],
+          [
+            "items",
+            "silk"
+          ]
+        ]
+      },
+      "covyns-hood": {
+        "name": "Covyn兜帽",
+        "path": "/codex/items/covyns-hood/",
+        "image_url": "https://playorna.com/static/img/armor/covyn_hood.png",
+        "description": "邪恶的北族像素画师 Covyn 所穿戴的兜帽。",
+        "tier": 5,
+        "immunities": [
+          [
+            "诅咒",
+            null
+          ],
+          [
+            "石化",
+            null
+          ]
+        ],
+        "dropped_by": [
+          [
+            "raids",
+            "covyn"
+          ]
+        ],
+        "materials": [
+          [
+            "items",
+            "avalon-ore"
+          ]
+        ]
+      },
+      "covyns-robe": {
+        "name": "Covyn法袍",
+        "path": "/codex/items/covyns-robe/",
+        "image_url": "https://playorna.com/static/img/armor/covyn_robe.png",
+        "description": "邪恶的北族像素画师 Covyn 所穿戴的法袍。",
+        "tier": 5,
+        "immunities": [
+          [
+            "厄运",
+            null
+          ]
+        ],
+        "dropped_by": [
+          [
+            "raids",
+            "covyn"
+          ]
+        ],
+        "materials": [
+          [
+            "items",
+            "hide"
+          ],
+          [
+            "items",
+            "runestone"
+          ],
+          [
+            "items",
+            "silk"
+          ]
+        ]
+      },
+      "covyns-scythe": {
+        "name": "Covyn镰刀",
+        "path": "/codex/items/covyns-scythe/",
+        "image_url": "https://playorna.com/static/img/weapons/covyn_scythe.png",
+        "description": "用尽双手之力攻击，造成极为浮动的伤害。在战斗中需要 2 回合发动。",
+        "tier": 5,
+        "dropped_by": [
+          [
+            "raids",
+            "covyn"
+          ]
+        ],
+        "materials": [
+          [
+            "items",
+            "steel"
+          ],
+          [
+            "items",
+            "wood"
+          ],
+          [
+            "items",
+            "stone"
+          ]
+        ]
+      },
+      "covyns-skirt": {
+        "name": "Covyn之裙",
+        "path": "/codex/items/covyns-skirt/",
+        "image_url": "https://playorna.com/static/img/armor/covyn_bottom.png",
+        "description": "邪恶的北族像素画师 Covyn 所穿戴的法袍。",
+        "tier": 5,
+        "immunities": [
+          [
+            "厄运",
+            null
+          ]
+        ],
+        "dropped_by": [
+          [
+            "raids",
+            "covyn"
+          ]
+        ],
+        "materials": [
+          [
+            "items",
+            "hide"
+          ],
+          [
+            "items",
+            "runestone"
+          ],
+          [
+            "items",
+            "silk"
+          ]
+        ]
+      },
+      "covyns-wolven-hood": {
+        "name": "Covyn群狼兜帽",
+        "path": "/codex/items/covyns-wolven-hood/",
+        "image_url": "https://playorna.com/static/img/armor/covyn_hood_arisen.png",
+        "description": "邪恶的北族像素画师 Covyn 所穿戴的兜帽。",
+        "tier": 10,
+        "immunities": [
+          [
+            "诅咒",
+            null
+          ],
+          [
+            "石化",
+            null
+          ]
+        ],
+        "dropped_by": [
+          [
+            "raids",
+            "arisen-covyn"
+          ]
+        ],
+        "materials": [
+          [
+            "items",
+            "avalon-ore"
+          ]
+        ]
+      },
+      "crimson-summoning-scroll-aries": {
+        "name": "绯红召唤卷轴(阿瑞斯)",
+        "path": "/codex/items/crimson-summoning-scroll-aries/",
+        "image_url": "https://playorna.com/static/img/useables/crimson_summoning_scroll.png",
+        "description": "内含远古召唤技术的卷轴。阅读它时，能够将召唤其中一位绯红战士的投影于大地上，作为绯红节的一部分。",
+        "tier": 7
+      },
+      "crimson-summoning-scroll-cerus": {
+        "name": "绯红召唤卷轴(凯鲁斯)",
+        "path": "/codex/items/crimson-summoning-scroll-cerus/",
+        "image_url": "https://playorna.com/static/img/useables/crimson_summoning_scroll.png",
+        "description": "内含远古召唤技术的卷轴。阅读它时，能够将召唤其中一位绯红战士的投影于大地上，作为绯红节的一部分。",
+        "tier": 7
+      },
+      "crimson-summoning-scroll-perseus": {
+        "name": "绯红召唤卷轴(珀尔修斯)",
+        "path": "/codex/items/crimson-summoning-scroll-perseus/",
+        "image_url": "https://playorna.com/static/img/useables/crimson_summoning_scroll.png",
+        "description": "内含远古召唤技术的卷轴。阅读它时，能够将召唤其中一位绯红战士的投影于大地上，作为绯红节的一部分。",
+        "tier": 7
+      },
+      "duskbreaker-64b29d3a": {
+        "name": "破暮",
+        "path": "/codex/items/duskbreaker-64b29d3a/",
+        "image_url": "https://playorna.com/static/img/weapons/dawn_staff.png",
+        "description": "夜之精灵王族的魔法权杖。给予持有者免疫致盲与入睡的能力。",
+        "tier": 8,
+        "immunities": [
+          [
+            "致盲",
+            null
+          ],
+          [
+            "入睡",
+            null
+          ]
+        ],
+        "dropped_by": [
+          [
+            "bosses",
+            "queen-of-dokkalfar"
+          ]
+        ],
+        "materials": [
+          [
+            "items",
+            "pure-lightstone"
+          ]
+        ]
       }
     },
+    "classes": {},
     "monsters": {
       "adamantine-knight": {
         "name": "精金骑士",
@@ -74018,6 +74338,47 @@
         ],
         "ornaguide_id": 156,
         "ornaguide_category": "monster"
+      },
+      "alfar-50af8af8": {
+        "name": "古精灵 (重生者) ",
+        "path": "/codex/monsters/alfar-50af8af8/",
+        "image_url": "https://playorna.com/static/img/monsters/alfar_arisen.png",
+        "event": "年末",
+        "family": "哥布林族",
+        "rarity": "普通",
+        "tier": 8,
+        "spells": [
+          [
+            "spells",
+            "drain-iii"
+          ],
+          [
+            "spells",
+            "guarding-strike"
+          ],
+          [
+            "spells",
+            "guarding-strikes"
+          ],
+          [
+            "spells",
+            "jump-ii"
+          ],
+          [
+            "spells",
+            "slow-2"
+          ]
+        ],
+        "drops": [
+          [
+            "items",
+            "alfar-trinket"
+          ],
+          [
+            "items",
+            "strangers-gift"
+          ]
+        ]
       }
     },
     "bosses": {
@@ -89170,6 +89531,37 @@
         ],
         "ornaguide_id": 38,
         "ornaguide_category": "pet"
+      },
+      "medusa": {
+        "name": "美杜莎",
+        "path": "/codex/followers/medusa/",
+        "image_url": "https://playorna.com/static/img/bosses/medusa2.png",
+        "description": "期间限定。",
+        "event": "绯红节",
+        "rarity": "秘稀",
+        "tier": 10,
+        "spells": [
+          [
+            "spells",
+            "arrowstorm"
+          ],
+          [
+            "spells",
+            "stone-stare"
+          ],
+          [
+            "spells",
+            "full-bend-ii"
+          ],
+          [
+            "spells",
+            "magic-arrow-iv"
+          ],
+          [
+            "spells",
+            "magic-chakram"
+          ]
+        ]
       }
     },
     "raids": {
@@ -111957,7 +112349,66 @@
         ],
         "ornaguide_id": 162,
         "ornaguide_category": "skill"
+      },
+      "medusa-stare": {
+        "name": "美杜莎的凝视",
+        "path": "/codex/spells/medusa-stare/",
+        "image_url": "https://playorna.com/static/img/spells/flare.png",
+        "description": "造成魔法伤害且有一定的机率石化对手。",
+        "tier": 8,
+        "causes": [
+          [
+            "石化",
+            100
+          ],
+          [
+            "麻痹",
+            100
+          ],
+          [
+            "晕眩",
+            100
+          ],
+          [
+            "致盲",
+            100
+          ]
+        ]
+      },
+      "poison-volley": {
+        "name": "附毒齐射 (副手)",
+        "path": "/codex/spells/poison-volley/",
+        "image_url": "https://playorna.com/static/img/spells/multi_attack.png",
+        "description": "攻击三次并有机率使对手中毒。",
+        "tier": 1,
+        "tags": [
+          "副手技能"
+        ],
+        "causes": [
+          [
+            "中毒",
+            30
+          ]
+        ]
+      },
+      "song-of-skadi": {
+        "name": "斯卡蒂之歌 (副手)",
+        "path": "/codex/spells/song-of-skadi/",
+        "image_url": "https://playorna.com/static/img/spells/control.png",
+        "description": "提升你的追随者施放攻击法术的机率。此技能由瓦尔哈拉系职业来使用最为有效。",
+        "tier": 1,
+        "tags": [
+          "副手技能"
+        ],
+        "gives": [
+          [
+            "斯卡蒂",
+            100
+          ]
+        ]
       }
-    }
+    },
+    "buildings": {},
+    "dungeons": {}
   }
 }
