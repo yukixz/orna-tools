@@ -2,7 +2,6 @@ import React from 'react'
 import Select from 'react-select'
 import { Grid, Segment, Input } from 'semantic-ui-react'
 import { DataContext, DataDispatchContext } from '../context/DataContext'
-import './Filters.css'
 
 export default function Filters() {
   const { options, i18n } = React.useContext(DataContext)

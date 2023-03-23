@@ -1,9 +1,10 @@
 import React from 'react'
 import { RouterProvider, createHashRouter } from 'react-router-dom'
-import 'semantic-ui-css/semantic.min.css'
 import CodexPage from './pages/CodexPage'
 import SearchPage from './pages/SearchPage'
 import { DataProvider } from './context/DataContext'
+import 'semantic-ui-css/semantic.min.css'
+import './App.css'
 
 const router = createHashRouter([
   {
