@@ -1,5 +1,6 @@
 import React from 'react'
 import * as ReactRouter from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Table, Button, Label, Icon, Image } from 'semantic-ui-react'
 import { DataContext } from '../context/DataContext'
 import { CODEX_TABLE_MAX_ROWS } from '../data/setting'
@@ -10,9 +11,11 @@ export default function CodexTable() {
   return (
     <Table celled striped selectable unstackable>
       <Table.Header>
-        <Table.HeaderCell>Codex</Table.HeaderCell>
-        <Table.HeaderCell></Table.HeaderCell>
-        <Table.HeaderCell collapsing></Table.HeaderCell>
+        <Table.Row>
+          <Table.HeaderCell>Codex</Table.HeaderCell>
+          <Table.HeaderCell></Table.HeaderCell>
+          <Table.HeaderCell collapsing></Table.HeaderCell>
+        </Table.Row>
       </Table.Header>
       <Table.Body>
         {rows.slice(0, CODEX_TABLE_MAX_ROWS).map(codex =>
@@ -47,7 +50,7 @@ const TableRowForItem = React.memo(function ({ codex }) {
       </Table.Cell>
       <Table.Cell>
         <Button.Group>
-          <Button icon onClick={handleClick}>
+          <Button icon as={Link} to={`/codex/${codex.category}/${codex.id}`}>
             <Icon name='align justify' />
           </Button>
           <Button icon as='a'
