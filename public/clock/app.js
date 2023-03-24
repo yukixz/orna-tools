@@ -31,6 +31,23 @@ function getFloorAtTime(name, atTime) {
   return floor
 }
 
+function format(datetime, style) {
+  switch (style) {
+    case 'weekday': {
+      return datetime.toLocaleString("bestfit", { weekday: 'short' })
+    }
+    case 'date': {
+      return datetime.toLocaleString("bestfit", { month: 'numeric', day: 'numeric' })
+    }
+    case 'time': {
+      return datetime.toLocaleString("bestfit", { hour: 'numeric', minute: 'numeric' })
+    }
+    default: {
+      throw Error(`Unknown style '${style}'`)
+    }
+  }
+}
+
 document.addEventListener("DOMContentLoaded", (_) => {
   const tbody = document.querySelector('tbody')
   const template = document.createElement('template')
@@ -48,21 +65,20 @@ document.addEventListener("DOMContentLoaded", (_) => {
     while (GROW_AT_HOURS.indexOf(edTime.getUTCHours()) === -1 && edTime.getUTCHours() !== 0)
     edTime.setSeconds(edTime.getSeconds() - 1)
 
-    const stHour = stTime.getHours().toString().padStart(2, '0')
-    const edHour = edTime.getHours().toString().padStart(2, '0')
+    const floors = ["selene", "eos", "oceanus", "themis", "prometheus"]
+      .map(name => getFloorAtTime(name, stTime))
     template.innerHTML =
       `<tr class="${i === 0 ? "table-primary" : ""}">
-      <td>
-        <span class="weekday">${stTime.toLocaleString("bestfit", { weekday: 'short' })} </span>
-        <span class="date">${stTime.toLocaleString("bestfit", { month: 'numeric', day: 'numeric' })} </span>
-        <span>${stHour}</span><span class="minute">:00</span><span>-</span><span>${edHour}</span><span class="minute">:59</span>
-      </td>
-      <td>${getFloorAtTime("eos", stTime)}</td>
-      <td>${getFloorAtTime("oceanus", stTime)}</td>
-      <td>${getFloorAtTime("prometheus", stTime)}</td>
-      <td>${getFloorAtTime("selene", stTime)}</td>
-      <td>${getFloorAtTime("themis", stTime)}</td>
-    </tr>`
+        <td>
+          <span>${format(stTime, 'weekday')}</span>
+          <span>${format(stTime, 'date')}</span>
+          <span>${format(stTime, 'time')}</span>
+          <span>-</span>
+          <span>${format(edTime, 'time')}</span>
+        </td>
+        ${floors.map(floor =>
+        `<td class="${floor >= 46 ? "table-success" : ""}">${floor}</td>`).join('')}
+      </tr>`
     tbody.append(template.content.firstChild)
 
     edTime.setSeconds(edTime.getSeconds() + 1)
