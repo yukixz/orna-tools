@@ -4,7 +4,7 @@ import { Grid, Segment, Input } from 'semantic-ui-react'
 import { DataContext, DataDispatchContext } from '../context/DataContext'
 
 export default function Filters() {
-  const { options, i18n } = React.useContext(DataContext)
+  const { filters, options, i18n } = React.useContext(DataContext)
   const dispatch = React.useContext(DataDispatchContext)
 
   const searchChangeTimeout = React.useRef()
@@ -61,7 +61,8 @@ export default function Filters() {
       <Grid.Row>
         <Grid.Column width={8}>
           <label>Search in ANY language</label>
-          <Input fluid icon='search' onChange={handleSearchChange} />
+          <Input fluid autoFocus icon='search'
+            defaultValue={filters.query} onChange={handleSearchChange} />
         </Grid.Column>
         <DropdownFilterColumn label='Category' options={options.category}
           onChange={handleCategoryChange} />
@@ -92,12 +93,11 @@ export default function Filters() {
   )
 }
 
-const DropdownFilterColumn = React.memo(function ({ label, options, onChange }) {
+const DropdownFilterColumn = React.memo(function ({ label, ...props }) {
   return (
     <Grid.Column>
       <label>{label}</label>
-      <Select isSearchable isClearable
-        placeholder='--' options={options} onChange={onChange} />
+      <Select isSearchable isClearable placeholder='--' {...props} />
     </Grid.Column >
   )
 })
