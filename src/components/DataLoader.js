@@ -1,13 +1,13 @@
 import React from 'react'
 import { Dimmer, Loader } from 'semantic-ui-react'
-import { DataContext, DataDispatchContext } from '../context/DataContext'
+import { StoreContext, StoreDispatchContext } from '../context/StoreContext'
 import { LANGUAGE_DEFAULT } from '../data/setting'
 import init from '../utils/init'
 
 
 export default function DataLoader() {
-  const data = React.useContext(DataContext)
-  const dispatchDataContext = React.useContext(DataDispatchContext)
+  const { loading } = React.useContext(StoreContext)
+  const dispatchDataContext = React.useContext(StoreDispatchContext)
 
   React.useEffect(() => {
     init(LANGUAGE_DEFAULT, (state) => {
@@ -19,7 +19,7 @@ export default function DataLoader() {
   }, [dispatchDataContext])
 
   return (
-    <Dimmer active={data.loading}>
+    <Dimmer active={loading}>
       <Loader>Loading</Loader>
     </Dimmer>
   )

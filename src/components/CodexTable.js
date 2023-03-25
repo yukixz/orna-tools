@@ -2,11 +2,11 @@ import React from 'react'
 import * as ReactRouter from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { Table, Button, Label, Icon, Image } from 'semantic-ui-react'
-import { DataContext } from '../context/DataContext'
+import { StoreContext } from '../context/StoreContext'
 import { CODEX_TABLE_MAX_ROWS } from '../data/setting'
 
 export default function CodexTable() {
-  const { rows } = React.useContext(DataContext)
+  const { rows } = React.useContext(StoreContext)
 
   return (
     <Table celled striped selectable unstackable>
@@ -70,7 +70,7 @@ const TableRowForItem = React.memo(function ({ codex }) {
 })
 
 const CodexLabels = React.memo(function ({ codex, disable = {} }) {
-  const { i18n } = React.useContext(DataContext)
+  const { i18n } = React.useContext(StoreContext)
 
   return (
     <Label.Group size='small'>

@@ -1,11 +1,11 @@
 import React from 'react'
 import Select from 'react-select'
 import { Grid, Segment, Input } from 'semantic-ui-react'
-import { DataContext, DataDispatchContext } from '../context/DataContext'
+import { StoreContext, StoreDispatchContext } from '../context/StoreContext'
 
 export default function Filters() {
-  const { filters, options, i18n } = React.useContext(DataContext)
-  const dispatch = React.useContext(DataDispatchContext)
+  const { filters, options, i18n } = React.useContext(StoreContext)
+  const dispatch = React.useContext(StoreDispatchContext)
 
   const searchChangeTimeout = React.useRef()
   const handleSearchChange = React.useCallback((event, data) => {

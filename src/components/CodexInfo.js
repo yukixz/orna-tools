@@ -1,11 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Grid, Table, Segment, Card, Label, Container, Header } from 'semantic-ui-react'
-import { DataContext } from '../context/DataContext'
+import { StoreContext } from '../context/StoreContext'
 
 
 export default function CodexInfo({ codex }) {
-  const { codexes, i18n } = React.useContext(DataContext)
+  const { codexes, i18n } = React.useContext(StoreContext)
 
   const renderRowForCodexItems = React.useCallback(([category, id]) => {
     const item = codexes[category][id]

@@ -1,17 +1,17 @@
 import { createContext, useReducer } from 'react'
 
-export const DataContext = createContext(null)
-export const DataDispatchContext = createContext(null)
+export const StoreContext = createContext(null)
+export const StoreDispatchContext = createContext(null)
 
-export function DataProvider({ children }) {
+export function StoreProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState)
 
   return (
-    <DataContext.Provider value={state}>
-      <DataDispatchContext.Provider value={dispatch}>
+    <StoreContext.Provider value={state}>
+      <StoreDispatchContext.Provider value={dispatch}>
         {children}
-      </DataDispatchContext.Provider>
-    </DataContext.Provider>
+      </StoreDispatchContext.Provider>
+    </StoreContext.Provider>
   )
 }
 

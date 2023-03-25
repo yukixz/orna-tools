@@ -1,11 +1,11 @@
 import React from "react"
 import { Container, Dropdown, Menu } from "semantic-ui-react"
-import { DataContext, DataDispatchContext } from "../context/DataContext"
+import { StoreContext, StoreDispatchContext } from "../context/StoreContext"
 import init from "../utils/init"
 
 export default function Header() {
-  const { language, options } = React.useContext(DataContext)
-  const dispatchDataContext = React.useContext(DataDispatchContext)
+  const { language, options } = React.useContext(StoreContext)
+  const dispatchDataContext = React.useContext(StoreDispatchContext)
 
   const handleLanguageChange = React.useCallback((event, data) => {
     init(data.value, (state) => {
