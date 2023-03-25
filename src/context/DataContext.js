@@ -16,6 +16,7 @@ export function DataProvider({ children }) {
 }
 
 const initialState = {
+  loading: true,
   language: null,
   codexes: null,
   codexItems: null,
@@ -54,6 +55,7 @@ function reducer(state, action) {
     case 'INITIALIZED': {
       return {
         ...state,
+        loading: false,
         language: action.language,
         codexes: action.codexes,
         codexItems: action.codexItems,
