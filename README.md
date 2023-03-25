@@ -1,4 +1,4 @@
-# Orna Tools
+# Orna Codex
 
 Tools for Orna: The GPS RPG.
 
