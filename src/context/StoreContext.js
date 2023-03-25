@@ -39,7 +39,7 @@ function reducer(state, action) {
         ...state,
         ...parsed,
         loading: false,
-        rows: parsed.codexItems,
+        rows: applyFilters(parsed.codexItems, state.filters, state.searchQuery)
       }
     }
     case 'FILTER_INSERT': {
