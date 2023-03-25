@@ -28,6 +28,7 @@ const initialState = {
   },
   options: {},
   filters: [{}],
+  searchQuery: "",
 }
 
 function reducer(state, action) {
@@ -38,7 +39,7 @@ function reducer(state, action) {
         ...state,
         ...parsed,
         loading: false,
-        rows: applyFilters(parsed.codexItems, state.filters),
+        rows: parsed.codexItems,
       }
     }
     case 'FILTER_INSERT': {
@@ -47,7 +48,8 @@ function reducer(state, action) {
         {},
       ]
       return {
-        ...state, filters, rows: applyFilters(state.codexItems, filters)
+        ...state, filters,
+        rows: applyFilters(state.codexItems, filters, state.searchQuery)
       }
     }
     case 'FILTER_DELETE': {
@@ -57,7 +59,8 @@ function reducer(state, action) {
         ...state.filters.slice(index + 1),
       ]
       return {
-        ...state, filters, rows: applyFilters(state.codexItems, filters)
+        ...state, filters,
+        rows: applyFilters(state.codexItems, filters, state.searchQuery)
       }
     }
     case 'FILTER_UPDATE': {
@@ -68,7 +71,14 @@ function reducer(state, action) {
         ...state.filters.slice(index + 1),
       ]
       return {
-        ...state, filters, rows: applyFilters(state.codexItems, filters)
+        ...state, filters,
+        rows: applyFilters(state.codexItems, filters, state.searchQuery)
+      }
+    }
+    case 'SEARCH_UPDATE': {
+      return {
+        ...state, searchQuery: action.query,
+        rows: applyFilters(state.codexItems, state.filters, action.query)
       }
     }
     default: {
@@ -77,11 +87,14 @@ function reducer(state, action) {
   }
 }
 
-function applyFilters(rows, filters) {
+function applyFilters(rows, filters, query) {
   for (const filter of filters) {
     if (filter.value != null) {
       rows = rows.filter(filter.value.func)
     }
+  }
+  if (query.length >= 1) {
+    rows = rows.filter((codex) => codex.searches.includes(query))
   }
   return rows
 }

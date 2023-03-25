@@ -4,7 +4,7 @@ import { Button, Grid, Icon, Input, Segment } from 'semantic-ui-react'
 import { StoreContext, StoreDispatchContext } from '../context/StoreContext'
 
 export default function Filters() {
-  const { filters } = React.useContext(StoreContext)
+  const { filters, searchQuery } = React.useContext(StoreContext)
   const dispatch = React.useContext(StoreDispatchContext)
 
   const searchChangeTimeout = React.useRef()
@@ -12,7 +12,7 @@ export default function Filters() {
     clearTimeout(searchChangeTimeout.current)
     searchChangeTimeout.current = setTimeout(() => {
       const query = data.value.trim().toLowerCase()
-      dispatch({ type: 'FILTERS_UPDATED', filters: { query } })
+      dispatch({ type: 'SEARCH_UPDATE', query: query })
     }, 200)
   }, [dispatch])
 
@@ -24,7 +24,7 @@ export default function Filters() {
     <Grid as={Segment} doubling columns={2} className='select-filter'>
       <Grid.Column>
         <Input fluid autoFocus action='Search'
-          defaultValue={filters.query} onChange={handleSearchChange} />
+          defaultValue={searchQuery} onChange={handleSearchChange} />
       </Grid.Column>
       <Grid.Column>
         <Grid>
