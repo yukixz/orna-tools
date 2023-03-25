@@ -35,14 +35,13 @@ async function _init(language, callback) {
     category: data.category,
   }
   // options
-  const options = {}
+  const options = {
+    language: Object.entries(LANGUAGES).map(([value, text]) => ({ value, text })),
+    category: Object.entries(i18n.category).map(([value, label]) => ({ value, label })),
+  }
   for (const [key, values] of Object.entries(data.options)) {
     options[key] = values.map(value => ({ value, label: value }))
   }
-  Object.assign(options, {
-    language: Object.entries(LANGUAGES).map(([value, text]) => ({ value, text })),
-    category: Object.entries(i18n.category).map(([value, label]) => ({ value, label })),
-  })
   // callback
   callback({ language, codexes, codexItems, i18n, options })
 }
