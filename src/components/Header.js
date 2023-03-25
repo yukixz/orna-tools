@@ -1,14 +1,14 @@
 import React from "react"
 import { Container, Dropdown, Menu } from "semantic-ui-react"
 import { StoreContext, StoreDispatchContext } from "../context/StoreContext"
-import init from "../utils/init"
+import load from "../utils/load"
 
 export default function Header() {
   const { language, options } = React.useContext(StoreContext)
   const dispatchDataContext = React.useContext(StoreDispatchContext)
 
   const handleLanguageChange = React.useCallback((event, data) => {
-    init(data.value, (state) => {
+    load(data.value, (state) => {
       dispatchDataContext({
         type: 'INITIALIZED',
         ...state,
@@ -22,9 +22,9 @@ export default function Header() {
         <Menu.Item as='a' header href='/' style={{ fontSize: '1.4em' }}>Codex</Menu.Item>
         <Menu.Item as='a' header href='/clock/'>Clock</Menu.Item>
         <Menu.Item as='a' header position='right'>
-          <Dropdown button floating
+          {/* <Dropdown button floating
             value={language} options={options.language}
-            onChange={handleLanguageChange} />
+            onChange={handleLanguageChange} /> */}
         </Menu.Item>
       </Container>
     </Menu >

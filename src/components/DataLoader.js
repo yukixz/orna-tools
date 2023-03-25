@@ -1,8 +1,7 @@
 import React from 'react'
 import { Dimmer, Loader } from 'semantic-ui-react'
 import { StoreContext, StoreDispatchContext } from '../context/StoreContext'
-import { LANGUAGE_DEFAULT } from '../data/setting'
-import init from '../utils/init'
+import init from '../utils/load'
 
 
 export default function DataLoader() {
@@ -10,7 +9,7 @@ export default function DataLoader() {
   const dispatchDataContext = React.useContext(StoreDispatchContext)
 
   React.useEffect(() => {
-    init(LANGUAGE_DEFAULT, (state) => {
+    init((state) => {
       dispatchDataContext({
         type: 'INITIALIZED',
         ...state,
