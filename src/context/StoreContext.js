@@ -27,7 +27,7 @@ const initialState = {
     category: {},
   },
   options: {},
-  filters: [{}],
+  filters: [],
   searchQuery: "",
 }
 
