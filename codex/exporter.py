@@ -80,9 +80,11 @@ class Exporter:
         data = {}
         data['text'] = self.texts
         data['category'] = self.export_category()
-        data['codex'] = {}
-        for category in data['category'].keys():
-            data['codex'][category] = self.export_codex(category)
+        data['codex'] = {
+            category: self.export_codex(category)
+            for category in data['category'].keys()
+        }
+        data['options'] = self.export_options(data['codex'])
         return data
 
     def export_category(self):
@@ -115,7 +117,7 @@ class Exporter:
                 and_(Page.path.like(
                     f"/codex/{category}/%"), Page.lang == self.lang)
             ).all()
-        logger.info("Exporting codex items length=%d", len(pages))
+        logger.info("Exporting codex items=%d", len(pages))
         for page in pages:
             _, key = self.key_from_url(page.path)
             if page.code != 200:
@@ -129,6 +131,54 @@ class Exporter:
                 raise
 
         return ret
+
+    def export_options(self, codexes):
+        logger.info("Exporting options")
+        options = {
+            "tags": set(),
+            "events": set(),
+            "families": set(),
+            "rarities": set(),
+            "statuses": set(),
+            "tiers": set(),
+        }
+        for _, items in codexes.items():
+            for _, item in items.items():
+                # item.x is value directly
+                for to, fr in [
+                    ['tiers', 'tier'],
+                    ['families', 'family'],
+                    ['rarities', 'rarity'],
+                    ['events', 'event'],
+                ]:
+                    if fr not in item:
+                        continue
+                    value = item[fr]
+                    options[to].add(value)
+                # item.x is [value, value, ...]
+                for to, fr in [
+                    ['tags', 'tags'],
+                ]:
+                    if fr not in item:
+                        continue
+                    for value in item[fr]:
+                        options[to].add(value)
+                # item.x is [[value, ...unused], ...]
+                for to, fr in [
+                    ['statuses', 'causes'],
+                    ['statuses', 'cures'],
+                    ['statuses', 'gives'],
+                    ['statuses', 'immunities'],
+                ]:
+                    if fr not in item:
+                        continue
+                    for values in item[fr]:
+                        value = values[0]
+                        options[to].add(value)
+        return {
+            key: sorted(values)
+            for key, values in options.items()
+        }
 
     def key_from_url(self, path: str):
         return re.match(r"/codex/(\w+?)/([\w-]+?)/", path).groups()
