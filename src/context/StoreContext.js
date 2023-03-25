@@ -140,7 +140,7 @@ function init(state, dataAll) {
   }
   for (const { id, name, type, ...config } of [
     {
-      id: 'category', name: 'Category', sources: data.category,
+      id: 'category', name: i18n.text['category'], sources: data.category,
       func: (value) => (codex) => codex.category === value,
     },
     {

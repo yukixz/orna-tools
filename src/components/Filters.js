@@ -4,7 +4,7 @@ import { Button, Grid, Icon, Input, Segment } from 'semantic-ui-react'
 import { StoreContext, StoreDispatchContext } from '../context/StoreContext'
 
 export default function Filters() {
-  const { filters, searchQuery } = React.useContext(StoreContext)
+  const { filters, searchQuery, i18n } = React.useContext(StoreContext)
   const dispatch = React.useContext(StoreDispatchContext)
 
   const searchChangeTimeout = React.useRef()
@@ -23,7 +23,7 @@ export default function Filters() {
   return (
     <Grid as={Segment} doubling columns={2}>
       <Grid.Column>
-        <Input fluid autoFocus action='Search'
+        <Input fluid autoFocus action={i18n.text['search']}
           defaultValue={searchQuery} onChange={handleSearchChange} />
       </Grid.Column>
       <Grid.Column>
@@ -31,7 +31,7 @@ export default function Filters() {
           <Grid.Row textAlign='right'>
             <Grid.Column>
               <Button icon labelPosition='right' onClick={handleInsert}>
-                Filters
+                {i18n.text['filters']}
                 <Icon name='add' />
               </Button>
             </Grid.Column>
