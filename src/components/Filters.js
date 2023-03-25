@@ -21,13 +21,13 @@ export default function Filters() {
   }, [dispatch])
 
   return (
-    <Grid as={Segment} doubling columns={2} className='select-filter'>
+    <Grid as={Segment} doubling columns={2}>
       <Grid.Column>
         <Input fluid autoFocus action='Search'
           defaultValue={searchQuery} onChange={handleSearchChange} />
       </Grid.Column>
       <Grid.Column>
-        <Grid>
+        <Grid className='select-filter'>
           <Grid.Row textAlign='right'>
             <Grid.Column>
               <Button icon labelPosition='right' onClick={handleInsert}>
@@ -73,15 +73,15 @@ const SelectFilterRow = React.memo(function ({ index, filter }) {
 
   return (
     <Grid.Row stretched>
-      <Grid.Column width={6}>
+      <Grid.Column>
         <Select isSearchable placeholder='--' value={filter.type}
           options={options.type} onChange={handleChangeType} />
       </Grid.Column>
-      <Grid.Column width={6}>
+      <Grid.Column>
         <Select isSearchable placeholder='--' value={filter.value}
           options={optionsOfType} onChange={handleChangeSelect} />
       </Grid.Column>
-      <Grid.Column width={4}>
+      <Grid.Column className='action'>
         <Button icon onClick={handleDelete}>
           <Icon name='delete' />
         </Button>

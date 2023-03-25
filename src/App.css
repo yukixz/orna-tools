@@ -1,12 +1,14 @@
-#filters.grid label {
-    font-size: 0.78571429rem;
-    font-weight: bold;
-    margin-left: 0.21428571rem;
+.ui.grid.select-filter>.row {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
 }
 
-/* Mobile Only */
-@media only screen and (max-width: 991px) {
-    #filters.grid .column.wide {
-        width: 100% !important;
-    }
+.ui.grid.select-filter>.row>.column {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    flex: auto;
+}
+
+.ui.grid.select-filter>.row>.column.action {
+    flex: 0 0 min-content;
 }
