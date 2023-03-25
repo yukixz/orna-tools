@@ -17,15 +17,15 @@ export default function Header() {
   }, [dispatchDataContext])
 
   return (
-    <Menu inverted style={{ margin: 0 }}>
+    <Menu inverted style={{ margin: 0, borderRadius: 'unset' }}>
       <Container>
         <Menu.Item as='a' header href='/' style={{ fontSize: '1.4em' }}>Codex</Menu.Item>
         <Menu.Item as='a' header href='/clock/'>Clock</Menu.Item>
-        <Menu.Item as='a' header position='right'>
-          {/* <Dropdown button floating
+        {/* <Menu.Item as='a' header position='right'>
+          <Dropdown button floating
             value={language} options={options.language}
-            onChange={handleLanguageChange} /> */}
-        </Menu.Item>
+            onChange={handleLanguageChange} />
+        </Menu.Item> */}
       </Container>
     </Menu >
   )
