@@ -144,10 +144,6 @@ function init(state, dataAll) {
       func: (value) => (codex) => codex.category === value,
     },
     {
-      id: 'tag', name: i18n.text['tags'], sources: data.options.tags,
-      func: (value) => (codex) => codex.tags != null && codex.tags.includes(value),
-    },
-    {
       id: 'tier', name: i18n.text['tier'], sources: data.options.tiers,
       func: (value) => (codex) => codex.tier === value,
     },
@@ -160,8 +156,20 @@ function init(state, dataAll) {
       func: (value) => (codex) => codex.rarity === value,
     },
     {
+      id: 'place', name: i18n.text['place'], sources: data.options.places,
+      func: (value) => (codex) => codex.place === value,
+    },
+    {
+      id: 'useable', name: i18n.text['useableBy'], sources: data.options.useables,
+      func: (value) => (codex) => codex.useableBy === value,
+    },
+    {
       id: 'event', name: i18n.text['event'], sources: data.options.events,
       func: (value) => (codex) => codex.event === value,
+    },
+    {
+      id: 'tag', name: i18n.text['tags'], sources: data.options.tags,
+      func: (value) => (codex) => codex.tags != null && codex.tags.includes(value),
     },
     {
       id: 'cause', name: i18n.text['causes'], sources: data.options.statuses,

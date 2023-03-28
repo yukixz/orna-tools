@@ -34,9 +34,11 @@ TEXTS = {
         "tier": "Tier",
         "immunities": "Immunities",
         "materials": "Upgrade materials",
+        "place": "Place",
         "rarity": "Rarity",
         "search": "Search",
         "skills": "Skills",
+        "useableBy": "Useable by",
     },
     "zh-hans": {
         "category": "类别",
@@ -52,9 +54,11 @@ TEXTS = {
         "tier": "阶级",
         "immunities": "免疫",
         "materials": "升级素材",
+        "place": "部位",
         "rarity": "稀有度",
         "search": "搜索",
         "skills": "技能",
+        "useableBy": "适用于",
     }
 }
 
@@ -141,21 +145,25 @@ class Exporter:
     def export_options(self, codexes):
         logger.info("Exporting options")
         options = {
-            "tags": set(),
             "events": set(),
             "families": set(),
+            "places": set(),
             "rarities": set(),
             "statuses": set(),
+            "tags": set(),
             "tiers": set(),
+            "useables": set(),
         }
         for _, items in codexes.items():
             for _, item in items.items():
                 # item.x is value directly
                 for to, fr in [
-                    ['tiers', 'tier'],
-                    ['families', 'family'],
-                    ['rarities', 'rarity'],
                     ['events', 'event'],
+                    ['families', 'family'],
+                    ['places', 'place'],
+                    ['rarities', 'rarity'],
+                    ['tiers', 'tier'],
+                    ['useables', 'useableBy'],
                 ]:
                     if fr not in item:
                         continue
@@ -270,8 +278,11 @@ class Exporter:
         # tags
         subs = node.select('.codex-page-tag')
         if len(subs) >= 1:
-            return {'tags': tuple(map(
-                lambda e: self.normalize(e.string), subs))}
+            return {'tags': [self.normalize(e.string) for e in subs]}
+        # stats
+        subs = node.select('.codex-stat')
+        if len(subs) >= 1:
+            return {'stats': [self.normalize(e.string) for e in subs]}
         # meta
         if 'codex-page-description' in classes:
             string = ''.join(node.stripped_strings)
@@ -282,13 +293,10 @@ class Exporter:
             return {'description': string}
         if 'codex-page-meta' in classes:
             string = ''.join(node.stripped_strings)
-            for key in ("tier", ):
+            for key in ("tier", "rarity", "useableBy", "place"):
                 prefix = f"{self.texts[key]}:"
                 if string.startswith(prefix):
                     return {key: self.normalize(string.removeprefix(prefix))}
-            return {}
-        # stats
-        if 'codex-stats' in classes:
             return {}
         # bypass until h4
         if node.name != 'h4':
