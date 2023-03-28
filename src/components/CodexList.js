@@ -35,7 +35,7 @@ const TableRowForItem = React.memo(function ({ codex }) {
     <Item className='codex' onClick={handleClick}>
       <Item.Image size='tiny' src={codex.image_url} />
       <Item.Content>
-        <Item.Header>{codex.name}</Item.Header>
+        <Item.Header>{codex.name} <Icon name='star' fitted />{codex.tier}</Item.Header>
         <Item.Meta><CodexLabels codex={codex} /></Item.Meta>
         <Item.Extra>
           <Button.Group floated='right' onClick={handleClickButton}>
@@ -59,19 +59,15 @@ const TableRowForItem = React.memo(function ({ codex }) {
   )
 })
 
-const CodexLabels = React.memo(function ({ codex, disable = {} }) {
+const CodexLabels = React.memo(function ({ codex }) {
   const { i18n } = React.useContext(StoreContext)
 
   return (
     <Label.Group size='small'>
-      <Label>{i18n.category[codex.category]}</Label>
-      {!disable.tier && codex.tier && <Label><Icon name='star' />{codex.tier}</Label>}
-      {/* {!disable.family && codex.family && <Label>{codex.family}</Label>} */}
-      {/* {!disable.rarity && codex.rarity && <Label>{codex.rarity}</Label>} */}
-      {!disable.event && codex.event && <Label><Icon name='map' />{codex.event}</Label>}
-      {!disable.place && codex.place && <Label>{codex.place}</Label>}
-      {!disable.useableBy && codex.useableBy && <Label>{codex.useableBy}</Label>}
-      {/* {!disable.tags && codex.tags && codex.tags.map(tag => <Label key={`tag:${tag}`}>{tag}</Label>)} */}
+      <Label content={i18n.category[codex.category]} />
+      {codex.event && <Label content={codex.event} icon='map' />}
+      {codex.place && <Label content={codex.place} />}
+      {codex.useableBy && <Label content={codex.useableBy} />}
     </Label.Group>
   )
 })
