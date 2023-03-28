@@ -66,6 +66,8 @@ const CodexLabels = React.memo(function ({ codex, disable = {} }) {
       {/* {!disable.family && codex.family && <Label>{codex.family}</Label>} */}
       {/* {!disable.rarity && codex.rarity && <Label>{codex.rarity}</Label>} */}
       {!disable.event && codex.event && <Label><Icon name='map' />{codex.event}</Label>}
+      {!disable.place && codex.place && <Label>{codex.place}</Label>}
+      {!disable.useableBy && codex.useableBy && <Label>{codex.useableBy}</Label>}
       {/* {!disable.tags && codex.tags && codex.tags.map(tag => <Label key={`tag:${tag}`}>{tag}</Label>)} */}
     </Label.Group>
   )
