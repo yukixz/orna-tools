@@ -94,6 +94,7 @@ class Exporter:
             category: self.export_codex(category)
             for category in data['category'].keys()
         }
+        self.add_material_for(data['codex'])
         data['options'] = self.export_options(data['codex'])
         return data
 
@@ -141,6 +142,18 @@ class Exporter:
                 raise
 
         return ret
+
+    def add_material_for(self, codexes):
+        logger.info("Exporting codex: Adding material for")
+        for category, items in codexes.items():
+            for id, item in items.items():
+                if 'materials' not in item:
+                    continue
+                for target_category, target_id in item['materials']:
+                    target = codexes[target_category][target_id]
+                    if 'material_for' not in target:
+                        target['material_for'] = []
+                    target['material_for'].append([category, id])
 
     def export_options(self, codexes):
         logger.info("Exporting options")

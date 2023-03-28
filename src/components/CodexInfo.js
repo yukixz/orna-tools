@@ -75,6 +75,7 @@ export default function CodexInfo({ codex }) {
         <CodexSegment label={i18n.text['drops']} tableData={codex.drops} tableRenderRow={renderRowForCodexItems} />
         <CodexSegment label={i18n.text['droppedBy']} tableData={codex.dropped_by} tableRenderRow={renderRowForCodexItems} />
         <CodexSegment label={i18n.text['materials']} tableData={codex.materials} tableRenderRow={renderRowForCodexItems} />
+        <CodexSegment label={i18n.text['materials']} tableData={codex.material_for} tableRenderRow={renderRowForCodexItems} />
       </Grid>
     </Container >
   )
