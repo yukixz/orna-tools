@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Grid, Table, Segment, Card, Label, Container, Header } from 'semantic-ui-react'
+import { Grid, Table, Segment, Card, Label, Container, Image, Icon } from 'semantic-ui-react'
 import { StoreContext } from '../context/StoreContext'
 
 
@@ -39,9 +39,8 @@ export default function CodexInfo({ codex }) {
   }
   return (
     <Container as={Segment}>
-      <Header>{codex.name}</Header>
       <Grid columns={2} doubling>
-        <CodexCard description={codex.description} tags={codex.tags} />
+        <CodexCard codex={codex} />
         <CodexSegment label={i18n.text['skills']} tableData={codex.spells} tableRenderRow={renderRowForCodexItems} />
         <CodexSegment label={`${i18n.text['causes']} (${i18n.text['skills']})`}
           tableData={codex.causes_by_spells} tableRenderRow={renderRowForCausesBySpells} />
@@ -57,14 +56,30 @@ export default function CodexInfo({ codex }) {
   )
 }
 
-const CodexCard = React.memo(function ({ description, tags }) {
-  if (!description && !tags) return
+const CodexCard = React.memo(function ({ codex }) {
   return (
     <Grid.Column width={16} >
       <Card fluid>
         <Card.Content>
-          {description && <Card.Description>{description}</Card.Description>}
-          {tags && <Card.Meta>{tags.map(tag => <Label key={tag}>{tag}</Label>)}</Card.Meta>}
+          <Image floated='left' size='tiny' src={codex.image_url} />
+          <Card.Header>{codex.name}</Card.Header>
+          <Card.Meta>
+            <Icon name='star' />{codex.tier}
+          </Card.Meta>
+          {codex.description && <Card.Meta>{codex.description}</Card.Meta>}
+          <Card.Description>
+            {codex.family && <Label content={codex.family} />}
+            {codex.rarity && <Label content={codex.rarity} />}
+            {codex.place && <Label content={codex.place} />}
+            {codex.useableBy && <Label content={codex.useableBy} />}
+            {codex.event && <Label content={codex.event} icon='map' />}
+          </Card.Description>
+          {codex.tags && <Card.Description>
+            {codex.tags.map((value, index) => <Label key={index} content={value} />)}
+          </Card.Description>}
+          {codex.stats && <Card.Description>
+            {codex.stats.map((value, index) => <Label key={index} content={value} />)}
+          </Card.Description>}
         </Card.Content>
       </Card>
     </Grid.Column >
@@ -77,7 +92,7 @@ const CodexSegment = React.memo(function ({ label, tableData, tableRenderRow }) 
     <Grid.Column>
       <Segment>
         {label != null &&
-          <Label attached='top'>{label}</Label>}
+          <Label attached='top' content={label} />}
         {tableData != null &&
           <Table basic='very'
             tableData={Array.isArray(tableData) ? tableData : Object.entries(tableData)}
