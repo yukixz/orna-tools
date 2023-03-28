@@ -5,7 +5,7 @@ import { Button, Label, Icon, Item, Segment } from 'semantic-ui-react'
 import { StoreContext } from '../context/StoreContext'
 import { CODEX_TABLE_MAX_ROWS } from '../data/setting'
 
-export default function CodexTable() {
+export default function CodexList() {
   const { rows } = React.useContext(StoreContext)
 
   return (
