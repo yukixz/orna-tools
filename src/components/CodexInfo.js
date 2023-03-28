@@ -7,11 +7,11 @@ import { StoreContext } from '../context/StoreContext'
 export default function CodexInfo({ codex }) {
   const { codexes, i18n } = React.useContext(StoreContext)
 
-  const renderRowForCodexItems = React.useCallback(([category, id]) => {
-    const item = codexes[category][id]
+  const renderRowForCodexItems = React.useCallback((id) => {
+    const item = codexes[id]
     return (
-      <Table.Row key={item.key}>
-        <Table.Cell><Link to={`/codex/${category}/${id}`}>{item.name}</Link></Table.Cell>
+      <Table.Row key={item.id}>
+        <Table.Cell><Link to={`/codex/${id}/`}>{item.name}</Link></Table.Cell>
       </Table.Row>
     )
   }, [codexes])
@@ -42,8 +42,8 @@ export default function CodexInfo({ codex }) {
   let causes_by_spells = null
   if (codex.spells != null) {
     causes_by_spells = {}
-    for (const [category, key] of codex.spells) {
-      const spellCodex = codexes[category][key]
+    for (const id of codex.spells) {
+      const spellCodex = codexes[id]
       if (spellCodex.causes == null) {
         continue
       }

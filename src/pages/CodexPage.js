@@ -7,9 +7,9 @@ import { StoreContext } from '../context/StoreContext'
 import _ from 'lodash'
 
 export default function CodexPage() {
-  const { category, id } = ReactRouter.useParams()
+  const { id1, id2 } = ReactRouter.useParams()
   const { codexes } = React.useContext(StoreContext)
-  const codex = _.get(codexes, [category, id])
+  const codex = _.get(codexes, `${id1}/${id2}`)
 
   return (
     <div>

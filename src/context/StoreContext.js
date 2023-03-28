@@ -104,21 +104,16 @@ function init(state, dataAll) {
   const data = JSON.parse(JSON.stringify(dataAll[language]))  // deep copy
 
   const codexes = data.codex
-  const codexItems = []
-  for (const [category, items] of Object.entries(codexes)) {
-    for (const [id, item] of Object.entries(items)) {
-      codexItems.push(item)
-      Object.assign(item, {
-        key: `${category}:${id}`,
-        id: id,
-        category: category,
-        searches: Object.values(dataAll).map(
-          data => data.codex[category][id].name)
-          .join('|').toLowerCase(),
-      })
-    }
+  for (const [id, item] of Object.entries(codexes)) {
+    Object.assign(item, {
+      id: id,
+      searches: Object.values(dataAll).map(
+        data => data.codex[id].name)
+        .join('|').toLowerCase(),
+    })
   }
-  codexItems.sort((a, b) => a.key.localeCompare(b.key))
+  const codexItems = Object.values(codexes)
+    .sort((a, b) => a.id.localeCompare(b.id))
 
   const i18n = {
     text: data.text,

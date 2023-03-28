@@ -12,7 +12,7 @@ const router = createHashRouter([
     element: <SearchPage />
   },
   {
-    path: '/codex/:category/:id',
+    path: '/codex/:id1/:id2/',
     element: <CodexPage />
   },
 ])

@@ -12,7 +12,7 @@ export default function CodexList() {
     <Segment>
       <Item.Group divided unstackable>
         {rows.slice(0, CODEX_TABLE_MAX_ROWS).map(codex =>
-          <TableRowForItem key={codex.key} codex={codex} />
+          <TableRowForItem key={codex.id} codex={codex} />
         )}
       </Item.Group>
       <p>
@@ -25,7 +25,7 @@ export default function CodexList() {
 const TableRowForItem = React.memo(function ({ codex }) {
   const navigate = ReactRouter.useNavigate()
   const handleClick = React.useCallback((event) => {
-    navigate(`/codex/${codex.category}/${codex.id}`)
+    navigate(`/codex/${codex.id}/`)
   }, [codex, navigate])
   const handleClickButton = React.useCallback((event) => {
     event.stopPropagation()
@@ -39,7 +39,7 @@ const TableRowForItem = React.memo(function ({ codex }) {
         <Item.Meta><CodexLabels codex={codex} /></Item.Meta>
         <Item.Extra>
           <Button.Group floated='right' onClick={handleClickButton}>
-            <Button icon as={Link} to={`/codex/${codex.category}/${codex.id}`}>
+            <Button icon as={Link} to={`/codex/${codex.id}/`}>
               <Icon name='align justify' />
             </Button>
             <Button icon as='a'

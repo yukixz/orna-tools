@@ -90,10 +90,9 @@ class Exporter:
         data = {}
         data['text'] = self.texts
         data['category'] = self.export_category()
-        data['codex'] = {
-            category: self.export_codex(category)
-            for category in data['category'].keys()
-        }
+        data['codex'] = {}
+        for category in data['category'].keys():
+            data['codex'].update(self.export_codex(category))
         self.add_material_for(data['codex'])
         data['options'] = self.export_options(data['codex'])
         return data
@@ -130,30 +129,28 @@ class Exporter:
             ).all()
         logger.info("Exporting codex items=%d", len(pages))
         for page in pages:
-            _, key = self.key_from_url(page.path)
+            id_ = self.id_from_url(page.path)
             if page.code != 200:
-                logger.info("Skipped key=%s:%s code=%s",
-                            category, key, page.code)
+                logger.info("Skipped id=%s code=%s", id_, page.code)
                 continue
             try:
-                ret[key] = self.parse_item(page)
+                ret[id_] = self.parse_item(page, category)
             except:
-                logger.error("key=%s", key)
+                logger.error("id=%s", id_)
                 raise
 
         return ret
 
     def add_material_for(self, codexes):
         logger.info("Exporting codex: Adding material for")
-        for category, items in codexes.items():
-            for id, item in items.items():
-                if 'materials' not in item:
-                    continue
-                for target_category, target_id in item['materials']:
-                    target = codexes[target_category][target_id]
-                    if 'material_for' not in target:
-                        target['material_for'] = []
-                    target['material_for'].append([category, id])
+        for id_, item in codexes.items():
+            if 'materials' not in item:
+                continue
+            for target_id in item['materials']:
+                target = codexes[target_id]
+                if 'material_for' not in target:
+                    target['material_for'] = []
+                target['material_for'].append(id_)
 
     def export_options(self, codexes):
         logger.info("Exporting options")
@@ -167,54 +164,54 @@ class Exporter:
             "tiers": set(),
             "useables": set(),
         }
-        for _, items in codexes.items():
-            for _, item in items.items():
-                # item.x is value directly
-                for to, fr in [
-                    ['events', 'event'],
-                    ['families', 'family'],
-                    ['places', 'place'],
-                    ['rarities', 'rarity'],
-                    ['tiers', 'tier'],
-                    ['useables', 'useableBy'],
-                ]:
-                    if fr not in item:
-                        continue
-                    value = item[fr]
+        for _, item in codexes.items():
+            # item.x is value directly
+            for to, fr in [
+                ['events', 'event'],
+                ['families', 'family'],
+                ['places', 'place'],
+                ['rarities', 'rarity'],
+                ['tiers', 'tier'],
+                ['useables', 'useableBy'],
+            ]:
+                if fr not in item:
+                    continue
+                value = item[fr]
+                options[to].add(value)
+            # item.x is [value, value, ...]
+            for to, fr in [
+                ['tags', 'tags'],
+            ]:
+                if fr not in item:
+                    continue
+                for value in item[fr]:
                     options[to].add(value)
-                # item.x is [value, value, ...]
-                for to, fr in [
-                    ['tags', 'tags'],
-                ]:
-                    if fr not in item:
-                        continue
-                    for value in item[fr]:
-                        options[to].add(value)
-                # item.x is [[value, ...unused], ...]
-                for to, fr in [
-                    ['statuses', 'causes'],
-                    ['statuses', 'cures'],
-                    ['statuses', 'gives'],
-                    ['statuses', 'immunities'],
-                ]:
-                    if fr not in item:
-                        continue
-                    for values in item[fr]:
-                        value = values[0]
-                        options[to].add(value)
+            # item.x is [[value, ...unused], ...]
+            for to, fr in [
+                ['statuses', 'causes'],
+                ['statuses', 'cures'],
+                ['statuses', 'gives'],
+                ['statuses', 'immunities'],
+            ]:
+                if fr not in item:
+                    continue
+                for values in item[fr]:
+                    value = values[0]
+                    options[to].add(value)
         return {
             key: sorted(values)
             for key, values in options.items()
         }
 
-    def key_from_url(self, path: str):
-        return re.match(r"/codex/(\w+?)/([\w-]+?)/", path).groups()
+    def id_from_url(self, path: str):
+        return re.match(r"/codex/(\w+?/[\w-]+?)/", path).group(1)
 
-    def parse_item(self, page: Page):
+    def parse_item(self, page: Page, category: str):
         soup = BeautifulSoup(page.html, "html.parser")
         codex = {
             "name": self.extract_name(soup),
             "path": page.path,
+            "category": category,
         }
 
         # codex page
@@ -342,4 +339,4 @@ class Exporter:
 
     def parse_href(self, node: Tag):
         path = node.select_one('a')['href']
-        return self.key_from_url(path)
+        return self.id_from_url(path)
