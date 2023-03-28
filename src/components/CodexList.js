@@ -23,10 +23,13 @@ export default function CodexList() {
 }
 
 const TableRowForItem = React.memo(function ({ codex }) {
+  const { i18n } = React.useContext(StoreContext)
+
   const navigate = ReactRouter.useNavigate()
   const handleClick = React.useCallback((event) => {
     navigate(`/codex/${codex.id}/`)
   }, [codex, navigate])
+
   const handleClickButton = React.useCallback((event) => {
     event.stopPropagation()
   }, [])
@@ -35,8 +38,9 @@ const TableRowForItem = React.memo(function ({ codex }) {
     <Item className='codex' onClick={handleClick}>
       <Item.Image size='tiny' src={codex.image_url} />
       <Item.Content>
-        <Item.Header>{codex.name} <Icon name='star' fitted />{codex.tier}</Item.Header>
-        <Item.Meta><CodexLabels codex={codex} /></Item.Meta>
+        <Item.Header>
+          {codex.name} <Icon name='star' fitted />{codex.tier}
+        </Item.Header>
         <Item.Extra>
           <Button.Group floated='right' onClick={handleClickButton}>
             <Button icon as={Link} to={`/codex/${codex.id}/`}>
@@ -53,21 +57,14 @@ const TableRowForItem = React.memo(function ({ codex }) {
               <Icon name='bookmark' />
             </Button>
           </Button.Group>
+          <Label.Group size='small'>
+            <Label content={i18n.category[codex.category]} />
+            {codex.event && <Label content={codex.event} icon='map' />}
+            {codex.place && <Label content={codex.place} />}
+            {codex.useableBy && <Label content={codex.useableBy} />}
+          </Label.Group>
         </Item.Extra>
       </Item.Content>
     </Item>
-  )
-})
-
-const CodexLabels = React.memo(function ({ codex }) {
-  const { i18n } = React.useContext(StoreContext)
-
-  return (
-    <Label.Group size='small'>
-      <Label content={i18n.category[codex.category]} />
-      {codex.event && <Label content={codex.event} icon='map' />}
-      {codex.place && <Label content={codex.place} />}
-      {codex.useableBy && <Label content={codex.useableBy} />}
-    </Label.Group>
   )
 })
