@@ -74,8 +74,9 @@ class Crawler:
                 and_(Page.path == path, Page.lang == lang)
             ).one_or_none()
             if page is None:
-                page = Page(path=path, lang=lang,
-                            code=resp.status_code, html=resp.text)
+                page = Page(path=path, lang=lang)
+            page.code = resp.status_code
+            page.html = resp.text
             session.add(page)
             session.commit()
 
@@ -101,8 +102,10 @@ class Crawler:
                 waitlist.add(path)
         # get entries from saved codex
         with Session(self.db_engine) as session:
-            pages = session.query(Page.path).filter(Page.code == 200).all()
+            pages = session.query(Page.path).all()
             for page in pages:
+                if page.path.startswith('/codex/spells/summon-scarecrow'):
+                    logger.info(page.path)
                 waitlist.add(page.path)
         # update entries in waitlist
         logger.info("waitlist length=%d", len(waitlist))
