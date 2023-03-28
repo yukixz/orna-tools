@@ -93,6 +93,7 @@ class Exporter:
         data['codex'] = {}
         for category in data['category'].keys():
             data['codex'].update(self.export_codex(category))
+        self.add_causes_by_spells(data['codex'])
         self.add_material_for(data['codex'])
         data['options'] = self.export_options(data['codex'])
         return data
@@ -140,17 +141,6 @@ class Exporter:
                 raise
 
         return ret
-
-    def add_material_for(self, codexes):
-        logger.info("Exporting codex: Adding material for")
-        for id_, item in codexes.items():
-            if 'materials' not in item:
-                continue
-            for target_id in item['materials']:
-                target = codexes[target_id]
-                if 'material_for' not in target:
-                    target['material_for'] = []
-                target['material_for'].append(id_)
 
     def export_options(self, codexes):
         logger.info("Exporting options")
@@ -264,6 +254,39 @@ class Exporter:
             if isinstance(value, (str, list, tuple)) and len(value) == 0:
                 del codex[key]
         return codex
+
+    def add_material_for(self, codexes):
+        logger.info("Exporting codex: Adding material for")
+        for id_, item in codexes.items():
+            if 'materials' not in item:
+                continue
+            for target_id in item['materials']:
+                target = codexes[target_id]
+                if 'material_for' not in target:
+                    target['material_for'] = []
+                target['material_for'].append(id_)
+
+    def add_causes_by_spells(self, codexes):
+        logger.info("Exporting codex: Adding causes by spells")
+        for id_, item in codexes.items():
+            if 'spells' not in item:
+                continue
+            causes = {}
+            for target_id in item['spells']:
+                target = codexes[target_id]
+                if 'causes' not in target:
+                    continue
+                for [status, probability] in target['causes']:
+                    current = causes.get(status, {
+                        'probability': 0,
+                        'by': [],
+                    })
+                    current['by'].append(f"{status} ({probability}%)")
+                    if probability > current['probability']:
+                        current['probability'] = probability
+                    causes[status] = current
+            if len(causes) >= 1:
+                item['causes_by_spells'] = causes
 
     def normalize(self, string: str):
         string = string \

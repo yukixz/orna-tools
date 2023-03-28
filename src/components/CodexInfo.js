@@ -37,30 +37,6 @@ export default function CodexInfo({ codex }) {
   if (codex == null) {
     return null
   }
-
-
-  let causes_by_spells = null
-  if (codex.spells != null) {
-    causes_by_spells = {}
-    for (const id of codex.spells) {
-      const spellCodex = codexes[id]
-      if (spellCodex.causes == null) {
-        continue
-      }
-      for (const [status, probability] of spellCodex.causes) {
-        if (causes_by_spells[status] == null) {
-          causes_by_spells[status] = {
-            probability: 0,
-            by: []
-          }
-        }
-        causes_by_spells[status].by.push(`${spellCodex.name} (${probability}%)`)
-        if (probability > causes_by_spells[status].probability) {
-          causes_by_spells[status].probability = probability
-        }
-      }
-    }
-  }
   return (
     <Container as={Segment}>
       <Header>{codex.name}</Header>
@@ -68,7 +44,7 @@ export default function CodexInfo({ codex }) {
         <CodexCard description={codex.description} tags={codex.tags} />
         <CodexSegment label={i18n.text['skills']} tableData={codex.spells} tableRenderRow={renderRowForCodexItems} />
         <CodexSegment label={`${i18n.text['causes']} (${i18n.text['skills']})`}
-          tableData={causes_by_spells} tableRenderRow={renderRowForCausesBySpells} />
+          tableData={codex.causes_by_spells} tableRenderRow={renderRowForCausesBySpells} />
         <CodexSegment label={i18n.text['gives']} tableData={codex.gives} tableRenderRow={renderRowForStatuses} />
         <CodexSegment label={i18n.text['causes']} tableData={codex.causes} tableRenderRow={renderRowForStatuses} />
         <CodexSegment label={i18n.text['immunities']} tableData={codex.immunities} tableRenderRow={renderRowForStatuses} />
