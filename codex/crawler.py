@@ -56,7 +56,8 @@ class Crawler:
             })
         self.fetched_count += 1
         if datetime.now() >= self.fetched_last_reported + timedelta(minutes=1):
-            logger.info("fetched %d from last reported", self.fetched_count)
+            logger.info("fetched %d urls from last reported",
+                        self.fetched_count)
             self.fetched_count = 0
             self.fetched_last_reported = datetime.now()
         return resp

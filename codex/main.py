@@ -6,8 +6,6 @@ import json
 import os
 
 import sqlalchemy
-from crawler import Crawler
-from exporter import Exporter
 from orm import migrate
 
 
@@ -26,6 +24,7 @@ def open_db(path, is_init=False):
 
 
 def crawl(engine, langs):
+    from crawler import Crawler
     crawler = Crawler(engine)
     for lang in langs:
         crawler.crawl(lang)
@@ -33,6 +32,7 @@ def crawl(engine, langs):
 
 
 def export(engine, langs, directory):
+    from exporter import Exporter
     if not os.path.isdir(directory):
         raise FileNotFoundError(
             f"'{directory}' is not found or not a directory.")
