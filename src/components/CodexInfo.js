@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Grid, Table, Segment, Card, Label, Container, Image, Icon } from 'semantic-ui-react'
 import { StoreContext } from '../context/StoreContext'
+import LinkButtons from './LinkButtons'
 
 
 export default function CodexInfo({ codex }) {
@@ -80,6 +81,9 @@ const CodexCard = React.memo(function ({ codex }) {
           {codex.stats && <Card.Description>
             {codex.stats.map((value, index) => <Label key={index} content={value} />)}
           </Card.Description>}
+          <Card.Description>
+            <LinkButtons codex={codex} floated='right' />
+          </Card.Description>
         </Card.Content>
       </Card>
     </Grid.Column >
