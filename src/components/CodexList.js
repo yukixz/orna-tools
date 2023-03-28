@@ -24,18 +24,21 @@ export default function CodexList() {
 
 const TableRowForItem = React.memo(function ({ codex }) {
   const navigate = ReactRouter.useNavigate()
-  const handleClick = React.useCallback(() => {
+  const handleClick = React.useCallback((event) => {
     navigate(`/codex/${codex.category}/${codex.id}`)
   }, [codex, navigate])
+  const handleClickButton = React.useCallback((event) => {
+    event.stopPropagation()
+  }, [])
 
   return (
-    <Item className='codex'>
-      <Item.Image size='tiny' src={codex.image_url} onClick={handleClick} />
+    <Item className='codex' onClick={handleClick}>
+      <Item.Image size='tiny' src={codex.image_url} />
       <Item.Content>
         <Item.Header>{codex.name}</Item.Header>
         <Item.Meta><CodexLabels codex={codex} /></Item.Meta>
         <Item.Extra>
-          <Button.Group floated='right'>
+          <Button.Group floated='right' onClick={handleClickButton}>
             <Button icon as={Link} to={`/codex/${codex.category}/${codex.id}`}>
               <Icon name='align justify' />
             </Button>
