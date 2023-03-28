@@ -23,7 +23,7 @@ export default function Filters() {
   return (
     <Grid as={Segment} doubling columns={2}>
       <Grid.Column>
-        <Input fluid autoFocus action={i18n.text['search']}
+        <Input fluid action={i18n.text['search']}
           defaultValue={searchQuery} onChange={handleSearchChange} />
       </Grid.Column>
       <Grid.Column>
