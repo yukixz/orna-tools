@@ -1,5 +1,5 @@
 import { createContext, useReducer } from 'react'
-import { LANGUAGES, LANGUAGE_DEFAULT } from '../data/setting'
+import { LANGUAGES, LANGUAGE_DEFAULT, SETTINGS_LSKEY } from '../data/setting'
 
 export const StoreContext = createContext(null)
 export const StoreDispatchContext = createContext(null)
@@ -19,6 +19,7 @@ export function StoreProvider({ children }) {
 const initialState = {
   loading: true,
   language: null,
+  secondaryLanguages: [],
   codexes: null,
   codexItems: null,
   rows: [],
@@ -34,13 +35,24 @@ const initialState = {
 function reducer(state, action) {
   switch (action.type) {
     case 'INITIALIZED': {
-      const parsed = init(state, action.data)
+      const { data } = action
       return {
         ...state,
-        ...parsed,
+        ...data,
         loading: false,
-        rows: applyFilters(parsed.codexItems, state.filters, state.searchQuery)
+        rows: applyFilters(data.codexItems, state.filters, state.searchQuery)
       }
+    }
+    case 'LANGUAGE_CHANGE': {
+      const settings = JSON.stringify({
+        language: action.language,
+        secondaryLanguages: action.secondaryLanguages,
+      })
+      if (settings !== localStorage.getItem(SETTINGS_LSKEY)) {
+        localStorage.setItem(SETTINGS_LSKEY, settings)
+        window.location.reload()
+      }
+      return state
     }
     case 'FILTER_INSERT': {
       const filters = [
@@ -99,15 +111,38 @@ function applyFilters(rows, filters, query) {
   return rows
 }
 
-function init(state, dataAll) {
-  const language = state.language || LANGUAGE_DEFAULT
-  const data = JSON.parse(JSON.stringify(dataAll[language]))  // deep copy
+export async function init() {
+  // settings from localstrage
+  const settings = {}
+  try {
+    Object.assign(settings,
+      JSON.parse(localStorage.getItem(SETTINGS_LSKEY) || '{}'))
+  } catch (error) { }
+  // default settings
+  const defaultSettings = {
+    language: LANGUAGE_DEFAULT,
+    secondaryLanguages: [],
+  }
+  for (const [key, value] of Object.entries(defaultSettings)) {
+    if (settings[key] == null) {
+      settings[key] = value
+    }
+  }
 
+  // load data
+  const allLanguages = [].concat(settings.language, settings.secondaryLanguages)
+  const allData = {}
+  for (const lang of allLanguages) {
+    allData[lang] = await import(`../data/${lang}.json`)
+  }
+
+  // codex
+  const data = JSON.parse(JSON.stringify(allData[settings.language]))  // deep copy
   const codexes = data.codex
   for (const [id, item] of Object.entries(codexes)) {
     Object.assign(item, {
       id: id,
-      searches: Object.values(dataAll).map(
+      searches: Object.values(allData).map(
         data => data.codex[id].name)
         .join('|').toLowerCase(),
     })
@@ -115,11 +150,13 @@ function init(state, dataAll) {
   const codexItems = Object.values(codexes)
     .sort((a, b) => a.id.localeCompare(b.id))
 
+  // i18n
   const i18n = {
     text: data.text,
     category: data.category,
   }
 
+  // options
   const toSelectOptions = (items, func) => {
     if (Array.isArray(items)) {
       return items.map(item => ({ label: item, value: item, func: func != null && func(item) }))
@@ -130,7 +167,7 @@ function init(state, dataAll) {
     }
   }
   const options = {
-    language: toSelectOptions(LANGUAGES),
+    languages: toSelectOptions(LANGUAGES),
     type: [],
   }
   for (const { id, name, type, ...config } of [
@@ -187,5 +224,5 @@ function init(state, dataAll) {
     options[id] = toSelectOptions(config.sources, config.func)
   }
 
-  return { language, codexes, codexItems, i18n, options }
+  return { ...settings, codexes, codexItems, i18n, options }
 }

@@ -1,21 +1,19 @@
 import React from 'react'
 import { Dimmer, Loader } from 'semantic-ui-react'
-import { StoreContext, StoreDispatchContext } from '../context/StoreContext'
-import init from '../utils/load'
+import { StoreContext, StoreDispatchContext, init } from '../context/StoreContext'
 
 
 export default function DataLoader() {
   const { loading } = React.useContext(StoreContext)
-  const dispatchDataContext = React.useContext(StoreDispatchContext)
+  const dispatch = React.useContext(StoreDispatchContext)
 
   React.useEffect(() => {
-    init((state) => {
-      dispatchDataContext({
+    init().then(data =>
+      dispatch({
         type: 'INITIALIZED',
-        ...state,
-      })
-    })
-  }, [dispatchDataContext])
+        data,
+      }))
+  }, [dispatch])
 
   return (
     <Dimmer active={loading}>
