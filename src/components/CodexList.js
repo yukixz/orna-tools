@@ -43,7 +43,7 @@ const TableRowForItem = React.memo(function ({ codex }) {
 
   return (
     <Item className='codex' onClick={handleClick}>
-      <Item.Image size='tiny' src={codex.image_url} className='codex-icon' />
+      <Item.Image size='tiny' src={codex.image_url} loading='lazy' className='codex-icon' />
       <Item.Content>
         <Item.Header>
           {codex.name} <Icon name='star' fitted />{codex.tier}
