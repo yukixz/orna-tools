@@ -100,7 +100,7 @@ const CodexSegment = React.memo(function ({ label, tableData, tableRenderRow }) 
         {label != null &&
           <Label attached='top' content={label} />}
         {tableData != null &&
-          <Table basic='very'
+          <Table basic='very' unstackable
             tableData={Array.isArray(tableData) ? tableData : Object.entries(tableData)}
             renderBodyRow={tableRenderRow} />}
       </Segment>
