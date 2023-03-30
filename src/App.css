@@ -1,3 +1,9 @@
+.ui.codex-icon>img,
+img.codex-icon {
+    image-rendering: pixelated;
+}
+
+
 .ui.grid.select-filter>.row {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
@@ -21,7 +27,6 @@
 .ui.items>.item.codex>.image.tiny,
 .ui.items>.item.codex>.image.tiny>img {
     width: 80px !important;
-    image-rendering: pixelated;
 }
 
 

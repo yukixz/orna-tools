@@ -62,7 +62,7 @@ const CodexCard = React.memo(function ({ codex }) {
     <Grid.Column width={16} >
       <Card fluid>
         <Card.Content>
-          <Image floated='left' size='tiny' src={codex.image_url} />
+          <Image floated='left' size='tiny' src={codex.image_url} className='codex-icon' />
           <Card.Header>{codex.name}</Card.Header>
           <Card.Meta>
             <Icon name='star' />{codex.tier}
