@@ -9,10 +9,12 @@ export default function CodexInfo({ codex }) {
   const { codexes, i18n } = React.useContext(StoreContext)
 
   const renderRowForCodexItems = React.useCallback((id) => {
-    const item = codexes[id]
+    const codex = codexes[id]
     return (
-      <Table.Row key={item.id}>
-        <Table.Cell><Link to={`/codex/${id}/`}>{item.name}</Link></Table.Cell>
+      <Table.Row key={codex.id}>
+        <Table.Cell><Link to={`/codex/${id}/`}>
+          <Icon name='star' fitted />{codex.tier} {codex.name}
+        </Link></Table.Cell>
       </Table.Row>
     )
   }, [codexes])
