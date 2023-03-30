@@ -1,5 +1,6 @@
 import { createContext, useReducer } from 'react'
 import { LANGUAGES, LANGUAGE_DEFAULT, SETTINGS_LSKEY } from '../data/setting'
+import { CODEX_LIST_INITIAL, CODEX_LIST_INCREASE } from '../data/setting'
 
 export const StoreContext = createContext(null)
 export const StoreDispatchContext = createContext(null)
@@ -23,6 +24,7 @@ const initialState = {
   codexes: null,
   codexItems: null,
   rows: [],
+  rowsShowCount: 0,
   i18n: {
     text: {},
     category: {},
@@ -40,7 +42,8 @@ function reducer(state, action) {
         ...state,
         ...data,
         loading: false,
-        rows: applyFilters(data.codexItems, state.filters, state.searchQuery)
+        rows: applyFilters(data.codexItems, state.filters, state.searchQuery),
+        rowsShowCount: CODEX_LIST_INITIAL,
       }
     }
     case 'LANGUAGE_CHANGE': {
@@ -61,7 +64,8 @@ function reducer(state, action) {
       ]
       return {
         ...state, filters,
-        rows: applyFilters(state.codexItems, filters, state.searchQuery)
+        rows: applyFilters(state.codexItems, filters, state.searchQuery),
+        rowsShowCount: CODEX_LIST_INITIAL,
       }
     }
     case 'FILTER_DELETE': {
@@ -72,7 +76,8 @@ function reducer(state, action) {
       ]
       return {
         ...state, filters,
-        rows: applyFilters(state.codexItems, filters, state.searchQuery)
+        rows: applyFilters(state.codexItems, filters, state.searchQuery),
+        rowsShowCount: CODEX_LIST_INITIAL,
       }
     }
     case 'FILTER_UPDATE': {
@@ -84,13 +89,21 @@ function reducer(state, action) {
       ]
       return {
         ...state, filters,
-        rows: applyFilters(state.codexItems, filters, state.searchQuery)
+        rows: applyFilters(state.codexItems, filters, state.searchQuery),
+        rowsShowCount: CODEX_LIST_INITIAL,
       }
     }
     case 'SEARCH_UPDATE': {
       return {
         ...state, searchQuery: action.query,
-        rows: applyFilters(state.codexItems, state.filters, action.query)
+        rows: applyFilters(state.codexItems, state.filters, action.query),
+        rowsShowCount: CODEX_LIST_INITIAL,
+      }
+    }
+    case 'LIST_LOAD_MORE': {
+      return {
+        ...state,
+        rowsShowCount: state.rowsShowCount + CODEX_LIST_INCREASE,
       }
     }
     default: {

@@ -2,30 +2,28 @@ import React from 'react'
 import * as ReactRouter from 'react-router-dom'
 import InfiniteScroll from 'react-infinite-scroller'
 import { Label, Icon, Item, Segment } from 'semantic-ui-react'
-import { StoreContext } from '../context/StoreContext'
-import { CODEX_LIST_INITIAL, CODEX_LIST_INCREASE } from '../data/setting'
+import { StoreContext, StoreDispatchContext } from '../context/StoreContext'
 import LinkButtons from './LinkButtons'
 
 export default function CodexList() {
-  const { rows, filters } = React.useContext(StoreContext)
+  const { rows, rowsShowCount } = React.useContext(StoreContext)
+  const dispatch = React.useContext(StoreDispatchContext)
 
-  const [showRowCount, setShowRowCount] = React.useState(CODEX_LIST_INITIAL)
-  React.useEffect(() => {
-    setShowRowCount(CODEX_LIST_INITIAL)
-  }, [filters, setShowRowCount])
   const loadMore = React.useCallback(() => {
-    setShowRowCount(showRowCount + CODEX_LIST_INCREASE)
-  }, [showRowCount, setShowRowCount])
+    dispatch({
+      type: 'LIST_LOAD_MORE',
+    })
+  }, [dispatch])
 
   return (
     <Segment>
       <Label icon='numbered list' content={rows.length} size='mini' attached='top right' />
       <InfiniteScroll
-        loadMore={loadMore} hasMore={showRowCount < rows.length}
+        loadMore={loadMore} hasMore={rowsShowCount < rows.length}
         loader={<p key={0}>...</p>}
       >
         <Item.Group divided unstackable>
-          {rows.slice(0, showRowCount).map(codex =>
+          {rows.slice(0, rowsShowCount).map(codex =>
             <TableRowForItem key={codex.id} codex={codex} />
           )}
         </Item.Group>
