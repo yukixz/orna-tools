@@ -13,7 +13,7 @@ export default function Header() {
   }, [])
 
   return (
-    <Menu inverted style={{ margin: 0, borderRadius: 'unset' }}>
+    <Menu inverted style={{ marginTop: 0, borderRadius: 'unset' }}>
       <Container>
         <Menu.Item as='a' header href='/' style={{ fontSize: '1.4em' }}>Codex</Menu.Item>
         <Menu.Item as='a' header href='/clock/'>Clock</Menu.Item>

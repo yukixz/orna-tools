@@ -41,7 +41,7 @@ export default function CodexInfo({ codex }) {
     return null
   }
   return (
-    <Container as={Segment}>
+    <Container>
       <Grid columns={2} doubling>
         <CodexCard codex={codex} />
         <CodexSegment label={i18n.text['skills']} tableData={codex.spells} tableRenderRow={renderRowForCodexItems} />
