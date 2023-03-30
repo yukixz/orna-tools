@@ -19,9 +19,9 @@ export default function CodexList() {
 
   return (
     <Segment>
-      <InfiniteScroll as={Segment}
+      <InfiniteScroll
         loadMore={loadMore} hasMore={showRowCount < rows.length}
-        loader={<p>{showRowCount} / {rows.length}</p>}
+        loader={<p key={0}>{showRowCount} / {rows.length}</p>}
       >
         <Item.Group divided unstackable>
           {rows.slice(0, showRowCount).map(codex =>
