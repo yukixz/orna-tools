@@ -3,6 +3,7 @@ import * as ReactRouter from 'react-router-dom'
 import CodexInfo from '../components/CodexInfo'
 import DataLoader from '../components/DataLoader'
 import Header from '../components/Header'
+import Footer from '../components/Footer'
 import { StoreContext } from '../context/StoreContext'
 import _ from 'lodash'
 
@@ -16,6 +17,7 @@ export default function CodexPage() {
       <DataLoader />
       <Header />
       <CodexInfo codex={codex} />
+      <Footer />
     </div>
   )
 }
