@@ -60,6 +60,8 @@ export default function CodexInfo({ codex }) {
 }
 
 const CodexCard = React.memo(function ({ codex }) {
+  const { i18n } = React.useContext(StoreContext)
+
   return (
     <Grid.Column width={16} >
       <Card fluid>
@@ -71,6 +73,7 @@ const CodexCard = React.memo(function ({ codex }) {
           </Card.Meta>
           {codex.description && <Card.Meta>{codex.description}</Card.Meta>}
           <Card.Description>
+            {codex.exotic && <Label content={i18n.text['exotic']} />}
             {codex.family && <Label content={codex.family} />}
             {codex.rarity && <Label content={codex.rarity} />}
             {codex.place && <Label content={codex.place} />}
