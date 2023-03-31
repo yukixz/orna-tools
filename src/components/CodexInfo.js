@@ -75,8 +75,10 @@ const CodexCard = React.memo(function ({ codex }) {
             {codex.rarity && <Label content={codex.rarity} />}
             {codex.place && <Label content={codex.place} />}
             {codex.useableBy && <Label content={codex.useableBy} />}
-            {codex.event && <Label content={codex.event} icon='map' />}
           </Card.Description>
+          {codex.events && <Card.Description>
+            {codex.events.map((value, index) => <Label key={index} content={value} icon='map' />)}
+          </Card.Description>}
           {codex.tags && <Card.Description>
             {codex.tags.map((value, index) => <Label key={index} content={value} />)}
           </Card.Description>}

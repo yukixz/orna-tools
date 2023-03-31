@@ -51,7 +51,8 @@ const TableRowForItem = React.memo(function ({ codex }) {
           <LinkButtons codex={codex} floated='right' />
           <Label.Group size='small'>
             <Label content={i18n.category[codex.category]} />
-            {codex.event && <Label content={codex.event} icon='map' />}
+            {codex.events && codex.events.map((value, index) =>
+              <Label key={index} content={value} icon='map' />)}
             {codex.place && <Label content={codex.place} />}
             {codex.useableBy && <Label content={codex.useableBy} />}
           </Label.Group>

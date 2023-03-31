@@ -209,8 +209,8 @@ export async function init() {
       func: (value) => (codex) => codex.useableBy === value,
     },
     {
-      id: 'event', name: i18n.text['event'], sources: data.options.events,
-      func: (value) => (codex) => codex.event === value,
+      id: 'events', name: i18n.text['events'], sources: data.options.events,
+      func: (value) => (codex) => codex.events != null && codex.events.includes(value),
     },
     {
       id: 'tag', name: i18n.text['tags'], sources: data.options.tags,

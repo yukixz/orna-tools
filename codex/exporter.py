@@ -27,6 +27,7 @@ TEXTS = {
         "drops": "Drops",
         "droppedBy": "Dropped by",
         "event": "Event",
+        "events": "Events",
         "family": "Family",
         "filters": "Filters",
         "gives": "Gives",
@@ -47,6 +48,7 @@ TEXTS = {
         "drops": "掉落",
         "droppedBy": "掉落来源",
         "event": "活动",
+        "events": "活动",
         "family": "种类",
         "filters": "过滤",
         "gives": "赋予",
@@ -61,6 +63,17 @@ TEXTS = {
         "useableBy": "适用于",
     }
 }
+
+
+def normalize(string: str):
+    string = string \
+        .replace('✓', '') \
+        .replace('★', '') \
+        .strip()
+    try:
+        return int(string)
+    except ValueError:
+        return string
 
 
 class Exporter:
@@ -157,7 +170,6 @@ class Exporter:
         for _, item in codexes.items():
             # item.x is value directly
             for to, fr in [
-                ['events', 'event'],
                 ['families', 'family'],
                 ['places', 'place'],
                 ['rarities', 'rarity'],
@@ -170,6 +182,7 @@ class Exporter:
                 options[to].add(value)
             # item.x is [value, value, ...]
             for to, fr in [
+                ['events', 'events'],
                 ['tags', 'tags'],
             ]:
                 if fr not in item:
@@ -288,16 +301,6 @@ class Exporter:
             if len(causes) >= 1:
                 item['causes_by_spells'] = causes
 
-    def normalize(self, string: str):
-        string = string \
-            .replace('✓', '') \
-            .replace('★', '') \
-            .strip()
-        try:
-            return int(string)
-        except ValueError:
-            return string
-
     def extract_name(self, soup: BeautifulSoup):
         return soup.select_one(".herotext").string
 
@@ -311,25 +314,29 @@ class Exporter:
         # tags
         subs = node.select('.codex-page-tag')
         if len(subs) >= 1:
-            return {'tags': [self.normalize(e.string) for e in subs]}
+            return {'tags': [normalize(e.string) for e in subs]}
         # stats
         subs = node.select('.codex-stat')
         if len(subs) >= 1:
-            return {'stats': [self.normalize(e.string) for e in subs]}
+            return {'stats': [normalize(e.string) for e in subs]}
         # meta
-        if 'codex-page-description' in classes:
+        if 'codex-page-description' in classes or 'codex-page-meta' in classes:
             string = ''.join(node.stripped_strings)
-            for key in ("event", "family", "rarity", "tier"):
+            # events
+            prefix = f"{self.texts['event']}:"
+            if string.startswith(prefix):
+                return {"events": sorted([
+                    normalize(s)
+                    for s in string.removeprefix(prefix).split('/')
+                ])}
+            # others
+            for key in ("event", "family", "place", "rarity", "tier", "useableBy"):
                 prefix = f"{self.texts[key]}:"
                 if string.startswith(prefix):
-                    return {key: self.normalize(string.removeprefix(prefix))}
-            return {'description': string}
-        if 'codex-page-meta' in classes:
-            string = ''.join(node.stripped_strings)
-            for key in ("tier", "rarity", "useableBy", "place"):
-                prefix = f"{self.texts[key]}:"
-                if string.startswith(prefix):
-                    return {key: self.normalize(string.removeprefix(prefix))}
+                    return {key: normalize(string.removeprefix(prefix))}
+            # otherwise description
+            if 'codex-page-description' in classes:
+                return {'description': string}
             return {}
         # bypass until h4
         if node.name != 'h4':
