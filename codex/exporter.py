@@ -281,7 +281,7 @@ class Exporter:
                         'probability': 0,
                         'by': [],
                     })
-                    current['by'].append(f"{status} ({probability}%)")
+                    current['by'].append(f"{target['name']} ({probability}%)")
                     if probability > current['probability']:
                         current['probability'] = probability
                     causes[status] = current
