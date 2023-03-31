@@ -28,6 +28,7 @@ TEXTS = {
         "droppedBy": "Dropped by",
         "event": "Event",
         "events": "Events",
+        "exotic": "Exotic",
         "family": "Family",
         "filters": "Filters",
         "gives": "Gives",
@@ -49,6 +50,7 @@ TEXTS = {
         "droppedBy": "掉落来源",
         "event": "活动",
         "events": "活动",
+        "exotic": "限定",
         "family": "种类",
         "filters": "过滤",
         "gives": "赋予",
@@ -82,6 +84,7 @@ class Exporter:
         self.lang = lang
         self.texts = TEXTS[lang]
         self.guide = {}
+        self.cache = {}
 
     def prepare(self):
         with Session(self.db_engine) as session:
@@ -320,24 +323,32 @@ class Exporter:
         if len(subs) >= 1:
             return {'stats': [normalize(e.string) for e in subs]}
         # meta
+        if 'meta_rules' not in self.cache:
+            self.cache['meta_rules'] = [
+                (key, re.compile(f"^({self.texts[key]})$"), lambda s: True)
+                for key in ['exotic']
+            ] + [
+                (key, re.compile(f"^{self.texts[key]}: *(.+)$"), None)
+                for key in ["family", "place", "rarity", "tier", "useableBy"]
+            ] + [
+                ('events', re.compile(f"^{self.texts['event']}: *(.+)$"),
+                 lambda string: sorted([normalize(s) for s in string.split('/')])),
+            ]
         if 'codex-page-description' in classes or 'codex-page-meta' in classes:
             string = ''.join(node.stripped_strings)
-            # events
-            prefix = f"{self.texts['event']}:"
-            if string.startswith(prefix):
-                return {"events": sorted([
-                    normalize(s)
-                    for s in string.removeprefix(prefix).split('/')
-                ])}
-            # others
-            for key in ("event", "family", "place", "rarity", "tier", "useableBy"):
-                prefix = f"{self.texts[key]}:"
-                if string.startswith(prefix):
-                    return {key: normalize(string.removeprefix(prefix))}
-            # otherwise description
+            # meta
+            meta_rules = self.cache['meta_rules']
+            for key, pattern, parse in meta_rules:
+                matched = re.match(pattern, string)
+                if matched is None:
+                    continue
+                if parse is None:
+                    parse = normalize
+                return {key: parse(matched.group(1))}
+            # description
             if 'codex-page-description' in classes:
                 return {'description': string}
-            return {}
+            logging.warning("Unknown meta node: %s", node)
         # bypass until h4
         if node.name != 'h4':
             return {}
