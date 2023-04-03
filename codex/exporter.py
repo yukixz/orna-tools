@@ -289,6 +289,9 @@ class Exporter:
                 continue
             causes = {}
             for target_id in item['spells']:
+                if target_id not in codexes:
+                    logger.warning("Unknown spell: %s", target_id)
+                    continue
                 target = codexes[target_id]
                 if 'causes' not in target:
                     continue
