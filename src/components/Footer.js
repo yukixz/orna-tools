@@ -7,7 +7,7 @@ export default function Footer() {
       <Divider />
       <Container>
         <List horizontal link>
-          <List.Item as='a' href='#'>
+          <List.Item as='a'>
             <Icon name='hashtag' />
             {window.location.hostname}
           </List.Item>
