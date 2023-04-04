@@ -122314,6 +122314,17 @@
       "tags": [
         "奥术商店售卖"
       ]
+    },
+    "spells/summon-hati": {
+      "name": "哈提召唤",
+      "path": "/codex/spells/summon-hati/",
+      "category": "spells",
+      "image_url": "https://playorna.com/static/img/monsters/lunar_demon.png",
+      "description": "召唤一只野兽来协助你。",
+      "tier": 9,
+      "tags": [
+        "奥术商店售卖"
+      ]
     }
   },
   "options": {

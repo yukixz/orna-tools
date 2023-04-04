@@ -122314,6 +122314,17 @@
       "tags": [
         "Found in Arcanists"
       ]
+    },
+    "spells/summon-hati": {
+      "name": "Summon Hati",
+      "path": "/codex/spells/summon-hati/",
+      "category": "spells",
+      "image_url": "https://playorna.com/static/img/monsters/lunar_demon.png",
+      "description": "Summon a beast to assist you.",
+      "tier": 9,
+      "tags": [
+        "Found in Arcanists"
+      ]
     }
   },
   "options": {
