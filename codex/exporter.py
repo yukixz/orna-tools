@@ -121,7 +121,7 @@ class Exporter:
             page = session.query(Page).filter(
                 and_(Page.path == "/codex/", Page.lang == self.lang)
             ).one()
-        soup = BeautifulSoup(page.html, "html.parser")
+        soup = BeautifulSoup(page.html, "lxml")
         nodes = soup.select("a.codex-link")
         catetories = {
             re.match(r'^/codex/(\w+)/$', node['href']).group(1): node.text.strip().title()
@@ -213,7 +213,7 @@ class Exporter:
         return re.match(r"/codex/(\w+?/[\w-]+?)/", path).group(1)
 
     def parse_item(self, page: Page, category: str):
-        soup = BeautifulSoup(page.html, "html.parser")
+        soup = BeautifulSoup(page.html, "lxml")
         codex = {
             "name": self.extract_name(soup),
             "path": page.path,

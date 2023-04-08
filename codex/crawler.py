@@ -86,7 +86,7 @@ class Crawler:
             resp = self.fetch_html(f"/codex/{category}/?p={index}", lang)
             if resp.status_code == 404:
                 break
-            soup = BeautifulSoup(resp.text, "html.parser")
+            soup = BeautifulSoup(resp.text, "lxml")
             for item in soup.select("a.codex-entries-entry"):
                 yield item['href']
             index += 1
