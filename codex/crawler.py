@@ -104,8 +104,6 @@ class Crawler:
         with Session(self.db_engine) as session:
             pages = session.query(Page.path).all()
             for page in pages:
-                if page.path.startswith('/codex/spells/summon-scarecrow'):
-                    logger.info(page.path)
                 waitlist.add(page.path)
         # update entries in waitlist
         logger.info("waitlist length=%d", len(waitlist))
