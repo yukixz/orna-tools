@@ -269,6 +269,7 @@ class Exporter:
                 del codex[key]
             if isinstance(value, (str, list, tuple)) and len(value) == 0:
                 del codex[key]
+
         return codex
 
     def add_material_for(self, codexes):
@@ -308,7 +309,7 @@ class Exporter:
                 item['causes_by_spells'] = causes
 
     def extract_name(self, soup: BeautifulSoup):
-        return soup.select_one(".herotext").string
+        return str(soup.select_one(".herotext").string)
 
     def extract_info(self, nodes: list[Tag]):
         node = nodes.pop(0)
