@@ -1,0 +1,30 @@
+name: Update Indexes
+on:
+  schedule:
+    - cron: "33 00 * * *"
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          key: build-cache
+          path: /tmp/http_cache.sqlite
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+          cache: "pip"
+      - run: pip install -r codex/requirements.txt
+
+      - name: Update Indexes
+        run: python3 codex/indexer.py
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          branch: bot/update-indexes
+          commit-message: "chore: update indexes"
+          title: "[bot] Update Indexes"
