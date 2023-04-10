@@ -1,6 +1,6 @@
 import { createContext, useReducer } from 'react'
-import { LANGUAGES, LANGUAGE_DEFAULT, SETTINGS_LSKEY } from '../data/setting'
-import { CODEX_LIST_INITIAL, CODEX_LIST_INCREASE } from '../data/setting'
+import { LANGUAGES, LANGUAGE_DEFAULT, SETTINGS_LSKEY } from '../setting'
+import { CODEX_LIST_INITIAL, CODEX_LIST_INCREASE } from '../setting'
 
 export const StoreContext = createContext(null)
 export const StoreDispatchContext = createContext(null)
