@@ -26,7 +26,6 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
-          token: ${{ secrets.GH_TOKEN }}
           branch: bot/update-indexes
           delete-branch: true
           commit-message: "chore: update indexes [bot]"
