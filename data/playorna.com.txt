@@ -7,7 +7,6 @@
 /codex/bosses/ankou-eef994e0/
 /codex/bosses/anubis/
 /codex/bosses/arachne-7cde6803/
-/codex/bosses/arachne/
 /codex/bosses/arisen-aegir/
 /codex/bosses/arisen-alfar-lord/
 /codex/bosses/arisen-balor-king/
@@ -1096,7 +1095,6 @@
 /codex/items/dawnbreaker-29962248/
 /codex/items/dawnbreaker-93ca602e/
 /codex/items/dawnbreaker/
-/codex/items/daybreak-187acb44/
 /codex/items/daybreak-63f01d22/
 /codex/items/daybreak-fbe009b8/
 /codex/items/daybreak/
@@ -1199,7 +1197,6 @@
 /codex/items/dusk-hood/
 /codex/items/dusk-robe/
 /codex/items/duskbreaker-64b29d3a/
-/codex/items/duskbreaker-ec7a531c/
 /codex/items/duskbreaker-ef96cc6a/
 /codex/items/duskbreaker/
 /codex/items/dynasty/
@@ -1835,7 +1832,6 @@
 /codex/items/masamune/
 /codex/items/medusas-bow/
 /codex/items/medusas-chestplate/
-/codex/items/memory-waystone/
 /codex/items/merchants-waystone/
 /codex/items/merlins-concoction/
 /codex/items/merlins-ring/
@@ -2415,7 +2411,6 @@
 /codex/items/waterstone/
 /codex/items/whetstone/
 /codex/items/whisper/
-/codex/items/white-sheet/
 /codex/items/willow-tree-branch/
 /codex/items/wintara-crested-shield/
 /codex/items/wisp-staff/
@@ -2491,7 +2486,6 @@
 /codex/monsters/adamantine-knight/
 /codex/monsters/aine/
 /codex/monsters/alfar-50af8af8/
-/codex/monsters/alfar-de53a4e0/
 /codex/monsters/alfar-mage-fe8adf12/
 /codex/monsters/alfar-mage/
 /codex/monsters/alfar/
@@ -2508,7 +2502,6 @@
 /codex/monsters/apollyons-pupil-88e5ba1c/
 /codex/monsters/apollyons-pupil-e22d143d/
 /codex/monsters/apollyons-pupil/
-/codex/monsters/arachne-e15f8316/
 /codex/monsters/arachne/
 /codex/monsters/arcane-dragon/
 /codex/monsters/arcane-flame/
@@ -2847,9 +2840,6 @@
 /codex/monsters/storm-knight/
 /codex/monsters/stray-tatzelwurm/
 /codex/monsters/succubus/
-/codex/monsters/tatzelwurm-5c648f70/
-/codex/monsters/tatzelwurm-9c57b317/
-/codex/monsters/tatzelwurm/
 /codex/monsters/third-stable-keeper/
 /codex/monsters/tiamat-316a9861/
 /codex/monsters/tower-guard/
@@ -2859,7 +2849,6 @@
 /codex/monsters/twilight-wisp/
 /codex/monsters/typhon/
 /codex/monsters/undead-a47061cd/
-/codex/monsters/undead-eb6d32d2/
 /codex/monsters/undead-golem/
 /codex/monsters/undead/
 /codex/monsters/ushi-oni/
@@ -3659,7 +3648,6 @@
 /codex/spells/summon-warg/
 /codex/spells/summon-wyvern/
 /codex/spells/super-bomb/
-/codex/spells/super-sigil/
 /codex/spells/supernova/
 /codex/spells/swansong/
 /codex/spells/sweep-ii/
