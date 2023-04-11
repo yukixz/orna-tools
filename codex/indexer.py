@@ -81,13 +81,3 @@ class Indexer:
         self.save()
 
         logger.info("Done with lang=%s", self.lang)
-
-
-if __name__ == '__main__':
-    app = Indexer(
-        path="./data/playorna.com.txt",
-        categories=("items", "monsters", "bosses",
-                    "followers", "raids", "spells"),
-        lang="en",
-    )
-    app.run()

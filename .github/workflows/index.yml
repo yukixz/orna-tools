@@ -1,7 +1,7 @@
 name: Update Indexes
 on:
   schedule:
-    - cron: "33 00 * * *"
+    - cron: "33 0 * * *"
   workflow_dispatch:
 jobs:
   update:
@@ -19,13 +19,14 @@ jobs:
       - run: pip install -r codex/requirements.txt
 
       - name: Update Indexes Data
-        run: python3 codex/indexer.py
+        run: python3 codex/main.py --index
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.GH_TOKEN }}
           branch: bot/update-indexes
+          delete-branch: true
           commit-message: "chore: update indexes [bot]"
           title: "[bot] Update Indexes"
           body: "See files changed"
