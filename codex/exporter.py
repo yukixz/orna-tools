@@ -5,7 +5,6 @@ import logging
 import os.path
 import re
 import sys
-from datetime import datetime, timedelta
 
 from bs4 import BeautifulSoup, Tag
 from utils import TEXTS, HttpSession
@@ -103,16 +102,7 @@ class Exporter:
 
         logger.info("Codex index items=%d", len(paths))
         codexes = {}
-        path_count = 0
-        last_reported = datetime.now()
         for path in paths:
-            if datetime.now() - last_reported >= timedelta(seconds=10):
-                logger.info("Fetched %d items in last %s",
-                            path_count, datetime.now() - last_reported)
-                last_reported = datetime.now()
-                path_count = 0
-
-            path_count += 1
             resp = self.http.get_playorna_com(path, self.lang)
             if resp.status_code != 200:
                 logger.warning("Skipped codex path=%s code=%s",

@@ -2,9 +2,13 @@
 # coding: utf-8
 # pylint: disable=abstract-method
 
-from datetime import timedelta
+import logging
+from datetime import datetime, timedelta
 
 import requests_cache
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 
 class HttpSession(requests_cache.CachedSession):
@@ -17,6 +21,18 @@ class HttpSession(requests_cache.CachedSession):
             allowable_codes=[200, 404],
             match_headers=True,
         )
+        self.request_count = 0
+        self.last_reported_count = datetime.now()
+
+    def request(self, *args, **kwargs):
+        if datetime.now() - self.last_reported_count >= timedelta(seconds=10):
+            logger.info("Fetched %d items in last %s",
+                        self.request_count,
+                        datetime.now() - self.last_reported_count)
+            self.request_count = 0
+            self.last_reported_count = datetime.now()
+        self.request_count += 1
+        return super().request(*args, **kwargs)
 
     def get_playorna_com(self, path, lang) -> requests_cache.Response:
         return self.get(
