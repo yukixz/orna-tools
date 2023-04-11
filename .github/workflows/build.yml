@@ -1,0 +1,54 @@
+name: Build
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          key: http-cache
+          path: /tmp/http_cache.sqlite
+      - name: Install Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+          cache: "pip"
+      - name: Install Python Dependencies
+        run: pip install -r codex/requirements.txt
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "npm"
+      - name: Install Node Dependencies
+        run: npm install
+
+      - name: Build Static Resources
+        run: python3 codex/main.py --export src/data/ --lang en,zh-hans
+      - name: Build Web Application
+        run: npm run Build
+
+      - name: Upload Data as Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: src-data
+          path: src/data/
+          if-no-files-found: error
+
+  # deploy:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+
+  #     - name: Publish to Cloudflare Pages
+  #       uses: cloudflare/pages-action@v1
+  #       with:
+  #         apiToken: ${{ secrets.CF_API_TOKEN }}
+  #         accountId: ${{ secrets.CF_ACCOUNT_ID }}
+  #         projectName: ${{ secrets.CF_PROJECT_NAME }}
+  #         directory: build
