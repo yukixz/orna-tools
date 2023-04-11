@@ -74,8 +74,8 @@ class Indexer:
     def run(self) -> None:
         logger.info("Run with lang=%s", self.lang)
 
-        self.bootstrap()
         self.load()
+        self.bootstrap()
         while len(self.queue) >= 1:
             self.parse_page(self.queue.pop(0))
         self.save()
