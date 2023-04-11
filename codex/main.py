@@ -1,44 +1,33 @@
 #!/usr/bin/env python3
 # coding: utf-8
+# pylint: disable=import-outside-toplevel
 
 import argparse
 import json
 import os
 
-import sqlalchemy
-from orm import migrate
+INDEX_FILE = "./data/playorna.com.txt"
 
 
-def open_db(path, is_init=False):
-    url = f"sqlite:///{path}"
-    if is_init:
-        engine = sqlalchemy.create_engine(url)
-        migrate(engine=engine)
-        return engine
-
-    if not os.path.isfile(path):
-        raise FileNotFoundError(
-            f"'{path}' is not found or not a file.")
-    engine = sqlalchemy.create_engine(url)
-    return engine
+def update_index():
+    from indexer import Indexer
+    indexer = Indexer(
+        path=INDEX_FILE,
+        categories=("items", "monsters", "bosses",
+                    "followers", "raids", "spells"),
+        lang="en",
+    )
+    indexer.run()
 
 
-def crawl(engine, langs):
-    from crawler import Crawler
-    crawler = Crawler(engine)
-    for lang in langs:
-        crawler.crawl(lang)
-    crawler.crawl_guide()
-
-
-def export(engine, langs, directory):
+def export(directory, langs):
     from exporter import Exporter
     if not os.path.isdir(directory):
         raise FileNotFoundError(
             f"'{directory}' is not found or not a directory.")
 
     for lang in langs:
-        exporter = Exporter(engine, lang)
+        exporter = Exporter(INDEX_FILE, lang)
         exporter.prepare()
         data = exporter.export()
         with open(
@@ -49,28 +38,17 @@ def export(engine, langs, directory):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--db', metavar='FILE', required=True)
-    parser.add_argument('--lang', action='append')
-    parser.add_argument('--init', action='store_true')
-    parser.add_argument('--crawl', action='store_true')
+    parser.add_argument('--index', action='store_true')
     parser.add_argument('--export', metavar='DIR')
+    parser.add_argument('--langs', metavar='LANG[,LANG,...]')
     args = parser.parse_args()
 
-    if args.init:
-        open_db(args.db, is_init=True)
-        return
-
-    engine = open_db(args.db)
-    if args.crawl:
-        crawl(engine, args.lang)
+    if args.index:
+        update_index()
     if args.export:
-        export(engine, args.lang, args.export)
+        langs = args.langs.split(',')
+        export(args.export, langs)
 
 
 if __name__ == '__main__':
-    ''' python3 ./codex/main.py \
-        --db ./codex/db.sqlite3 \
-        --lang en --lang zh-hans \
-        --export src/data/
-    '''
     main()

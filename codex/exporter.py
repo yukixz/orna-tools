@@ -1,70 +1,21 @@
 #!/usr/bin/env python3
 # coding: utf-8
 
-import json
 import logging
 import os.path
 import re
 import sys
+from datetime import datetime, timedelta
 
 from bs4 import BeautifulSoup, Tag
-from orm import GuideAPI, Page
-from sqlalchemy import and_
-from sqlalchemy.orm import Session
+from utils import TEXTS, HttpSession
 
 logging.basicConfig(
     format="[%(asctime)s] %(levelname)s %(funcName)s:%(lineno)d %(message)s",
     stream=sys.stdout,
 )
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
-
-TEXTS = {
-    "en": {
-        "category": "Category",
-        "causes": "Causes",
-        "cures": "Cures",
-        "drops": "Drops",
-        "droppedBy": "Dropped by",
-        "event": "Event",
-        "events": "Events",
-        "exotic": "Exotic",
-        "family": "Family",
-        "filters": "Filters",
-        "gives": "Gives",
-        "tags": "Tags",
-        "tier": "Tier",
-        "immunities": "Immunities",
-        "materials": "Upgrade materials",
-        "place": "Place",
-        "rarity": "Rarity",
-        "search": "Search",
-        "skills": "Skills",
-        "useableBy": "Useable by",
-    },
-    "zh-hans": {
-        "category": "类别",
-        "causes": "造成",
-        "cures": "治疗",
-        "drops": "掉落",
-        "droppedBy": "掉落来源",
-        "event": "活动",
-        "events": "活动",
-        "exotic": "限定",
-        "family": "种类",
-        "filters": "过滤",
-        "gives": "赋予",
-        "tags": "标签",
-        "tier": "阶级",
-        "immunities": "免疫",
-        "materials": "升级素材",
-        "place": "部位",
-        "rarity": "稀有度",
-        "search": "搜索",
-        "skills": "技能",
-        "useableBy": "适用于",
-    }
-}
+logger.setLevel(logging.INFO)
 
 
 def normalize(string: str):
@@ -79,36 +30,47 @@ def normalize(string: str):
 
 
 class Exporter:
-    def __init__(self, db_engine, lang):
-        self.db_engine = db_engine
+    def __init__(self, index_path, lang):
+        self.index_path = index_path
         self.lang = lang
         self.texts = TEXTS[lang]
+        self.http = HttpSession()
         self.guide = {}
-        self.cache = {}
+        self.meta_rules = None
 
     def prepare(self):
-        with Session(self.db_engine) as session:
-            guides = session.query(GuideAPI).all()
-        for guide in guides:
-            items = json.loads(guide.data)
+        for category in ("item", "skill", "pet", "monster"):
+            items = []
+            for tier in range(1, 10 + 1):
+                items.extend(self.fetch_guide(category, tier))
             for item in items:
                 path = item.get('codex', None)
                 if path is None:
                     continue
                 if path in self.guide:
                     logger.error("codex duplicated path=%s", path)
-                item['category'] = guide.action
                 self.guide[path] = item
+                item['category'] = category
         logger.info("Prepared orna.guide items=%d", len(self.guide))
+
+    def fetch_guide(self, action, tier):
+        logger.info("fetch orna.guide action=%s tier=%s", action, tier)
+        resp = self.http.post(
+            url=f"https://orna.guide/api/v1/{action}",
+            json={"tier": tier},
+        )
+        if resp.status_code == 200:
+            return resp.json()
+        logger.error("fetched error action=%s tier=%s http_status_code=%d",
+                     action, tier, resp.status_code)
+        return resp.raise_for_status()
 
     def export(self):
         logger.info("Exporting lang=%s", self.lang)
         data = {}
         data['text'] = self.texts
         data['category'] = self.export_category()
-        data['codex'] = {}
-        for category in data['category'].keys():
-            data['codex'].update(self.export_codex(category))
+        data['codex'] = self.export_codexes()
         self.add_causes_by_spells(data['codex'])
         self.add_material_for(data['codex'])
         data['options'] = self.export_options(data['codex'])
@@ -117,11 +79,8 @@ class Exporter:
     def export_category(self):
         logger.info("Exporting category")
 
-        with Session(self.db_engine) as session:
-            page = session.query(Page).filter(
-                and_(Page.path == "/codex/", Page.lang == self.lang)
-            ).one()
-        soup = BeautifulSoup(page.html, "lxml")
+        resp = self.http.get_playorna_com("/codex/", self.lang)
+        soup = BeautifulSoup(resp.text, "lxml")
         nodes = soup.select("a.codex-link")
         catetories = {
             re.match(r'^/codex/(\w+)/$', node['href']).group(1): node.text.strip().title()
@@ -135,28 +94,39 @@ class Exporter:
         }
         return catetories
 
-    def export_codex(self, category):
-        logger.info("Exporting codex category=%s", category)
-        ret = {}
+    def export_codexes(self):
+        logger.info("Exporting codexes")
+        paths = set()
+        with open(self.index_path, 'r', encoding='utf-8') as file:
+            for path in file.readlines():
+                paths.add(path.strip())
 
-        with Session(self.db_engine) as session:
-            pages = session.query(Page).filter(
-                and_(Page.path.like(
-                    f"/codex/{category}/%"), Page.lang == self.lang)
-            ).all()
-        logger.info("Exporting codex items=%d", len(pages))
-        for page in pages:
-            id_ = self.id_from_url(page.path)
-            if page.code != 200:
-                logger.info("Skipped id=%s code=%s", id_, page.code)
+        logger.info("Codex index items=%d", len(paths))
+        codexes = {}
+        path_count = 0
+        last_reported = datetime.now()
+        for path in paths:
+            if datetime.now() - last_reported >= timedelta(seconds=10):
+                logger.info("Fetched %d items in last %s",
+                            path_count, datetime.now() - last_reported)
+                last_reported = datetime.now()
+                path_count = 0
+
+            path_count += 1
+            resp = self.http.get_playorna_com(path, self.lang)
+            if resp.status_code != 200:
+                logger.warning("Skipped codex path=%s code=%s",
+                               path, resp.status_code)
                 continue
+
+            id_ = self.id_from_url(path)
             try:
-                ret[id_] = self.parse_item(page, category)
+                codexes[id_] = self.parse_item(path, resp.text)
             except:
                 logger.error("id=%s", id_)
                 raise
 
-        return ret
+        return codexes
 
     def export_options(self, codexes):
         logger.info("Exporting options")
@@ -212,12 +182,15 @@ class Exporter:
     def id_from_url(self, path: str):
         return re.match(r"/codex/(\w+?/[\w-]+?)/", path).group(1)
 
-    def parse_item(self, page: Page, category: str):
-        soup = BeautifulSoup(page.html, "lxml")
+    def category_from_url(self, path: str):
+        return re.match(r"/codex/(\w+?)/[\w-]+?/", path).group(1)
+
+    def parse_item(self, path: str, html: str):
+        soup = BeautifulSoup(html, "lxml")
         codex = {
             "name": self.extract_name(soup),
-            "path": page.path,
-            "category": category,
+            "path": path,
+            "category": self.category_from_url(path),
         }
 
         # codex page
@@ -256,7 +229,7 @@ class Exporter:
             pass
 
         # orna.guide
-        guide = self.guide.get(page.path)
+        guide = self.guide.get(path)
         if guide is not None:
             codex.update({
                 "ornaguide_id": guide['id'],
@@ -285,7 +258,7 @@ class Exporter:
 
     def add_causes_by_spells(self, codexes):
         logger.info("Exporting codex: Adding causes by spells")
-        for id_, item in codexes.items():
+        for _, item in codexes.items():
             if 'spells' not in item:
                 continue
             causes = {}
@@ -327,8 +300,8 @@ class Exporter:
         if len(subs) >= 1:
             return {'stats': [normalize(e.string) for e in subs]}
         # meta
-        if 'meta_rules' not in self.cache:
-            self.cache['meta_rules'] = [
+        if self.meta_rules is None:
+            self.meta_rules = [
                 (key, re.compile(f"^({self.texts[key]})$"), lambda s: True)
                 for key in ['exotic']
             ] + [
@@ -341,8 +314,7 @@ class Exporter:
         if 'codex-page-description' in classes or 'codex-page-meta' in classes:
             string = ''.join(node.stripped_strings)
             # meta
-            meta_rules = self.cache['meta_rules']
-            for key, pattern, parse in meta_rules:
+            for key, pattern, parse in self.meta_rules:
                 matched = re.match(pattern, string)
                 if matched is None:
                     continue
