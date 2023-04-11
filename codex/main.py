@@ -22,9 +22,9 @@ def update_index():
 
 def export(directory, langs):
     from exporter import Exporter
+    os.makedirs(directory, exist_ok=True)
     if not os.path.isdir(directory):
-        raise FileNotFoundError(
-            f"'{directory}' is not found or not a directory.")
+        raise FileNotFoundError(f"'{directory}' is not a directory.")
 
     for lang in langs:
         exporter = Exporter(INDEX_FILE, lang)
