@@ -31,9 +31,9 @@ jobs:
       - name: Build Static Resources
         run: python3 codex/main.py --export src/data/ --lang en,zh-hans
       - name: Build Web Application
-        run: npm run Build
+        run: npm run build
 
-      - name: Upload Data as Artifacts
+      - name: Upload Static Resources as Artifacts
         uses: actions/upload-artifact@v3
         with:
           name: src-data
