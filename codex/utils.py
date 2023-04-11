@@ -26,7 +26,7 @@ class HttpSession(requests_cache.CachedSession):
 
     def request(self, *args, **kwargs):
         if datetime.now() - self.last_reported_count >= timedelta(seconds=10):
-            logger.info("Fetched %d items in last %s",
+            logger.info("Maked %d HTTP requests in last %s",
                         self.request_count,
                         datetime.now() - self.last_reported_count)
             self.request_count = 0
