@@ -76,6 +76,8 @@ jobs:
           path: src/data/
       - name: Build Web Application
         run: npm run build
+        env:
+          GENERATE_SOURCEMAP: false
 
       - name: Publish to Cloudflare Pages
         uses: cloudflare/pages-action@v1
