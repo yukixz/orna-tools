@@ -4,13 +4,16 @@ on:
   push:
     branches:
       - main
+  schedule:
+    - cron: "33 0 * * *"
   workflow_dispatch:
 
 env:
   CACHE_DIR: .cache
 
 jobs:
-  build:
+  update_data:
+    name: Update External Data
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -27,6 +30,33 @@ jobs:
           cache: "pip"
       - name: Install Python Dependencies
         run: pip install -r codex/requirements.txt
+
+      - name: Update External Data Index
+        run: python3 codex/main.py --index
+      - name: Create Pull Request if Changed
+        uses: peter-evans/create-pull-request@v5
+        with:
+          branch: bot/update-data
+          delete-branch: true
+          commit-message: "chore: update external data [bot]"
+          title: "[bot] Update External Data"
+          body: "See files changed"
+
+      - name: Build External Data
+        run: python3 codex/main.py --export src/data/ --lang en,zh-hans
+      - name: Upload External Data as Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: external-data
+          path: src/data/
+          if-no-files-found: error
+
+  build_and_deploy:
+    name: Build and Deploy
+    needs: update_data
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
       - name: Install Node
         uses: actions/setup-node@v3
         with:
@@ -35,17 +65,13 @@ jobs:
       - name: Install Node Dependencies
         run: npm install
 
-      - name: Build Static Resources
-        run: python3 codex/main.py --export src/data/ --lang en,zh-hans
+      - name: Download External Data from Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: external-data
       - name: Build Web Application
         run: npm run build
 
-      - name: Upload Static Resources as Artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: src-data
-          path: src/data/
-          if-no-files-found: error
       - name: Publish to Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:
