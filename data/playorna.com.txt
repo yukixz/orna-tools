@@ -3648,6 +3648,7 @@
 /codex/spells/summon-warg/
 /codex/spells/summon-wyvern/
 /codex/spells/super-bomb/
+/codex/spells/super-sigil/
 /codex/spells/supernova/
 /codex/spells/swansong/
 /codex/spells/sweep-ii/
