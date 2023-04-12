@@ -65,9 +65,7 @@ class Indexer:
         soup = BeautifulSoup(resp.text, "lxml")
         for item in soup.find_all("a", href=re.compile(r'^/codex/[^/]+/[^/]+/')):
             path = item['href']
-            if path in self.known:
-                continue
-            logger.debug("Found path %s", path)
+            logger.debug("Found path=%s", path)
             self.known.add(path)
             self.queue.append(path)
 
@@ -77,7 +75,9 @@ class Indexer:
         self.load()
         self.bootstrap()
         while len(self.queue) >= 1:
-            self.parse_page(self.queue.pop(0))
+            path = self.queue.pop(0)
+            if path not in self.known:
+                self.parse_page(path)
         self.save()
 
         logger.info("Done with lang=%s", self.lang)
