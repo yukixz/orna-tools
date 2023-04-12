@@ -16,8 +16,7 @@ env:
   CACHE_DIR: .cache
 
 jobs:
-  update_data:
-    name: Update External Data
+  build_and_deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -27,6 +26,15 @@ jobs:
           restore-keys: |
             build-cache-
           path: ${{ env.CACHE_DIR }}
+
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "npm"
+      - name: Install Node Dependencies
+        run: npm install
+
       - name: Install Python
         uses: actions/setup-python@v4
         with:
@@ -55,31 +63,6 @@ jobs:
           path: src/data/
           if-no-files-found: error
 
-  build_and_deploy:
-    name: Build and Deploy
-    needs: update_data
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/cache@v3
-        with:
-          key: build-cache-${{ github.run_id }}-${{ github.run_number }}
-          restore-keys: |
-            build-cache-
-          path: ${{ env.CACHE_DIR }}
-      - name: Install Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "npm"
-      - name: Install Node Dependencies
-        run: npm install
-
-      - name: Download External Data from Artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: external-data
-          path: src/data/
       - name: Build Web Application
         run: npm run build
         env:
