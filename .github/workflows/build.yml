@@ -61,6 +61,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          key: build-cache-${{ github.run_id }}-${{ github.run_number }}
+          restore-keys: |
+            build-cache-
+          path: ${{ env.CACHE_DIR }}
       - name: Install Node
         uses: actions/setup-node@v3
         with:
@@ -79,7 +85,21 @@ jobs:
         env:
           GENERATE_SOURCEMAP: false
 
+      - name: Check whether Build Changed
+        id: build-check
+        env:
+          HASH: ${{ hashFiles('build/**') }}
+        run: |
+          LAST_FILE="${CACHE_DIR}/last-release-hash"
+          touch "${LAST_FILE}"
+          if [[ "$HASH" = "$(cat ${LAST_FILE})" ]]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "$HASH" > ${LAST_FILE}
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
       - name: Publish to Cloudflare Pages
+        if: ${{ steps.build-check.outputs.changed == true }}
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
