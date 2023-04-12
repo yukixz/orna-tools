@@ -14,11 +14,13 @@ jobs:
           restore-keys: |
             http-cache-
           path: /tmp/http_cache.sqlite
-      - uses: actions/setup-python@v4
+      - name: Install Python
+        uses: actions/setup-python@v4
         with:
           python-version: "3.9"
           cache: "pip"
-      - run: pip install -r codex/requirements.txt
+      - name: Install Python Dependencies
+        run: pip install -r codex/requirements.txt
 
       - name: Update Indexes Data
         run: python3 codex/main.py --index
