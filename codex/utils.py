@@ -3,6 +3,8 @@
 # pylint: disable=abstract-method
 
 import logging
+import os
+import tempfile
 from datetime import datetime, timedelta
 
 import requests_cache
@@ -13,8 +15,11 @@ logger.setLevel(logging.INFO)
 
 class HttpSession(requests_cache.CachedSession):
     def __init__(self) -> None:
+        cache = os.path.join(
+            os.environ.get("CACHE_DIR", tempfile.gettempdir()),
+            "http_cache.sqlite")
         super().__init__(
-            "/tmp/http_cache.sqlite",
+            cache,
             backend='sqlite',
             expire_after=timedelta(hours=22),
             allowable_methods=['GET', 'POST'],
