@@ -183,7 +183,7 @@ export async function init() {
     languages: toSelectOptions(LANGUAGES),
     type: [],
   }
-  for (const { id, name, type, ...config } of [
+  for (const { id, name, sources, func } of [
     {
       id: 'category', name: i18n.text['category'], sources: data.category,
       func: (value) => (codex) => codex.category === value,
@@ -232,9 +232,13 @@ export async function init() {
       id: 'immunity', name: i18n.text['immunities'], sources: data.options.statuses,
       func: (value) => (codex) => codex.immunities != null && codex.immunities.find(([name, _]) => name === value),
     },
+    {
+      id: 'exotic', name: i18n.text['exotic'], sources: ["YES", "NO"],
+      func: (value) => value === "YES" ? ((codex) => codex.exotic) : ((codex) => !codex.exotic),
+    }
   ]) {
-    options.type.push({ value: id, label: name, type: type })
-    options[id] = toSelectOptions(config.sources, config.func)
+    options.type.push({ value: id, label: name })
+    options[id] = toSelectOptions(sources, func)
   }
 
   return { ...settings, codexes, codexItems, i18n, options }
