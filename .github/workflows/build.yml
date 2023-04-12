@@ -75,14 +75,14 @@ jobs:
         run: |
           LAST_FILE="${CACHE_DIR}/last-release-hash"
           touch "${LAST_FILE}"
-          if [[ "$HASH" = "$(cat ${LAST_FILE})" ]]; then
-            echo "changed=true" >> $GITHUB_OUTPUT
+          if [[ "$HASH" != "$(cat ${LAST_FILE})" ]]; then
+            echo "changed=1" >> $GITHUB_OUTPUT
             echo "$HASH" > ${LAST_FILE}
           else
-            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "changed=0" >> $GITHUB_OUTPUT
           fi
       - name: Publish to Cloudflare Pages
-        if: ${{ steps.build-check.outputs.changed == true }}
+        if: ${{ steps.build-check.outputs.changed == 1 }}
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
