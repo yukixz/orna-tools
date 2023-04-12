@@ -74,12 +74,14 @@ jobs:
           HASH: ${{ hashFiles('build/**') }}
         run: |
           LAST_FILE="${CACHE_DIR}/last-release-hash"
-          touch "${LAST_FILE}"
-          if [[ "$HASH" != "$(cat ${LAST_FILE})" ]]; then
-            echo "changed=1" >> $GITHUB_OUTPUT
-            echo "$HASH" > ${LAST_FILE}
-          else
+          LAST_HASH="$([[ -f ${LAST_FILE} ]] && cat ${LAST_FILE})"
+          if [[ "$HASH" = "$LAST_HASH" ]]; then
             echo "changed=0" >> $GITHUB_OUTPUT
+          else
+            echo -n "$HASH" > ${LAST_FILE}
+            echo "changed=1" >> $GITHUB_OUTPUT
+            echo "# Build Changed" >> $GITHUB_STEP_SUMMARY
+            echo "$LAST_HASH => $HASH" >> $GITHUB_STEP_SUMMARY
           fi
       - name: Publish to Cloudflare Pages
         if: ${{ steps.build-check.outputs.changed == 1 }}
