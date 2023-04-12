@@ -5,6 +5,7 @@ import logging
 import re
 import sys
 
+import requests
 from bs4 import BeautifulSoup
 from utils import HttpSession
 
@@ -25,6 +26,7 @@ class Indexer:
         self.http = HttpSession()
         self.known = set()
         self.queue = []
+        self.is_codex = re.compile(r'^/codex/[^/]+/[^/]+/')
 
     def bootstrap(self) -> None:
         logger.info("Bootstrap from category pages")
@@ -50,34 +52,44 @@ class Indexer:
         with open(self.path, 'w', encoding='utf-8') as fd:
             fd.write('\n'.join(sorted(self.known)))
 
-    def parse_page(self, path) -> None:
-        logger.info("Parse page with path=%s", path)
-        resp = self.http.get_playorna_com(path, self.lang)
+    def check_page(self, path: str, resp: requests.Response) -> None:
+        ''' Check whether a path is valid codex path '''
+        # Keep all pages except 404 in known paths
         if resp.status_code == 404:
-            logger.warning("Page is missing. Remove path=%s", path)
+            logger.warning("Page path=%s is missing.", path)
             return
-        if resp.status_code != 200:
-            logger.warning("Page return unknown code=%d. Keep path=%s",
-                           resp.status_code, path)
+        if self.is_codex.match(path):
             self.known.add(path)
-            return
 
+    def parse_page(self, path: str, resp: requests.Response) -> None:
+        ''' Add codex links from the page to queue '''
+        # Parse pages with status code 200 only
+        if resp.status_code != 200:
+            logger.warning("Page path=%s return unknown status code=%d.",
+                           path, resp.status_code)
+            return
         soup = BeautifulSoup(resp.text, "lxml")
-        for item in soup.find_all("a", href=re.compile(r'^/codex/[^/]+/[^/]+/')):
+        for item in soup.find_all("a", href=self.is_codex):
             path = item['href']
             logger.debug("Found path=%s", path)
-            self.known.add(path)
             self.queue.append(path)
+
+    def consume_queue(self) -> None:
+        while len(self.queue) >= 1:
+            path = self.queue.pop(0)
+            if path in self.known:
+                continue
+            logger.info("Process path=%s", path)
+            response = self.http.get_playorna_com(path, self.lang)
+            self.check_page(path, response)
+            self.parse_page(path, response)
 
     def run(self) -> None:
         logger.info("Run with lang=%s", self.lang)
 
         self.load()
         self.bootstrap()
-        while len(self.queue) >= 1:
-            path = self.queue.pop(0)
-            if path not in self.known:
-                self.parse_page(path)
+        self.consume_queue()
         self.save()
 
         logger.info("Done with lang=%s", self.lang)
