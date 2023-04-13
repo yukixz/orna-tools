@@ -95,10 +95,10 @@ class Exporter:
 
     def export_codexes(self):
         logger.info("Exporting codexes")
-        paths = set()
+        paths = []
         with open(self.index_path, 'r', encoding='utf-8') as file:
             for path in file.readlines():
-                paths.add(path.strip())
+                paths.append(path.strip())
 
         logger.info("Codex index items=%d", len(paths))
         codexes = {}
