@@ -56,6 +56,10 @@ jobs:
 
       - name: Build External Data
         run: python3 codex/main.py --export src/data/ --lang en,zh-hans
+      - name: Build Web Application
+        run: npm run build
+        env:
+          GENERATE_SOURCEMAP: false
       - name: Upload External Data as Artifacts
         uses: actions/upload-artifact@v3
         with:
@@ -63,28 +67,14 @@ jobs:
           path: src/data/
           if-no-files-found: error
 
-      - name: Build Web Application
-        run: npm run build
+      - name: Publish Check
+        id: publish-check
         env:
-          GENERATE_SOURCEMAP: false
-
-      - name: Check whether Build Changed
-        id: build-check
-        env:
-          HASH: ${{ hashFiles('build/**') }}
-        run: |
-          LAST_FILE="${CACHE_DIR}/last-release-hash"
-          LAST_HASH="$([[ -f ${LAST_FILE} ]] && cat ${LAST_FILE})"
-          if [[ "$HASH" = "$LAST_HASH" ]]; then
-            echo "changed=0" >> $GITHUB_OUTPUT
-          else
-            echo -n "$HASH" > ${LAST_FILE}
-            echo "changed=1" >> $GITHUB_OUTPUT
-            echo "# Build Changed" >> $GITHUB_STEP_SUMMARY
-            echo "$LAST_HASH => $HASH" >> $GITHUB_STEP_SUMMARY
-          fi
+          LAST_FILE: ${{ env.CACHE_DIR }}/last-release-hash
+          CURR_HASH: "${{ hashFiles('build/**') }}"
+        run: .github/workflows/publish-check.sh
       - name: Publish to Cloudflare Pages
-        if: ${{ steps.build-check.outputs.changed == 1 }}
+        if: ${{ steps.publish-check.outputs.changed == 1 }}
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
