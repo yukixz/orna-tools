@@ -48,6 +48,7 @@ export default function CodexInfo({ codex }) {
         <CodexSegment label={`${i18n.text['causes']} (${i18n.text['skills']})`}
           tableData={codex.causes_by_spells} tableRenderRow={renderRowForCausesBySpells} />
         <CodexSegment label={i18n.text['gives']} tableData={codex.gives} tableRenderRow={renderRowForStatuses} />
+        <CodexSegment label={i18n.text['cures']} tableData={codex.cures} tableRenderRow={renderRowForStatuses} />
         <CodexSegment label={i18n.text['causes']} tableData={codex.causes} tableRenderRow={renderRowForStatuses} />
         <CodexSegment label={i18n.text['immunities']} tableData={codex.immunities} tableRenderRow={renderRowForStatuses} />
         <CodexSegment label={i18n.text['drops']} tableData={codex.drops} tableRenderRow={renderRowForCodexItems} />
