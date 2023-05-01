@@ -167,7 +167,6 @@
 /codex/bosses/lotan-coiled-one/
 /codex/bosses/mammon/
 /codex/bosses/medea-arisen-queen/
-/codex/bosses/medusa/
 /codex/bosses/mighty-griffin/
 /codex/bosses/mimic-king-a90b8f0c/
 /codex/bosses/minotaur-db4e0c60689b5789486e695c6ae30fb9/
@@ -2507,9 +2506,6 @@
 /codex/monsters/arcane-flame/
 /codex/monsters/arcane-slime/
 /codex/monsters/arcane-troll/
-/codex/monsters/aries-acolyte-738a517f/
-/codex/monsters/aries-acolyte-a1881496/
-/codex/monsters/aries-acolyte/
 /codex/monsters/balor-assassin/
 /codex/monsters/balor-flame/
 /codex/monsters/balor-gateway-c5c7f249/
@@ -2541,9 +2537,6 @@
 /codex/monsters/cave-sprout/
 /codex/monsters/cerberus-c633f157/
 /codex/monsters/cernunnos/
-/codex/monsters/cerus-acolyte-5965f9aa/
-/codex/monsters/cerus-acolyte-73d59be2/
-/codex/monsters/cerus-acolyte/
 /codex/monsters/chimera/
 /codex/monsters/cobra/
 /codex/monsters/conall/
@@ -2785,9 +2778,6 @@
 /codex/monsters/ortanite-golem/
 /codex/monsters/orthrus/
 /codex/monsters/pegasus/
-/codex/monsters/perseus-acolyte-f1d8afb3/
-/codex/monsters/perseus-acolyte-ff80be87/
-/codex/monsters/perseus-acolyte/
 /codex/monsters/phaethon/
 /codex/monsters/phoenician-mage/
 /codex/monsters/phoenician/
@@ -2873,9 +2863,7 @@
 /codex/monsters/zu/
 /codex/raids/age-old-mimic/
 /codex/raids/almighty-balin/
-/codex/raids/aloof-aries/
 /codex/raids/apollyon/
-/codex/raids/aries/
 /codex/raids/arisen-asteria-of-olympia/
 /codex/raids/arisen-atlas-of-olympia/
 /codex/raids/arisen-balin/
@@ -2931,10 +2919,8 @@
 /codex/raids/maelor/
 /codex/raids/mimic-king-of-kings/
 /codex/raids/naggeneen/
-/codex/raids/noble-perseus/
 /codex/raids/ophion-of-olympia/
 /codex/raids/orochi/
-/codex/raids/perseus/
 /codex/raids/phoenix/
 /codex/raids/pumpkin-spider/
 /codex/raids/pumpkinhead/
@@ -2952,8 +2938,6 @@
 /codex/raids/the-mightiest-mimic/
 /codex/raids/the-morrigan/
 /codex/raids/third-horseman/
-/codex/raids/tricky-aries/
-/codex/raids/untarnished-perseus/
 /codex/raids/yggdrasil/
 /codex/raids/young-apollyon/
 /codex/raids/zeus/
@@ -3285,7 +3269,6 @@
 /codex/spells/hack-and-slash/
 /codex/spells/haste-2/
 /codex/spells/haste/
-/codex/spells/hati/
 /codex/spells/heal/
 /codex/spells/heat-lightning-ii/
 /codex/spells/heat-lightning/
@@ -3452,8 +3435,6 @@
 /codex/spells/omnistrike/
 /codex/spells/omnistrikes-ii/
 /codex/spells/omnistrikes/
-/codex/spells/onryo/
-/codex/spells/onslaught-ii/
 /codex/spells/onslaught/
 /codex/spells/ophion-stance/
 /codex/spells/osmostrike-ii/
@@ -3502,7 +3483,6 @@
 /codex/spells/quasar/
 /codex/spells/quick-attack/
 /codex/spells/ragnarok/
-/codex/spells/raise-dead/
 /codex/spells/rally-of-charon/
 /codex/spells/rampart-ii/
 /codex/spells/rampart-iii/
@@ -3544,7 +3524,6 @@
 /codex/spells/sacrificial-pact-ii/
 /codex/spells/sacrificial-pact/
 /codex/spells/sap/
-/codex/spells/scarecrow/
 /codex/spells/scorched-earth-ii/
 /codex/spells/scorched-earth/
 /codex/spells/scout-weakness/
@@ -3598,7 +3577,6 @@
 /codex/spells/spiked-shield-ii/
 /codex/spells/spiked-shield-iii/
 /codex/spells/spiked-shield/
-/codex/spells/spooky-ghost/
 /codex/spells/starscreen/
 /codex/spells/stone-stare/
 /codex/spells/storm-facade-ii/
@@ -3622,8 +3600,6 @@
 /codex/spells/summon-cockatrice/
 /codex/spells/summon-colossus/
 /codex/spells/summon-dark-pegasus/
-/codex/spells/summon-dead-ii/
-/codex/spells/summon-dead-iii/
 /codex/spells/summon-dead/
 /codex/spells/summon-dragon/
 /codex/spells/summon-fafnir/
@@ -3720,7 +3696,6 @@
 /codex/spells/verse-iii/
 /codex/spells/verse-iv/
 /codex/spells/verse/
-/codex/spells/very-scary-skeleton/
 /codex/spells/viperseal-ii/
 /codex/spells/viperseal-iii/
 /codex/spells/viperseal/
