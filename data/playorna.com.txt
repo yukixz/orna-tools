@@ -489,6 +489,7 @@
 /codex/items/argent-helmet/
 /codex/items/argent-leggings/
 /codex/items/argent-shield/
+/codex/items/argos/
 /codex/items/aries-hood/
 /codex/items/aries-horns/
 /codex/items/aries-legs/
@@ -817,6 +818,7 @@
 /codex/items/bandits-dagger/
 /codex/items/bandits-hood/
 /codex/items/baneblade/
+/codex/items/banhammer/
 /codex/items/banshee-boots/
 /codex/items/banshee-robe/
 /codex/items/banshee-veil/
@@ -1072,6 +1074,14 @@
 /codex/items/dalans-hood/
 /codex/items/dalans-robe/
 /codex/items/damonas-shield/
+/codex/items/dangys-arisen-glasses/
+/codex/items/dangys-chinos/
+/codex/items/dangys-fancy-t-shirt/
+/codex/items/dangys-glasses/
+/codex/items/dangys-house-key/
+/codex/items/dangys-laptop/
+/codex/items/dangys-t-shirt/
+/codex/items/dangys-tan-chinos/
 /codex/items/dark-elf-boots/
 /codex/items/dark-elf-cowl/
 /codex/items/dark-elf-garb/
@@ -1103,6 +1113,7 @@
 /codex/items/deathbringer/
 /codex/items/decor-token/
 /codex/items/defense-tonic/
+/codex/items/del-chliss/
 /codex/items/delta-achlys-riftlock-fragment/
 /codex/items/delta-achlys-riftlock/
 /codex/items/delta-charon-riftlock-fragment/
@@ -1416,6 +1427,10 @@
 /codex/items/flamberge/
 /codex/items/flame-belt/
 /codex/items/flameguard/
+/codex/items/flax44s-monocle/
+/codex/items/flax44s-robe/
+/codex/items/flax44s-shoes/
+/codex/items/flax44s-staff/
 /codex/items/fluke-of-oceanus/
 /codex/items/flute/
 /codex/items/fog-blade/
@@ -1580,6 +1595,16 @@
 /codex/items/hardened-steel/
 /codex/items/hardwood-lute/
 /codex/items/harpys-feathers/
+/codex/items/havels-cuirass/
+/codex/items/havels-helmet/
+/codex/items/havels-leggings/
+/codex/items/havels-old-cuirass/
+/codex/items/havels-old-helmet/
+/codex/items/havels-old-leggings/
+/codex/items/havels-old-shield/
+/codex/items/havels-old-sword/
+/codex/items/havels-shield/
+/codex/items/havels-sword/
 /codex/items/heart-of-eos/
 /codex/items/heart-of-oceanus/
 /codex/items/heart-of-prometheus/
@@ -1819,6 +1844,7 @@
 /codex/items/machas-scroll/
 /codex/items/mages-boots/
 /codex/items/mages-scroll/
+/codex/items/magh-meall/
 /codex/items/magic-defense-tonic/
 /codex/items/magic-tonic/
 /codex/items/magicians-hood/
@@ -1928,6 +1954,7 @@
 /codex/items/nu-olympia-warsword/
 /codex/items/occult-candle/
 /codex/items/oceanic-boots/
+/codex/items/ogma/
 /codex/items/ogmios-satin-robe/
 /codex/items/ogre-axe/
 /codex/items/oisin-crown/
@@ -1981,6 +2008,7 @@
 /codex/items/ortanite/
 /codex/items/oxen-axe/
 /codex/items/pale-armor/
+/codex/items/pale-beard/
 /codex/items/pale-eye-of-kerberos/
 /codex/items/pale-helmet/
 /codex/items/pale-leggings/
@@ -2034,6 +2062,14 @@
 /codex/items/pure-draconite/
 /codex/items/pure-lightstone/
 /codex/items/pure-waterstone/
+/codex/items/purrlys-favourite-staff/
+/codex/items/purrlys-hood/
+/codex/items/purrlys-legguards/
+/codex/items/purrlys-less-favourite-staff/
+/codex/items/purrlys-old-hat/
+/codex/items/purrlys-old-robe/
+/codex/items/purrlys-old-staff/
+/codex/items/purrlys-robe/
 /codex/items/qatvanga/
 /codex/items/questing-axe/
 /codex/items/questing-bow/
@@ -2305,6 +2341,7 @@
 /codex/items/tempest-boots/
 /codex/items/templar-shield/
 /codex/items/terra-boots/
+/codex/items/tethra/
 /codex/items/theta-achlys-riftlock/
 /codex/items/theta-charon-riftlock/
 /codex/items/theta-olympia-archistaff/
@@ -2343,6 +2380,7 @@
 /codex/items/tower-shard/
 /codex/items/tower-shield/
 /codex/items/treecutter/
+/codex/items/trenfher/
 /codex/items/trevelyans-archistaff/
 /codex/items/trevelyans-charm/
 /codex/items/trevelyans-hood/
@@ -2880,6 +2918,7 @@
 /codex/raids/arisen-atlas-of-olympia/
 /codex/raids/arisen-balin/
 /codex/raids/arisen-cade/
+/codex/raids/arisen-covyn/
 /codex/raids/arisen-ebon-scruug/
 /codex/raids/arisen-hel/
 /codex/raids/arisen-judge-achlys/
@@ -2901,6 +2940,8 @@
 /codex/raids/atlas-of-olympia/
 /codex/raids/beguiled-apollyon/
 /codex/raids/cerus/
+/codex/raids/covyn/
+/codex/raids/dangy/
 /codex/raids/dracon/
 /codex/raids/ebon-scruug/
 /codex/raids/fallen-judge-achlys/
@@ -2918,9 +2959,11 @@
 /codex/raids/final-horseman/
 /codex/raids/finesse/
 /codex/raids/first-horseman/
+/codex/raids/flax44/
 /codex/raids/fomor/
 /codex/raids/furious-cerus/
 /codex/raids/grand-knight-lugus/
+/codex/raids/havel/
 /codex/raids/hel/
 /codex/raids/ingenious-cade/
 /codex/raids/kerberos/
@@ -2936,6 +2979,7 @@
 /codex/raids/phoenix/
 /codex/raids/pumpkin-spider/
 /codex/raids/pumpkinhead/
+/codex/raids/purrly/
 /codex/raids/scruug/
 /codex/raids/second-horseman/
 /codex/raids/sister-badb/
@@ -2944,6 +2988,7 @@
 /codex/raids/starlord/
 /codex/raids/surtr/
 /codex/raids/tatzelwurms/
+/codex/raids/the-creator/
 /codex/raids/the-dioscuri/
 /codex/raids/the-fool-ef1c6cb2/
 /codex/raids/the-fool/
@@ -3635,6 +3680,7 @@
 /codex/spells/summon-tower-guardian/
 /codex/spells/summon-troll-2/
 /codex/spells/summon-troll/
+/codex/spells/summon-very-scary-skeleton/
 /codex/spells/summon-warg/
 /codex/spells/summon-wyvern/
 /codex/spells/super-bomb/
