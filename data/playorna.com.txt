@@ -257,6 +257,7 @@
 /codex/followers/chimera/
 /codex/followers/cockatrice/
 /codex/followers/colossus/
+/codex/followers/coral-varmint/
 /codex/followers/crimson-gazer/
 /codex/followers/crow/
 /codex/followers/cruel-banshee/
@@ -299,7 +300,9 @@
 /codex/followers/great-cockatrice/
 /codex/followers/great-gazer/
 /codex/followers/great-jinn/
+/codex/followers/great-lizarr-warrior/
 /codex/followers/great-pegasus/
+/codex/followers/great-questing-beast/
 /codex/followers/great-reaper/
 /codex/followers/great-yeti/
 /codex/followers/greater-lobster/
@@ -1605,6 +1608,7 @@
 /codex/items/havels-old-sword/
 /codex/items/havels-shield/
 /codex/items/havels-sword/
+/codex/items/heart-of-change/
 /codex/items/heart-of-eos/
 /codex/items/heart-of-oceanus/
 /codex/items/heart-of-prometheus/
@@ -2918,7 +2922,6 @@
 /codex/raids/arisen-atlas-of-olympia/
 /codex/raids/arisen-balin/
 /codex/raids/arisen-cade/
-/codex/raids/arisen-covyn/
 /codex/raids/arisen-ebon-scruug/
 /codex/raids/arisen-hel/
 /codex/raids/arisen-judge-achlys/
@@ -2940,8 +2943,6 @@
 /codex/raids/atlas-of-olympia/
 /codex/raids/beguiled-apollyon/
 /codex/raids/cerus/
-/codex/raids/covyn/
-/codex/raids/dangy/
 /codex/raids/dracon/
 /codex/raids/ebon-scruug/
 /codex/raids/fallen-judge-achlys/
@@ -2959,11 +2960,9 @@
 /codex/raids/final-horseman/
 /codex/raids/finesse/
 /codex/raids/first-horseman/
-/codex/raids/flax44/
 /codex/raids/fomor/
 /codex/raids/furious-cerus/
 /codex/raids/grand-knight-lugus/
-/codex/raids/havel/
 /codex/raids/hel/
 /codex/raids/ingenious-cade/
 /codex/raids/kerberos/
@@ -2979,7 +2978,6 @@
 /codex/raids/phoenix/
 /codex/raids/pumpkin-spider/
 /codex/raids/pumpkinhead/
-/codex/raids/purrly/
 /codex/raids/scruug/
 /codex/raids/second-horseman/
 /codex/raids/sister-badb/
@@ -2988,7 +2986,6 @@
 /codex/raids/starlord/
 /codex/raids/surtr/
 /codex/raids/tatzelwurms/
-/codex/raids/the-creator/
 /codex/raids/the-dioscuri/
 /codex/raids/the-fool-ef1c6cb2/
 /codex/raids/the-fool/
@@ -3076,7 +3073,11 @@
 /codex/spells/bloodshift/
 /codex/spells/bolt-ii/
 /codex/spells/bolt-iii/
+/codex/spells/bolt-iv/
+/codex/spells/bolt-volley/
 /codex/spells/bolt/
+/codex/spells/bonded-strikes/
+/codex/spells/boulder-toss/
 /codex/spells/break-power/
 /codex/spells/break/
 /codex/spells/bright-star-ii/
@@ -3150,6 +3151,10 @@
 /codex/spells/defend-2/
 /codex/spells/defend-3/
 /codex/spells/deific-channel/
+/codex/spells/delay-strike-ii/
+/codex/spells/delay-strike-iii/
+/codex/spells/delay-strike-x/
+/codex/spells/delay-strike/
 /codex/spells/despair-2/
 /codex/spells/despair/
 /codex/spells/desperation/
@@ -3184,6 +3189,7 @@
 /codex/spells/drakeblight/
 /codex/spells/earth-affinity/
 /codex/spells/earth-alignment/
+/codex/spells/earth-sigil-2/
 /codex/spells/earth-sigil/
 /codex/spells/earthblight-ii/
 /codex/spells/earthblight/
@@ -3234,6 +3240,7 @@
 /codex/spells/fire-affinity/
 /codex/spells/fire-alignment/
 /codex/spells/fire-arrow/
+/codex/spells/fire-sigil-2/
 /codex/spells/fire-sigil/
 /codex/spells/fire-wall/
 /codex/spells/fireball/
@@ -3305,6 +3312,7 @@
 /codex/spells/gloomstrike-iii/
 /codex/spells/gloomstrike/
 /codex/spells/golems-fortitude/
+/codex/spells/grand-rally/
 /codex/spells/grand-summon/
 /codex/spells/grand-tempest/
 /codex/spells/great-collapse/
@@ -3351,6 +3359,7 @@
 /codex/spells/ice-affinity/
 /codex/spells/ice-alignment/
 /codex/spells/ice-arrow/
+/codex/spells/ice-sigil-2/
 /codex/spells/ice-sigil/
 /codex/spells/ice-storm-ii/
 /codex/spells/ice-storm/
@@ -3392,6 +3401,7 @@
 /codex/spells/life-pact/
 /codex/spells/lightning-affinity/
 /codex/spells/lightning-alignment/
+/codex/spells/lightning-sigil-2/
 /codex/spells/lightning-sigil/
 /codex/spells/lightning-spears/
 /codex/spells/lightning-wall/
@@ -3453,6 +3463,8 @@
 /codex/spells/mend-wall/
 /codex/spells/meteor-ii/
 /codex/spells/meteor/
+/codex/spells/metronomus-ii/
+/codex/spells/metronomus/
 /codex/spells/miasma-ii/
 /codex/spells/miasma-iii/
 /codex/spells/miasma/
@@ -3505,6 +3517,9 @@
 /codex/spells/parry-2/
 /codex/spells/parry/
 /codex/spells/peck/
+/codex/spells/pendulus-ii/
+/codex/spells/pendulus-iii/
+/codex/spells/pendulus/
 /codex/spells/perfect-shot/
 /codex/spells/petrify/
 /codex/spells/phoenixs-rise/
@@ -3592,6 +3607,10 @@
 /codex/spells/sea-strikes/
 /codex/spells/shadow-ii/
 /codex/spells/shadow/
+/codex/spells/shadowed-earthstrike/
+/codex/spells/shadowed-firestrike/
+/codex/spells/shadowed-icestrike/
+/codex/spells/shadowed-lightningstrike/
 /codex/spells/sharpen/
 /codex/spells/shield-bash-ii/
 /codex/spells/shield-bash/
@@ -3638,6 +3657,7 @@
 /codex/spells/spiked-shield/
 /codex/spells/starscreen/
 /codex/spells/stone-stare/
+/codex/spells/stonefire/
 /codex/spells/storm-facade-ii/
 /codex/spells/storm-facade/
 /codex/spells/storm-ii/
@@ -3704,6 +3724,7 @@
 /codex/spells/terrastrike-iii/
 /codex/spells/terrastrike/
 /codex/spells/threaten/
+/codex/spells/throw-gold/
 /codex/spells/tiamats-breath/
 /codex/spells/tidal-facade-ii/
 /codex/spells/tidal-facade/
@@ -3796,6 +3817,8 @@
 /codex/spells/wolven-strikes/
 /codex/spells/worlds-end/
 /codex/spells/wyrms-song/
+/codex/spells/wyrmseal/
+/codex/spells/wyrmstrike/
 /codex/spells/wyvern-speed-ii/
 /codex/spells/wyvern-speed-iii/
 /codex/spells/wyvern-speed/
