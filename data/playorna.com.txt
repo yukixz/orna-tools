@@ -3694,9 +3694,11 @@
 /codex/spells/summon-hydra/
 /codex/spells/summon-kelpie/
 /codex/spells/summon-mighty-griffin/
+/codex/spells/summon-onryo/
 /codex/spells/summon-phaethon/
 /codex/spells/summon-scarecrow/
 /codex/spells/summon-slime/
+/codex/spells/summon-spooky-ghost/
 /codex/spells/summon-tower-guardian/
 /codex/spells/summon-troll-2/
 /codex/spells/summon-troll/
