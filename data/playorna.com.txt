@@ -2646,9 +2646,6 @@
 /codex/monsters/aries-acolyte-738a517f/
 /codex/monsters/aries-acolyte-a1881496/
 /codex/monsters/aries-acolyte/
-/codex/monsters/arisen-bloodwarg/
-/codex/monsters/arisen-spiritgarm/
-/codex/monsters/arisen-stonewarg/
 /codex/monsters/balor-assassin/
 /codex/monsters/balor-flame/
 /codex/monsters/balor-gateway-c5c7f249/
@@ -2665,6 +2662,7 @@
 /codex/monsters/bear/
 /codex/monsters/behemoth/
 /codex/monsters/black-widow/
+/codex/monsters/bloodwarg-dfa97df9/
 /codex/monsters/bloodwarg/
 /codex/monsters/blue-flame/
 /codex/monsters/blue-slime/
@@ -2975,8 +2973,10 @@
 /codex/monsters/snow-elf-rogue/
 /codex/monsters/snow-elf/
 /codex/monsters/spider/
+/codex/monsters/spiritgarm-732978de/
 /codex/monsters/spiritgarm/
 /codex/monsters/sprout/
+/codex/monsters/stonewarg-b4d838aa/
 /codex/monsters/stonewarg/
 /codex/monsters/storm-core/
 /codex/monsters/storm-knight/
