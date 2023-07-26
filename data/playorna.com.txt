@@ -51,6 +51,7 @@
 /codex/bosses/bandit-lord/
 /codex/bosses/bashe-hungry-one/
 /codex/bosses/behemoth-9697d9ae/
+/codex/bosses/beithir/
 /codex/bosses/belenus-of-fomoria/
 /codex/bosses/bormana-of-fomoria/
 /codex/bosses/camazotz-ebd4bcbf/
@@ -873,6 +874,7 @@
 /codex/items/beguiled-mystic-katar/
 /codex/items/beguiled-robe/
 /codex/items/beguiled-shoes/
+/codex/items/beithirs-staff/
 /codex/items/belenuss-boots/
 /codex/items/belt-of-cerus/
 /codex/items/belt/
@@ -1027,6 +1029,7 @@
 /codex/items/crest-of-avalon/
 /codex/items/crest-of-nocturna/
 /codex/items/crest-of-sumner/
+/codex/items/crest-of-the-dragon-slayer/
 /codex/items/crest-of-wintara/
 /codex/items/crimson-eye/
 /codex/items/crimson-pinion/
@@ -1237,7 +1240,7 @@
 /codex/items/dusk-helmet/
 /codex/items/dusk-hood/
 /codex/items/dusk-robe/
-/codex/items/duskbreaker-ec7a531c/
+/codex/items/duskbreaker-64b29d3a/
 /codex/items/duskbreaker-ef96cc6a/
 /codex/items/duskbreaker/
 /codex/items/dynasty/
@@ -1322,7 +1325,7 @@
 /codex/items/estoc/
 /codex/items/esuss-pillar/
 /codex/items/everlasting-torch/
-/codex/items/excalibur-eec7bf3e/
+/codex/items/excalibur-32be53bc/
 /codex/items/excalibur/
 /codex/items/exp-potion/
 /codex/items/explorers-waystone/
@@ -1493,12 +1496,12 @@
 /codex/items/fomor-shield/
 /codex/items/fomor-staff/
 /codex/items/fomor-sword/
-/codex/items/fomoria-plated-boots-0e3ca45d/
 /codex/items/fomoria-plated-boots-12aa0ab8/
+/codex/items/fomoria-plated-boots-8a5bd211/
 /codex/items/fomoria-plated-boots-b9357c84/
 /codex/items/fomoria-plated-boots/
+/codex/items/fomoria-plated-robe-272802ec/
 /codex/items/fomoria-plated-robe-427f8b42/
-/codex/items/fomoria-plated-robe-946a26b9/
 /codex/items/fomoria-plated-robe-fb3188b6/
 /codex/items/fomoria-plated-robe/
 /codex/items/fomorian-armor/
@@ -2498,6 +2501,7 @@
 /codex/items/uchigatana/
 /codex/items/undead-bone/
 /codex/items/unfelled-concord/
+/codex/items/unfelled-konqord/
 /codex/items/unremarkable-fish/
 /codex/items/untamed-bull/
 /codex/items/untamed-bulls-eye/
@@ -2594,6 +2598,7 @@
 /codex/items/yeti-mightycoat/
 /codex/items/yeti-overcoat/
 /codex/items/ymir-agathodaemon-hammer/
+/codex/items/ymir-beithirs-staff/
 /codex/items/ymir-brilliant-feathers/
 /codex/items/ymir-cliffside-cuirass/
 /codex/items/ymir-coiled-shield/
@@ -3692,6 +3697,7 @@
 /codex/spells/reflect/
 /codex/spells/refract/
 /codex/spells/remedy/
+/codex/spells/replicate-beithir/
 /codex/spells/requiem-ii/
 /codex/spells/requiem-iii/
 /codex/spells/requiem/
@@ -3793,6 +3799,8 @@
 /codex/spells/summon-basilisk/
 /codex/spells/summon-bear/
 /codex/spells/summon-behemoth/
+/codex/spells/summon-beithir-ii/
+/codex/spells/summon-beithir/
 /codex/spells/summon-bloodwarg/
 /codex/spells/summon-buggane/
 /codex/spells/summon-cernunnos/
