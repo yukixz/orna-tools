@@ -126,6 +126,7 @@
 /codex/bosses/false-king-meliodas/
 /codex/bosses/fenrir-b21e25dd/
 /codex/bosses/finfolk/
+/codex/bosses/flames/
 /codex/bosses/fomorian-lord/
 /codex/bosses/gargouille/
 /codex/bosses/giant-basilisk/
@@ -160,6 +161,7 @@
 /codex/bosses/knight-sirus/
 /codex/bosses/kobold-lord/
 /codex/bosses/kraken/
+/codex/bosses/large-wisp/
 /codex/bosses/lero-of-fomoria/
 /codex/bosses/lizarr-lord/
 /codex/bosses/ljosalfar-lord/
@@ -364,6 +366,11 @@
 /codex/followers/quetzalcoatl-feathered-one/
 /codex/followers/raging-cerus/
 /codex/followers/reaper/
+/codex/followers/replica-eos/
+/codex/followers/replica-oceanus/
+/codex/followers/replica-prometheus/
+/codex/followers/replica-selene/
+/codex/followers/replica-themis/
 /codex/followers/scarecrow/
 /codex/followers/scary-skeleton/
 /codex/followers/scruug/
@@ -1144,6 +1151,7 @@
 /codex/items/deadwood-staff/
 /codex/items/deathbringer/
 /codex/items/decor-token/
+/codex/items/deepshard/
 /codex/items/defense-tonic/
 /codex/items/del-chliss/
 /codex/items/delta-achlys-riftlock-fragment/
@@ -2042,6 +2050,7 @@
 /codex/items/nu-olympia-warsword/
 /codex/items/occult-candle/
 /codex/items/oceanic-boots/
+/codex/items/ode-to-the-dungeon/
 /codex/items/ogma/
 /codex/items/ogmios-satin-robe/
 /codex/items/ogre-axe/
@@ -2140,6 +2149,7 @@
 /codex/items/proof-of-effort/
 /codex/items/proof-of-great-effort/
 /codex/items/proof-of-magnificent-effort/
+/codex/items/proof-of-sparring/
 /codex/items/proof-of-trials/
 /codex/items/psi-olympia-archistaff/
 /codex/items/psi-olympia-boots/
@@ -2950,6 +2960,13 @@
 /codex/monsters/ronin-63fcd94a/
 /codex/monsters/rotten-slime/
 /codex/monsters/rubbish/
+/codex/monsters/runeblade-of-finesse-5679c8ce/
+/codex/monsters/runeblade-of-finesse-6501e0c6/
+/codex/monsters/runeblade-of-finesse-7eb0c126/
+/codex/monsters/runeblade-of-finesse-ad34c73a/
+/codex/monsters/runeblade-of-finesse-c7b29611/
+/codex/monsters/runeblade-of-finesse-e0553900/
+/codex/monsters/runeblade-of-finesse/
 /codex/monsters/sandstone-golem/
 /codex/monsters/sapling/
 /codex/monsters/scarecrow/
@@ -2987,6 +3004,13 @@
 /codex/monsters/storm-knight/
 /codex/monsters/stray-tatzelwurm/
 /codex/monsters/succubus/
+/codex/monsters/swordbearer-of-finesse-3574bce3/
+/codex/monsters/swordbearer-of-finesse-612600e2/
+/codex/monsters/swordbearer-of-finesse-82f67d6f/
+/codex/monsters/swordbearer-of-finesse-91560eaf/
+/codex/monsters/swordbearer-of-finesse-beba34a7/
+/codex/monsters/swordbearer-of-finesse-de62c6bd/
+/codex/monsters/swordbearer-of-finesse/
 /codex/monsters/third-stable-keeper/
 /codex/monsters/tiamat-316a9861/
 /codex/monsters/tower-guard/
@@ -3206,6 +3230,7 @@
 /codex/spells/bright-star/
 /codex/spells/brilliant-lights-2/
 /codex/spells/brilliant-lights/
+/codex/spells/brittle-break/
 /codex/spells/build-tower/
 /codex/spells/burn-2/
 /codex/spells/burn/
@@ -3697,6 +3722,10 @@
 /codex/spells/reflect/
 /codex/spells/refract/
 /codex/spells/remedy/
+/codex/spells/rend-daggers/
+/codex/spells/rend-epee/
+/codex/spells/rend-heavy-blade/
+/codex/spells/rend-thin-blade/
 /codex/spells/replicate-beithir/
 /codex/spells/requiem-ii/
 /codex/spells/requiem-iii/
@@ -3869,6 +3898,7 @@
 /codex/spells/tidalstrike-iii/
 /codex/spells/tidalstrike/
 /codex/spells/titans-lesser-wall/
+/codex/spells/titans-power/
 /codex/spells/titans-protection/
 /codex/spells/torchstrike/
 /codex/spells/tower-of-strength/
