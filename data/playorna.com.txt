@@ -637,6 +637,7 @@
 /codex/items/arisen-gerds-legwraps/
 /codex/items/arisen-globe-holder/
 /codex/items/arisen-greaves/
+/codex/items/arisen-hallowed-summoning-scroll/
 /codex/items/arisen-helhest/
 /codex/items/arisen-helmet/
 /codex/items/arisen-hels-boots/
@@ -689,6 +690,8 @@
 /codex/items/arisen-plagued-cuirass/
 /codex/items/arisen-plagued-greaves/
 /codex/items/arisen-plagued-helmet/
+/codex/items/arisen-pumpkinless-armor/
+/codex/items/arisen-pumpkinless-leggings/
 /codex/items/arisen-qatvanga/
 /codex/items/arisen-raven-boots/
 /codex/items/arisen-raven-garb/
@@ -1529,12 +1532,12 @@
 /codex/items/fomor-shield/
 /codex/items/fomor-staff/
 /codex/items/fomor-sword/
+/codex/items/fomoria-plated-boots-0e3ca45d/
 /codex/items/fomoria-plated-boots-12aa0ab8/
-/codex/items/fomoria-plated-boots-8a5bd211/
 /codex/items/fomoria-plated-boots-b9357c84/
 /codex/items/fomoria-plated-boots/
-/codex/items/fomoria-plated-robe-272802ec/
 /codex/items/fomoria-plated-robe-427f8b42/
+/codex/items/fomoria-plated-robe-946a26b9/
 /codex/items/fomoria-plated-robe-fb3188b6/
 /codex/items/fomoria-plated-robe/
 /codex/items/fomorian-armor/
@@ -1685,6 +1688,7 @@
 /codex/items/hallowed-blade/
 /codex/items/hallowed-candle/
 /codex/items/hallowed-monster-tome/
+/codex/items/hallowed-summoning-scroll/
 /codex/items/hallowed-witchs-hat/
 /codex/items/hammer/
 /codex/items/handy-waystone/
@@ -2188,6 +2192,8 @@
 /codex/items/psi-olympia-vestment/
 /codex/items/psi-olympia-warbow/
 /codex/items/psi-olympia-warsword/
+/codex/items/pumpkinless-armor/
+/codex/items/pumpkinless-leggings/
 /codex/items/pure-darkstone/
 /codex/items/pure-draconite/
 /codex/items/pure-lightstone/
@@ -3094,6 +3100,7 @@
 /codex/raids/arisen-ophion-of-olympia/
 /codex/raids/arisen-phoenix/
 /codex/raids/arisen-pumpkinhead/
+/codex/raids/arisen-pumpkinless/
 /codex/raids/arisen-quetzalcoatl/
 /codex/raids/arisen-rift-judgement/
 /codex/raids/arisen-surtr/
@@ -3149,6 +3156,7 @@
 /codex/raids/phoenix/
 /codex/raids/pumpkin-spider/
 /codex/raids/pumpkinhead/
+/codex/raids/pumpkinless/
 /codex/raids/purrly/
 /codex/raids/rift-judgement/
 /codex/raids/scruug/
