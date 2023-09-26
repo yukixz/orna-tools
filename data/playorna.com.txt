@@ -719,7 +719,9 @@
 /codex/items/arisen-riftrogue-boots/
 /codex/items/arisen-riftrogue-chestplate/
 /codex/items/arisen-riftrogue-helmet/
+/codex/items/arisen-riftshield/
 /codex/items/arisen-riftstaff/
+/codex/items/arisen-riftsword/
 /codex/items/arisen-ring/
 /codex/items/arisen-robe/
 /codex/items/arisen-sea-axe/
@@ -1085,9 +1087,9 @@
 /codex/items/cursed-damonas-shield/
 /codex/items/cursed-eostres-circlet/
 /codex/items/cursed-esuss-pillar/
+/codex/items/cursed-fomoria-plated-boots-0ebf6063/
 /codex/items/cursed-fomoria-plated-boots-7a9f5efc/
 /codex/items/cursed-fomoria-plated-boots-c6787dd8/
-/codex/items/cursed-fomoria-plated-boots-e03e2c7a/
 /codex/items/cursed-fomoria-plated-boots/
 /codex/items/cursed-fomoria-plated-robe-5d09a4d7/
 /codex/items/cursed-fomoria-plated-robe-62b00ff5/
