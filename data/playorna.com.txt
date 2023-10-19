@@ -2257,6 +2257,7 @@
 /codex/items/proof-of-effort/
 /codex/items/proof-of-great-effort/
 /codex/items/proof-of-magnificent-effort/
+/codex/items/proof-of-remembrance/
 /codex/items/proof-of-sparring/
 /codex/items/proof-of-trials/
 /codex/items/psi-olympia-archistaff/
@@ -2590,6 +2591,7 @@
 /codex/items/thorns/
 /codex/items/thors-arc/
 /codex/items/thors-hammer/
+/codex/items/timeless-pendant/
 /codex/items/titan-armor/
 /codex/items/titan-axe/
 /codex/items/titan-helmet/
@@ -3648,6 +3650,8 @@
 /codex/spells/inferno-ward/
 /codex/spells/inferno/
 /codex/spells/inquest/
+/codex/spells/iron-greaves/
+/codex/spells/iron-pauldrons/
 /codex/spells/jinns-talent/
 /codex/spells/jump-ii/
 /codex/spells/jump/
@@ -3750,6 +3754,8 @@
 /codex/spells/multi-tremor-iii/
 /codex/spells/multi-tremor/
 /codex/spells/mute/
+/codex/spells/mythril-greaves/
+/codex/spells/mythril-pauldrons/
 /codex/spells/natura-ii/
 /codex/spells/natura-iii/
 /codex/spells/natura/
@@ -3920,6 +3926,8 @@
 /codex/spells/speed-iii/
 /codex/spells/speed/
 /codex/spells/spellbreaker/
+/codex/spells/spiked-greaves/
+/codex/spells/spiked-pauldrons/
 /codex/spells/spiked-shield-ii/
 /codex/spells/spiked-shield-iii/
 /codex/spells/spiked-shield/
