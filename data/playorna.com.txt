@@ -358,6 +358,7 @@
 /codex/followers/ebon-scruug/
 /codex/followers/eistla/
 /codex/followers/elder-gnome/
+/codex/followers/elysian-memories/
 /codex/followers/evil-eye/
 /codex/followers/experienced-wolpertinger/
 /codex/followers/fae/
@@ -383,6 +384,7 @@
 /codex/followers/gorynych-son-of-mountains/
 /codex/followers/great-bear/
 /codex/followers/great-cockatrice/
+/codex/followers/great-elysian-memories/
 /codex/followers/great-gazer/
 /codex/followers/great-jinn/
 /codex/followers/great-lizarr-warrior/
@@ -1164,9 +1166,9 @@
 /codex/items/cursed-damonas-shield/
 /codex/items/cursed-eostres-circlet/
 /codex/items/cursed-esuss-pillar/
-/codex/items/cursed-fomoria-plated-boots-0ebf6063/
 /codex/items/cursed-fomoria-plated-boots-7a9f5efc/
 /codex/items/cursed-fomoria-plated-boots-c6787dd8/
+/codex/items/cursed-fomoria-plated-boots-e03e2c7a/
 /codex/items/cursed-fomoria-plated-boots/
 /codex/items/cursed-fomoria-plated-robe-5d09a4d7/
 /codex/items/cursed-fomoria-plated-robe-62b00ff5/
@@ -1917,7 +1919,7 @@
 /codex/items/jotunheim-mnemonic/
 /codex/items/kaladanda/
 /codex/items/kerberos-archistaff/
-/codex/items/kerberos-claws-81b67c8d/
+/codex/items/kerberos-claws-e7f61ea1/
 /codex/items/kerberos-claws/
 /codex/items/kerberos-greatsword/
 /codex/items/kerberos-hood-a1f843d0/
@@ -2093,6 +2095,7 @@
 /codex/items/moondust/
 /codex/items/morning-star/
 /codex/items/morrigans-scroll/
+/codex/items/mountain-acorn/
 /codex/items/mullos-blinders/
 /codex/items/myrddin-harp/
 /codex/items/myrkheim-hammer/
@@ -2206,6 +2209,7 @@
 /codex/items/orichalcum-armor/
 /codex/items/orichalcum-helmet/
 /codex/items/orichalcum-leggings/
+/codex/items/orichalcum-mortar/
 /codex/items/orichalcum/
 /codex/items/ortanite-armor/
 /codex/items/ortanite-greaves/
@@ -2241,6 +2245,7 @@
 /codex/items/phoenician-shoes/
 /codex/items/phoenixsong/
 /codex/items/piece-of-string/
+/codex/items/pistachio/
 /codex/items/plagued-cuirass/
 /codex/items/plagued-greaves/
 /codex/items/plagued-helmet/
@@ -2257,6 +2262,7 @@
 /codex/items/proof-of-effort/
 /codex/items/proof-of-great-effort/
 /codex/items/proof-of-magnificent-effort/
+/codex/items/proof-of-monument/
 /codex/items/proof-of-remembrance/
 /codex/items/proof-of-sparring/
 /codex/items/proof-of-trials/
@@ -2374,6 +2380,7 @@
 /codex/items/sages-cane/
 /codex/items/salas-hood/
 /codex/items/salas-robe/
+/codex/items/sand-mortar/
 /codex/items/sandstone/
 /codex/items/sandstorm/
 /codex/items/sanguine-archistaff/
@@ -2468,6 +2475,7 @@
 /codex/items/solar-garb/
 /codex/items/solar-hood/
 /codex/items/solar-secrets/
+/codex/items/solarite-mortar/
 /codex/items/solarite/
 /codex/items/sorcerers-scroll/
 /codex/items/soul-blade/
@@ -2604,6 +2612,7 @@
 /codex/items/tower-plane/
 /codex/items/tower-shard/
 /codex/items/tower-shield/
+/codex/items/tree-nut/
 /codex/items/treecutter/
 /codex/items/trenfher/
 /codex/items/trevelyans-archistaff/
