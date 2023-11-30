@@ -1166,9 +1166,9 @@
 /codex/items/cursed-damonas-shield/
 /codex/items/cursed-eostres-circlet/
 /codex/items/cursed-esuss-pillar/
+/codex/items/cursed-fomoria-plated-boots-0ebf6063/
 /codex/items/cursed-fomoria-plated-boots-7a9f5efc/
 /codex/items/cursed-fomoria-plated-boots-c6787dd8/
-/codex/items/cursed-fomoria-plated-boots-e03e2c7a/
 /codex/items/cursed-fomoria-plated-boots/
 /codex/items/cursed-fomoria-plated-robe-5d09a4d7/
 /codex/items/cursed-fomoria-plated-robe-62b00ff5/
@@ -1498,6 +1498,7 @@
 /codex/items/ferocious-bull/
 /codex/items/ferocious-bulls-eye/
 /codex/items/ferocious-hood/
+/codex/items/festive-summoning-scroll/
 /codex/items/fey-arrows/
 /codex/items/fey-badb-boots/
 /codex/items/fey-badb-catha/
@@ -1675,7 +1676,6 @@
 /codex/items/gamma-olympia-warsword/
 /codex/items/gandring/
 /codex/items/gargouilles-dagger/
-/codex/items/gauntlet-key/
 /codex/items/gazing-staff/
 /codex/items/genius/
 /codex/items/gerds-bullwhip/
@@ -2258,8 +2258,10 @@
 /codex/items/polluxs-greataxe/
 /codex/items/presents/
 /codex/items/proof-of-anguish/
+/codex/items/proof-of-avarice/
 /codex/items/proof-of-distance/
 /codex/items/proof-of-effort/
+/codex/items/proof-of-felling/
 /codex/items/proof-of-great-effort/
 /codex/items/proof-of-magnificent-effort/
 /codex/items/proof-of-monument/
@@ -2454,6 +2456,7 @@
 /codex/items/simple-hood/
 /codex/items/simple-robe/
 /codex/items/simple-shoes/
+/codex/items/skeleton-key/
 /codex/items/skyshard-dagger/
 /codex/items/skyshard-lute/
 /codex/items/skyshard-quarterstaff/
@@ -3872,6 +3875,11 @@
 /codex/spells/riposte-iii/
 /codex/spells/riposte/
 /codex/spells/rock-toss/
+/codex/spells/rune-of-eos/
+/codex/spells/rune-of-oceanus/
+/codex/spells/rune-of-prometheus/
+/codex/spells/rune-of-selene/
+/codex/spells/rune-of-themis/
 /codex/spells/sacreseal-ii/
 /codex/spells/sacreseal-iii/
 /codex/spells/sacreseal/
@@ -4033,6 +4041,8 @@
 /codex/spells/titans-lesser-wall/
 /codex/spells/titans-power/
 /codex/spells/titans-protection/
+/codex/spells/titans-seal/
+/codex/spells/titans-strike/
 /codex/spells/torchstrike/
 /codex/spells/tower-of-strength/
 /codex/spells/towerfall-ii/
