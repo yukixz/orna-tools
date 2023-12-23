@@ -44,6 +44,7 @@
 /codex/bosses/arisen-thor-the-storm-god/
 /codex/bosses/arisen-vulcan-the-red-knight/
 /codex/bosses/artio-of-fomoria/
+/codex/bosses/ascended-pledge/
 /codex/bosses/atepomarus-of-fomoria/
 /codex/bosses/baldr/
 /codex/bosses/balor-king/
@@ -118,7 +119,6 @@
 /codex/bosses/fallen-heretic/
 /codex/bosses/fallen-hero-lover-lost/
 /codex/bosses/fallen-ithra-the-white-knight/
-/codex/bosses/fallen-phoenix/
 /codex/bosses/fallen-ra-the-seer/
 /codex/bosses/fallen-realmshifter/
 /codex/bosses/fallen-thor-the-storm-god/
@@ -445,11 +445,13 @@
 /codex/followers/quetzalcoatl-feathered-one/
 /codex/followers/raging-cerus/
 /codex/followers/reaper/
+/codex/followers/red-nosed-chimera/
 /codex/followers/replica-eos/
 /codex/followers/replica-oceanus/
 /codex/followers/replica-prometheus/
 /codex/followers/replica-selene/
 /codex/followers/replica-themis/
+/codex/followers/ruby-nosed-chimera/
 /codex/followers/scarecrow/
 /codex/followers/scary-skeleton/
 /codex/followers/scruug/
@@ -2007,6 +2009,7 @@
 /codex/items/longsword/
 /codex/items/lordly-monster-tome/
 /codex/items/lost-art/
+/codex/items/lost-ember/
 /codex/items/lost-helmet/
 /codex/items/lovers-lost/
 /codex/items/lucky-coin/
@@ -2888,6 +2891,8 @@
 /codex/monsters/evil-eye/
 /codex/monsters/evil-eyes/
 /codex/monsters/fafnir/
+/codex/monsters/failed-phoenix-40f6a0b6/
+/codex/monsters/failed-phoenix/
 /codex/monsters/fairy/
 /codex/monsters/fallen-arcanic/
 /codex/monsters/fallen-archmage/
@@ -2964,8 +2969,8 @@
 /codex/monsters/great-mollusc/
 /codex/monsters/great-orc-marauder/
 /codex/monsters/great-orc/
-/codex/monsters/great-phoenician-mage/
-/codex/monsters/great-phoenician/
+/codex/monsters/great-phoenix-pledge-19c34e4d/
+/codex/monsters/great-phoenix-pledge/
 /codex/monsters/great-reaper/
 /codex/monsters/great-sprout/
 /codex/monsters/great-troll/
@@ -3068,8 +3073,10 @@
 /codex/monsters/perseus-acolyte-ff80be87/
 /codex/monsters/perseus-acolyte/
 /codex/monsters/phaethon/
-/codex/monsters/phoenician-mage/
-/codex/monsters/phoenician/
+/codex/monsters/phoenix-halfling-805cc50e/
+/codex/monsters/phoenix-halfling/
+/codex/monsters/phoenix-pledgeling-b6ac4a97/
+/codex/monsters/phoenix-pledgeling/
 /codex/monsters/poison-wyvern/
 /codex/monsters/polar-bear/
 /codex/monsters/pumpkin-spider/
@@ -3803,6 +3810,8 @@
 /codex/spells/pendulus/
 /codex/spells/perfect-shot/
 /codex/spells/petrify/
+/codex/spells/phoenixrise-ritual/
+/codex/spells/phoenixs-pledge/
 /codex/spells/phoenixs-rise/
 /codex/spells/pierce/
 /codex/spells/poison-volley/
@@ -3981,12 +3990,14 @@
 /codex/spells/summon-dead/
 /codex/spells/summon-dragon/
 /codex/spells/summon-fafnir/
+/codex/spells/summon-failed-phoenix/
 /codex/spells/summon-garm/
 /codex/spells/summon-gazer/
 /codex/spells/summon-glashtyn/
 /codex/spells/summon-golem/
 /codex/spells/summon-great-golem/
 /codex/spells/summon-great-hydra/
+/codex/spells/summon-great-phoenix-pledge/
 /codex/spells/summon-guivre/
 /codex/spells/summon-harpy/
 /codex/spells/summon-hati/
