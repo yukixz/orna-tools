@@ -315,6 +315,11 @@
 /codex/followers/arisen-naggeneen/
 /codex/followers/arisen-spiritgarm/
 /codex/followers/arisen-stonewarg/
+/codex/followers/ashen-phoenix-3fc74a3d/
+/codex/followers/ashen-phoenix-46c214e1/
+/codex/followers/ashen-phoenix-728b14e4/
+/codex/followers/ashen-phoenix-aa06bca6/
+/codex/followers/ashen-phoenix-d872c62d/
 /codex/followers/ashen-phoenix/
 /codex/followers/asteria-of-olympia/
 /codex/followers/atlas-of-olympia/
@@ -3840,7 +3845,7 @@
 /codex/spells/quad-edge/
 /codex/spells/quadcut-ii/
 /codex/spells/quadcut/
-/codex/spells/quake-iii/
+/codex/spells/quake-ii/
 /codex/spells/quake/
 /codex/spells/quakestorm-ii/
 /codex/spells/quakestorm/
