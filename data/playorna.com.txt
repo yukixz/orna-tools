@@ -169,6 +169,7 @@
 /codex/bosses/lost-pharaoh-0f685085/
 /codex/bosses/lotan-coiled-one/
 /codex/bosses/mammon/
+/codex/bosses/manticore/
 /codex/bosses/medea-arisen-queen/
 /codex/bosses/medusa/
 /codex/bosses/mighty-griffin/
@@ -393,6 +394,7 @@
 /codex/followers/great-gazer/
 /codex/followers/great-jinn/
 /codex/followers/great-lizarr-warrior/
+/codex/followers/great-monoceros/
 /codex/followers/great-pegasus/
 /codex/followers/great-questing-beast/
 /codex/followers/great-reaper/
@@ -434,6 +436,7 @@
 /codex/followers/mighty-slime/
 /codex/followers/mimic/
 /codex/followers/minotaur/
+/codex/followers/monoceros/
 /codex/followers/naggeneen/
 /codex/followers/nidhogg/
 /codex/followers/odok/
@@ -970,6 +973,16 @@
 /codex/items/beags-lute/
 /codex/items/bearclaw/
 /codex/items/bearskin/
+/codex/items/beastfelled-boots/
+/codex/items/beastfelled-cowl/
+/codex/items/beastfelled-cuirass/
+/codex/items/beastfelled-garb/
+/codex/items/beastfelled-helmet/
+/codex/items/beastfelled-hood/
+/codex/items/beastfelled-leggings/
+/codex/items/beastfelled-robe/
+/codex/items/beastfelled-shoes/
+/codex/items/beastfelled-summoning-scroll/
 /codex/items/beastly-monster-aspect/
 /codex/items/beasts-blood/
 /codex/items/beatrices-staff/
@@ -1175,7 +1188,7 @@
 /codex/items/cursed-esuss-pillar/
 /codex/items/cursed-fomoria-plated-boots-0ebf6063/
 /codex/items/cursed-fomoria-plated-boots-7a9f5efc/
-/codex/items/cursed-fomoria-plated-boots-c6787dd8/
+/codex/items/cursed-fomoria-plated-boots-e03e2c7a/
 /codex/items/cursed-fomoria-plated-boots/
 /codex/items/cursed-fomoria-plated-robe-5d09a4d7/
 /codex/items/cursed-fomoria-plated-robe-62b00ff5/
@@ -1449,7 +1462,7 @@
 /codex/items/estoc/
 /codex/items/esuss-pillar/
 /codex/items/everlasting-torch/
-/codex/items/excalibur-32be53bc/
+/codex/items/excalibur-eec7bf3e/
 /codex/items/excalibur/
 /codex/items/exp-potion/
 /codex/items/explorers-waystone/
@@ -1621,12 +1634,12 @@
 /codex/items/fomor-shield/
 /codex/items/fomor-staff/
 /codex/items/fomor-sword/
-/codex/items/fomoria-plated-boots-0e3ca45d/
 /codex/items/fomoria-plated-boots-12aa0ab8/
+/codex/items/fomoria-plated-boots-8a5bd211/
 /codex/items/fomoria-plated-boots-b9357c84/
 /codex/items/fomoria-plated-boots/
+/codex/items/fomoria-plated-robe-272802ec/
 /codex/items/fomoria-plated-robe-427f8b42/
-/codex/items/fomoria-plated-robe-946a26b9/
 /codex/items/fomoria-plated-robe-fb3188b6/
 /codex/items/fomoria-plated-robe/
 /codex/items/fomorian-armor/
@@ -1640,7 +1653,7 @@
 /codex/items/fomorian-staff/
 /codex/items/fomorian-sword/
 /codex/items/fomors-crown-2cca9537/
-/codex/items/fomors-crown-c64fb3e7/
+/codex/items/fomors-crown-d8f79592/
 /codex/items/fomors-crown-faad302c/
 /codex/items/fomors-crown/
 /codex/items/forest-goat-panflute/
@@ -1737,6 +1750,9 @@
 /codex/items/great-lizarr-boots/
 /codex/items/great-lizarr-leggings/
 /codex/items/great-mimic-head/
+/codex/items/great-monoceros-cowl/
+/codex/items/great-monoceros-garb/
+/codex/items/great-monoceros-hoofs/
 /codex/items/great-monster-aspect/
 /codex/items/great-monster-remains/
 /codex/items/great-monster-tome/
@@ -1926,8 +1942,9 @@
 /codex/items/jotunheim-mnemonic/
 /codex/items/kaladanda/
 /codex/items/kerberos-archistaff/
-/codex/items/kerberos-claws-e7f61ea1/
+/codex/items/kerberos-claws-81b67c8d/
 /codex/items/kerberos-claws/
+/codex/items/kerberos-fur/
 /codex/items/kerberos-greatsword/
 /codex/items/kerberos-hood-a1f843d0/
 /codex/items/kerberos-hood/
@@ -2029,6 +2046,11 @@
 /codex/items/lungs-of-selene/
 /codex/items/lungs-of-themis/
 /codex/items/lute/
+/codex/items/lyncus-bracer/
+/codex/items/lyncus-bristle/
+/codex/items/lyncus-paw/
+/codex/items/lyncus-ring/
+/codex/items/lynx-labrys/
 /codex/items/lyonesse-boots/
 /codex/items/lyonesse-cowl/
 /codex/items/lyonesse-crown/
@@ -2063,6 +2085,11 @@
 /codex/items/mammons-teardrop/
 /codex/items/mana-bow/
 /codex/items/mandrake/
+/codex/items/manticore-boots/
+/codex/items/manticore-eye/
+/codex/items/manticore-heart/
+/codex/items/manticore-hood/
+/codex/items/manticore-robe/
 /codex/items/maras-blessing/
 /codex/items/masamune/
 /codex/items/medusas-bow/
@@ -2093,6 +2120,11 @@
 /codex/items/mimic-king-of-kings-head/
 /codex/items/minotaur-axe/
 /codex/items/mirror/
+/codex/items/monoceros-cowl/
+/codex/items/monoceros-essence/
+/codex/items/monoceros-garb/
+/codex/items/monoceros-hoofs/
+/codex/items/monoceros-horn/
 /codex/items/monster-aspect/
 /codex/items/monster-remains/
 /codex/items/monster-tome/
@@ -2972,6 +3004,7 @@
 /codex/monsters/great-lizarr-warrior/
 /codex/monsters/great-mimic/
 /codex/monsters/great-mollusc/
+/codex/monsters/great-monoceros/
 /codex/monsters/great-orc-marauder/
 /codex/monsters/great-orc/
 /codex/monsters/great-phoenix-pledge-19c34e4d/
@@ -3049,6 +3082,7 @@
 /codex/monsters/mimic/
 /codex/monsters/minotaur/
 /codex/monsters/mollusc/
+/codex/monsters/monoceros/
 /codex/monsters/mummy/
 /codex/monsters/mythril-armor/
 /codex/monsters/naga-mage/
@@ -3280,6 +3314,7 @@
 /codex/raids/the-morrigan/
 /codex/raids/third-horseman/
 /codex/raids/tricky-aries/
+/codex/raids/turned-king-lyncus/
 /codex/raids/untarnished-perseus/
 /codex/raids/yggdrasil/
 /codex/raids/young-apollyon/
@@ -4002,6 +4037,7 @@
 /codex/spells/summon-golem/
 /codex/spells/summon-great-golem/
 /codex/spells/summon-great-hydra/
+/codex/spells/summon-great-monoceros/
 /codex/spells/summon-great-phoenix-pledge/
 /codex/spells/summon-guivre/
 /codex/spells/summon-harpy/
