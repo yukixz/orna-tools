@@ -472,6 +472,8 @@
 /codex/followers/sluagh/
 /codex/followers/snake/
 /codex/followers/spawn-of-anguish/
+/codex/followers/sphinx-cub/
+/codex/followers/sphinx-kit/
 /codex/followers/spiritgarm/
 /codex/followers/spooky-ghost/
 /codex/followers/steward-cactus/
@@ -1261,7 +1263,7 @@
 /codex/items/dawnbreaker-93ca602e/
 /codex/items/dawnbreaker/
 /codex/items/daybreak-187acb44/
-/codex/items/daybreak-63f01d22/
+/codex/items/daybreak-fbe009b8/
 /codex/items/daybreak/
 /codex/items/dayleaf/
 /codex/items/deadwood-staff/
@@ -1387,6 +1389,7 @@
 /codex/items/earthen-pike/
 /codex/items/earthen-sceptre/
 /codex/items/earthstone/
+/codex/items/eastern-regalia/
 /codex/items/ebon-candy-cane/
 /codex/items/ebon-caroling-lute/
 /codex/items/ebon-jolly-stockings/
@@ -1942,7 +1945,7 @@
 /codex/items/jotunheim-mnemonic/
 /codex/items/kaladanda/
 /codex/items/kerberos-archistaff/
-/codex/items/kerberos-claws-81b67c8d/
+/codex/items/kerberos-claws-e7f61ea1/
 /codex/items/kerberos-claws/
 /codex/items/kerberos-fur/
 /codex/items/kerberos-greatsword/
@@ -2436,6 +2439,7 @@
 /codex/items/scroll-of-anguish/
 /codex/items/scroll-of-arisen-rift-distortion/
 /codex/items/scroll-of-chaos/
+/codex/items/scroll-of-dynasty/
 /codex/items/scroll-of-earth/
 /codex/items/scroll-of-fire/
 /codex/items/scroll-of-ice/
@@ -2610,6 +2614,7 @@
 /codex/items/symbol-of-famine/
 /codex/items/symbol-of-pestilence/
 /codex/items/symbol-of-war/
+/codex/items/tail-of-a-sphinx/
 /codex/items/taranis-hood/
 /codex/items/tarnished-kings-crown/
 /codex/items/tattered-clothwrap/
@@ -3319,6 +3324,7 @@
 /codex/raids/yggdrasil/
 /codex/raids/young-apollyon/
 /codex/raids/zeus/
+/codex/spells/aarus-blessing/
 /codex/spells/achlys-pact/
 /codex/spells/aegir-stance/
 /codex/spells/aerial-barrage/
@@ -3534,6 +3540,7 @@
 /codex/spells/envy/
 /codex/spells/eoss-blessing/
 /codex/spells/evasive-strikes/
+/codex/spells/exploit-ii/
 /codex/spells/exploit/
 /codex/spells/faith-ii/
 /codex/spells/faith/
@@ -3635,6 +3642,7 @@
 /codex/spells/gloomstrike-ii/
 /codex/spells/gloomstrike-iii/
 /codex/spells/gloomstrike/
+/codex/spells/gods-of-aaru/
 /codex/spells/golems-fortitude/
 /codex/spells/grand-rally/
 /codex/spells/grand-summon/
@@ -3937,6 +3945,7 @@
 /codex/spells/sacrestrike/
 /codex/spells/sacrificial-pact-ii/
 /codex/spells/sacrificial-pact/
+/codex/spells/sands-of-aaru/
 /codex/spells/sap/
 /codex/spells/scorched-earth-ii/
 /codex/spells/scorched-earth/
@@ -4147,6 +4156,7 @@
 /codex/spells/wail-ii/
 /codex/spells/wail/
 /codex/spells/wallop/
+/codex/spells/walls-of-aaru/
 /codex/spells/warcry/
 /codex/spells/ward-of-annwn/
 /codex/spells/ward-of-balor-ii/
