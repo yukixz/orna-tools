@@ -291,6 +291,7 @@
 /codex/classes/84/
 /codex/classes/85/
 /codex/classes/9/
+/codex/followers/aaru-cobra/
 /codex/followers/aaru-viper/
 /codex/followers/aegir/
 /codex/followers/agathodaemon/
