@@ -475,7 +475,6 @@
 /codex/followers/snake/
 /codex/followers/spawn-of-anguish/
 /codex/followers/sphinx-cub/
-/codex/followers/sphinx-kit/
 /codex/followers/spiritgarm/
 /codex/followers/spooky-ghost/
 /codex/followers/steward-cactus/
