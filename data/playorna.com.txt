@@ -1161,6 +1161,9 @@
 /codex/items/counts-hood/
 /codex/items/court-jesters-outfit/
 /codex/items/court-staff/
+/codex/items/covyns-dark-armor/
+/codex/items/covyns-dark-leggings/
+/codex/items/covyns-dark-mask/
 /codex/items/covyns-great-scythe/
 /codex/items/covyns-hemmed-robe/
 /codex/items/covyns-hemmed-skirt/
@@ -1168,6 +1171,7 @@
 /codex/items/covyns-robe/
 /codex/items/covyns-scythe/
 /codex/items/covyns-skirt/
+/codex/items/covyns-soul-hunt-scythe/
 /codex/items/covyns-wolven-hood/
 /codex/items/cowards-blade/
 /codex/items/cowards-boots/
@@ -1215,8 +1219,8 @@
 /codex/items/cursed-damonas-shield/
 /codex/items/cursed-eostres-circlet/
 /codex/items/cursed-esuss-pillar/
-/codex/items/cursed-fomoria-plated-boots-0ebf6063/
 /codex/items/cursed-fomoria-plated-boots-7a9f5efc/
+/codex/items/cursed-fomoria-plated-boots-c6787dd8/
 /codex/items/cursed-fomoria-plated-boots-e03e2c7a/
 /codex/items/cursed-fomoria-plated-boots/
 /codex/items/cursed-fomoria-plated-robe-5d09a4d7/
@@ -1977,7 +1981,7 @@
 /codex/items/jotunheim-mnemonic/
 /codex/items/kaladanda/
 /codex/items/kerberos-archistaff/
-/codex/items/kerberos-claws-e7f61ea1/
+/codex/items/kerberos-claws-81b67c8d/
 /codex/items/kerberos-claws/
 /codex/items/kerberos-fur/
 /codex/items/kerberos-greatsword/
